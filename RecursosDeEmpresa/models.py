@@ -57,15 +57,26 @@ class Persona(models.Model):
     numero_documento = models.IntegerField(max_length=100)
     domicilio = models.ForeignKey(Domicilio)
     usuario = models.ForeignKey(User)
+#    telefono_particular = models.ForeignKey(TelefonoPersona)
+#    Telefono_domicilio = models.ForeignKey(TelefonoPersona)
     
     def __unicode__(self):
         return self.nombre + self.apellido
     
-class Telefono(models.Model):
-    """ Clase Telefono
+class TelefonoPersona(models.Model):
+    """ Clase TelefonoPersona
     Atributos: numero, descripcion(Ej:casa,trabajo,privado)"""
     numero = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=100)
+    
+    def __unicode__(self):
+        return self.numero
+    
+class TelefonoSucursal(models.Model):
+    """Clase TelfonoSucursal
+    Atributos: numero, sucursal"""
+    numero = models.CharField(max_length=100)
+#    sucursal = models.ForeignKey(Sucursal)
     
     def __unicode__(self):
         return self.numero
