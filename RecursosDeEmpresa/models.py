@@ -35,7 +35,7 @@ class Domicilio(models.Model):
     direccion = models.CharField(max_length=250, verbose_name='Dirección')
     numero = models.IntegerField(verbose_name='Número')
     piso = models.IntegerField()
-    departamento = models.CharField(max_length=50)
+    depto = models.CharField(max_length=50)
     codigo_postal = models.CharField(max_length=100)
     barrio = models.ForeignKey(Barrio)
     
@@ -54,7 +54,7 @@ class Persona(models.Model):
     sexo =  models.CharField(max_length=1, choices=sexo_choise)
     email = models.EmailField(max_length=50)
     tipo_documento= models.ForeignKey(TipoDocumento)
-    numero_documento = models.IntegerField()
+    numero_documento = models.IntegerField(max_length=100)
     domicilio = models.ForeignKey(Domicilio)
     usuario = models.ForeignKey(User)
     
