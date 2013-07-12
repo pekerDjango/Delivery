@@ -40,7 +40,16 @@ class Domicilio(models.Model):
     barrio = models.ForeignKey(Barrio)
     
     def __unicode__(self):
-        return self.direccion 
+        return self.direccion
+    
+class TelefonoPersona(models.Model):
+    """ Clase TelefonoPersona
+    Atributos: numero, descripcion(Ej:casa,trabajo,privado)"""
+    numero = models.CharField(max_length=100)
+    descripcion = models.CharField(max_length=100)
+    
+    def __unicode__(self):
+        return self.numero  
     
 class Persona(models.Model):
     """Clase Persona
@@ -57,30 +66,13 @@ class Persona(models.Model):
     numero_documento = models.IntegerField(max_length=100)
     domicilio = models.ForeignKey(Domicilio)
     usuario = models.ForeignKey(User)
-#    telefono_particular = models.ForeignKey(TelefonoPersona)
-#    Telefono_domicilio = models.ForeignKey(TelefonoPersona)
+    telefono_particular = models.ForeignKey(TelefonoPersona)
+    telefono_domicilio = models.ForeignKey(TelefonoPersona)
     
     def __unicode__(self):
         return self.nombre + self.apellido
     
-class TelefonoPersona(models.Model):
-    """ Clase TelefonoPersona
-    Atributos: numero, descripcion(Ej:casa,trabajo,privado)"""
-    numero = models.CharField(max_length=100)
-    descripcion = models.CharField(max_length=100)
-    
-    def __unicode__(self):
-        return self.numero
-    
-class TelefonoSucursal(models.Model):
-    """Clase TelfonoSucursal
-    Atributos: numero, sucursal"""
-    numero = models.CharField(max_length=100)
-#    sucursal = models.ForeignKey(Sucursal)
-    
-    def __unicode__(self):
-        return self.numero
-    
+  
 class Turno(models.Model):
     """Clase Turno
     Atributos: codigo, descripcion"""
@@ -110,6 +102,15 @@ class Sucursal(models.Model):
     
     def __unicode__(self):
         return self.nombre
+
+class TelefonoSucursal(models.Model):
+    """Clase TelfonoSucursal
+    Atributos: numero, sucursal"""
+    numero = models.CharField(max_length=100)
+    sucursal = models.ForeignKey(Sucursal)
+    
+    def __unicode__(self):
+        return self.numero
     
 class Empleado(Persona, models.Model):
     """Clase Empleado hereda los atributos de Persona
@@ -117,6 +118,7 @@ class Empleado(Persona, models.Model):
     legajo = models.IntegerField(primary_key=True, unique=True)
     turno = models.ForeignKey(Turno)
     sucursal = models.ForeignKey(Sucursal)
+    telefono = models.ForeignKey(TelefonoPersona)
     
     def __unicode__(self):
         return self.legajo
