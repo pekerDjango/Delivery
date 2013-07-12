@@ -66,8 +66,8 @@ class Persona(models.Model):
     numero_documento = models.IntegerField(max_length=100)
     domicilio = models.ForeignKey(Domicilio)
     usuario = models.ForeignKey(User)
-    telefono_particular = models.ForeignKey(TelefonoPersona)
-    telefono_domicilio = models.ForeignKey(TelefonoPersona)
+    telefono_particular = models.ForeignKey(TelefonoPersona, related_name ="telefono_Particular")
+    telefono_domicilio = models.ForeignKey(TelefonoPersona, related_name ="telefono_Domicilio")
     
     def __unicode__(self):
         return self.nombre + self.apellido
