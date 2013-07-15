@@ -125,7 +125,8 @@ INSTALLED_APPS = (
      'django.contrib.admindocs',
      'ComponentesDePedido',
      'RecursosDeEmpresa',
-     'PedidoRegistrado'
+     'PedidoRegistrado',
+     'ConfiguracionDeComponentes'
      
 )
 

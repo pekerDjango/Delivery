@@ -51,7 +51,7 @@ class TelefonoPersona(models.Model):
     def __unicode__(self):
         return self.numero  
     
-class Persona(models.Model):
+class Persona(Domicilio, models.Model):
     """Clase Persona
     Atributos: nombre, apellido, sexo, email, numero_documento, tipo_documento, domicilio, usuario"""
     sexo_choise= (
@@ -64,7 +64,7 @@ class Persona(models.Model):
     email = models.EmailField(max_length=50)
     tipo_documento= models.ForeignKey(TipoDocumento)
     numero_documento = models.IntegerField(max_length=100)
-    domicilio = models.ForeignKey(Domicilio)
+#    domicilio = models.ForeignKey(Domicilio)
     usuario = models.ForeignKey(User)
     telefono_particular = models.ForeignKey(TelefonoPersona, related_name ="telefono_Particular")
     telefono_domicilio = models.ForeignKey(TelefonoPersona, related_name ="telefono_Domicilio")
@@ -91,12 +91,12 @@ class CalificacionServicio(models.Model):
     def __unicode__(self):
         return self.nombre
     
-class Sucursal(models.Model):
+class Sucursal(Domicilio, models.Model):
     """ Clase Sucursal
     Atributos: codigo, nombre, domicilio, calificacion_servicio, imagen"""
     codigo = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100) 
-    domicilio = models.ForeignKey(Domicilio)
+#    domicilio = models.ForeignKey(Domicilio)
     calificacion_servicio = models.ForeignKey(CalificacionServicio)
     imagen = models.ImageField(upload_to='/imagenes', verbose_name='Imágen')
     
