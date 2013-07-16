@@ -15,7 +15,7 @@ class TipoDocumento(models.Model):
 class Barrio(models.Model):
     """Clase Barrio
     Atributo: nombre"""
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=50, unique=True)
     
     def __unicode__(self):
         return self.nombre
@@ -23,25 +23,12 @@ class Barrio(models.Model):
 class Localidad(models.Model):
     """Clase Localidad
     Atributos: nombre, barrio"""
-    nombre = models.CharField(max_length=100)
-    barrio = models.ForeignKey(Barrio)
+    nombre = models.CharField(max_length=100, unique=True)
+    barrio = models.ManyToManyField(Barrio)    
     
     def __unicode__(self):
         return self.nombre
-    
-class Domicilio(models.Model):
-    """Clase Domicilio
-    Atributos: direccion, numero, piso, depto, piso, codigo postal, barrio"""
-    direccion = models.CharField(max_length=250, verbose_name='Dirección')
-    numero = models.IntegerField(verbose_name='Número')
-    piso = models.IntegerField()
-    depto = models.CharField(max_length=50)
-    codigo_postal = models.CharField(max_length=100)
-    barrio = models.ForeignKey(Barrio)
-    
-    def __unicode__(self):
-        return self.direccion
-    
+       
 class TelefonoPersona(models.Model):
     """ Clase TelefonoPersona
     Atributos: numero, descripcion(Ej:casa,trabajo,privado)"""
@@ -51,7 +38,7 @@ class TelefonoPersona(models.Model):
     def __unicode__(self):
         return self.numero  
     
-class Persona(Domicilio, models.Model):
+class Persona(models.Model):
     """Clase Persona
     Atributos: nombre, apellido, sexo, email, numero_documento, tipo_documento, domicilio, usuario"""
     sexo_choise= (
@@ -64,15 +51,20 @@ class Persona(Domicilio, models.Model):
     email = models.EmailField(max_length=50)
     tipo_documento= models.ForeignKey(TipoDocumento)
     numero_documento = models.IntegerField(max_length=100)
-#    domicilio = models.ForeignKey(Domicilio)
+    direccion = models.CharField(max_length=250, verbose_name='Dirección')
+    numero_direccion = models.IntegerField(verbose_name='Número')
+    piso = models.IntegerField()
+    depto = models.CharField(max_length=50)
+    codigo_postal = models.CharField(max_length=100)
+    localidad = models.ForeignKey(Localidad)
+    barrio = models.ForeignKey(Barrio)
     usuario = models.ForeignKey(User)
     telefono_particular = models.ForeignKey(TelefonoPersona, related_name ="telefono_Particular")
     telefono_domicilio = models.ForeignKey(TelefonoPersona, related_name ="telefono_Domicilio")
     
     def __unicode__(self):
-        return self.nombre + self.apellido
-    
-  
+        return self.nombre + self.apellido  
+
 class Turno(models.Model):
     """Clase Turno
     Atributos: codigo, descripcion"""
@@ -91,12 +83,17 @@ class CalificacionServicio(models.Model):
     def __unicode__(self):
         return self.nombre
     
-class Sucursal(Domicilio, models.Model):
+class Sucursal(models.Model):
     """ Clase Sucursal
     Atributos: codigo, nombre, domicilio, calificacion_servicio, imagen"""
     codigo = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100) 
-#    domicilio = models.ForeignKey(Domicilio)
+    direccion = models.CharField(max_length=250, verbose_name='Dirección')
+    numero_direccion = models.IntegerField(verbose_name='Número')
+    piso = models.IntegerField()
+    depto = models.CharField(max_length=50)
+    codigo_postal = models.CharField(max_length=100)
+    barrio = models.ForeignKey(Barrio)
     calificacion_servicio = models.ForeignKey(CalificacionServicio)
     imagen = models.ImageField(upload_to='/imagenes', verbose_name='Imágen')
     
@@ -117,8 +114,7 @@ class Empleado(Persona, models.Model):
     Atributos: legajo, turno, sucursal"""
     legajo = models.IntegerField(primary_key=True, unique=True)
     turno = models.ForeignKey(Turno)
-    sucursal = models.ForeignKey(Sucursal)
-    telefono = models.ForeignKey(TelefonoPersona)
+    sucursal = models.ForeignKey(Sucursal)  
     
     def __unicode__(self):
         return self.legajo
