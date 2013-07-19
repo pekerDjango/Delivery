@@ -28,6 +28,15 @@ class Localidad(models.Model):
     
     def __unicode__(self):
         return self.nombre
+    
+class Provincia(models.Model):
+    """Clase Provincia
+    Atributos: nombre, localidad"""
+    nombre = models.CharField(max_length=100, unique=True)
+    localidad = models.ManyToManyField(Localidad)
+      
+    def __unicode__(self):
+        return self.nombre
        
 class TelefonoPersona(models.Model):
     """ Clase TelefonoPersona
@@ -56,6 +65,7 @@ class Persona(models.Model):
     piso = models.IntegerField()
     depto = models.CharField(max_length=50)
     codigo_postal = models.CharField(max_length=100)
+    provincia = models.ForeignKey(Provincia)
     localidad = models.ForeignKey(Localidad)
     barrio = models.ForeignKey(Barrio)
     usuario = models.ForeignKey(User)
@@ -63,7 +73,9 @@ class Persona(models.Model):
     telefono_domicilio = models.ForeignKey(TelefonoPersona, related_name ="telefono_Domicilio")
     
     def __unicode__(self):
-        return self.nombre + self.apellido  
+        return self.nombre + self.apellido 
+    
+                 
 
 class Turno(models.Model):
     """Clase Turno
