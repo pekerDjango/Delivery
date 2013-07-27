@@ -58,7 +58,7 @@ class Persona(models.Model):
     apellido = models.CharField(max_length=100)
     sexo =  models.CharField(max_length=1, choices=sexo_choise)
     email = models.EmailField(max_length=50)
-    tipo_documento= models.ForeignKey(TipoDocumento)
+    tipo_documento= models.OneToOneField(TipoDocumento)
     numero_documento = models.IntegerField(max_length=100)
     direccion = models.CharField(max_length=250, verbose_name='Dirección')
     numero_direccion = models.IntegerField(verbose_name='Número')
@@ -68,7 +68,7 @@ class Persona(models.Model):
     provincia = models.ForeignKey(Provincia)
     localidad = models.ForeignKey(Localidad)
     barrio = models.ForeignKey(Barrio)
-    usuario = models.ForeignKey(User)
+    usuario = models.OneToOneField(User)
     telefono_particular = models.ForeignKey(TelefonoPersona, related_name ="telefono_Particular")
     telefono_domicilio = models.ForeignKey(TelefonoPersona, related_name ="telefono_Domicilio")
     
@@ -125,7 +125,7 @@ class Empleado(Persona, models.Model):
     """Clase Empleado hereda los atributos de Persona
     Atributos: legajo, turno, sucursal"""
     legajo = models.IntegerField(primary_key=True, unique=True)
-    turno = models.ForeignKey(Turno)
+    turno = models.OneToOneField(Turno)
     sucursal = models.ForeignKey(Sucursal)  
     
     def __unicode__(self):
