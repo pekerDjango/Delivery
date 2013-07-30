@@ -84,7 +84,7 @@ class Turno(models.Model):
     descripcion = models.CharField(max_length=100)
     
     def __unicode__(self):
-        return self.codigo
+        return self.descripcion
     
 class CalificacionServicio(models.Model):
     """Clase Calificacion Servicio
@@ -106,7 +106,7 @@ class Sucursal(models.Model):
     depto = models.CharField(max_length=50)
     codigo_postal = models.CharField(max_length=100)
     barrio = models.ForeignKey(Barrio)
-    calificacion_servicio = models.ForeignKey(CalificacionServicio)
+    calificacion_servicio = models.OneToOneField(CalificacionServicio)
     imagen = models.ImageField(upload_to='/imagenes', verbose_name='Imágen')
     
     def __unicode__(self):
