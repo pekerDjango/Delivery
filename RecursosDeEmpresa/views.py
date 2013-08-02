@@ -22,4 +22,4 @@ def tipoDocumento_view(request, pagina):
 def indexAdmin_view(request):  
     mensaje = "Aquí realice su administración"
     ctx = {'msg':mensaje}
-    return render_to_response('about.html',ctx,context_instance=RequestContext(request))
+    return render_to_response('indexAdmin.html',ctx,context_instance=RequestContext(request))
