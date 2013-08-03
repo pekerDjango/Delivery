@@ -1,0 +1,57 @@
+{% extends 'baseAdmin.html' %}
+{% block title %} Lista de Tipo Documento {% endblock %}
+{%block content %}
+<h3>Empleados</h3>
+
+<br>
+{% if empleados %}
+    <table class="table table-hover">
+        <thead>
+                <tr>
+                  <th>Legajo</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Documento</th>                  
+                </tr>
+        </thead>
+    {% for e in empleados %}
+        <tbody>
+            <tr>
+                <td>{{ e.legajo }}</td>
+                <td>{{ e.nombre}}</td>
+                <td>{{e.apellido}}</td> 
+                <td>{{e.numero_documento}}</td>            
+                <td><a class="btn" href="#"><i class="icon-search"></i>   Ver</a></td>
+                <td><a class="btn" href="#"><i class="icon-shopping-cart"></i> Comprar</a></td>
+                <!--{% if user.is_authenticated and user.is_staff %}
+                    <td><a class="btn" href="/edit/producto/{{p.id}}/"><i class="icon-pencil"></i>  Editar </a></td>
+                {% endif %} -->         
+            </tr>
+        </tbody>
+    {% endfor %}
+    </table>
+    
+{% else %}
+    <h2>No existen empleados activos( </h2>
+{% endif %}
+<br>
+{% if empleados %}
+<div class="pagination">
+    <ul>
+        <li><a href="recursosDeEmpresa/empleados/page/1"> << </a></li>
+    {% if empleados.has_previous %}
+        <li><a href="recursosDeEmpresa/empleados/page/{{empleados.previous_page_number }}/"> Prev </a></li>
+    {% else %}
+        <li><a href="#"> Prev </a></li>
+    {% endif %}
+    {% if empleados.has_next %}
+        <li><a href="recursosDeEmpresa/empleados/page/{{empleados.next_page_number }}/"> Next </a></li>
+    {% else %}
+        <li><a href="#"> Next </a></li>
+    {% endif %}
+        <li><a href="recursosDeEmpresa/empleados/page/{{empleados.paginator.num_pages }} "> >> </a><li>
+    </ul>
+    </div>
+    <h4> Página {{ empleados.number }} de {{ empleados.paginator.num_pages }}</h4> 
+{% endif %}
+{% endblock %}

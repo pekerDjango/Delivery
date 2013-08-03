@@ -1,13 +1,13 @@
 #encoding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from RecursosDeEmpresa.models import TipoDocumento
+from RecursosDeEmpresa.models import Empleado,TipoDocumento
 # Paginacion en Django
 from django.core.paginator import Paginator,EmptyPage,InvalidPage
 
 def tipoDocumento_view(request, pagina):
-    lista_tipo = TipoDocumento.objects.all() # Select * from ventas_productos where status = True
-    paginator = Paginator(lista_tipo,3) # Cuantos productos quieres por pagina? = 3
+    lista_tipo = TipoDocumento.objects.all() 
+    paginator = Paginator(lista_tipo,3) 
     try:
         page = int(pagina)
     except:
@@ -17,9 +17,23 @@ def tipoDocumento_view(request, pagina):
     except (EmptyPage,InvalidPage):
         tipos = paginator.page(paginator.num_pages)
     ctx = {'tipos':tipos}
-    return render_to_response('RecursosDeEmpresa/tipoDocumento.html',ctx,context_instance=RequestContext(request))# Create your views here.
+    return render_to_response('RecursosDeEmpresa/tipoDocumento.html',ctx,context_instance=RequestContext(request))
 
 def indexAdmin_view(request):  
     mensaje = "Aquí realice su administración"
     ctx = {'msg':mensaje}
     return render_to_response('indexAdmin.html',ctx,context_instance=RequestContext(request))
+
+def empleado_view(request, pagina):
+    lista_empleado = Empleado.objects.all() 
+    paginator = Paginator(lista_empleado,3) 
+    try:
+        page = int(pagina)
+    except:
+        page = 1
+    try:
+        empleados = paginator.page(page)
+    except (EmptyPage,InvalidPage):
+        empleados = paginator.page(paginator.num_pages)
+    ctx = {'empleados':empleados}
+    return render_to_response('RecursosDeEmpresa/empleados.html',ctx,context_instance=RequestContext(request))

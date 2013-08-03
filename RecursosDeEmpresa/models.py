@@ -107,7 +107,7 @@ class Sucursal(models.Model):
     codigo_postal = models.CharField(max_length=100)
     barrio = models.ForeignKey(Barrio)
     calificacion_servicio = models.OneToOneField(CalificacionServicio)
-    imagen = models.ImageField(upload_to='/imagenes', verbose_name='Imágen')
+    imagen = models.ImageField(upload_to='imagenes', verbose_name='Imágen')
     
     def __unicode__(self):
         return self.nombre
@@ -129,6 +129,6 @@ class Empleado(Persona, models.Model):
     sucursal = models.ForeignKey(Sucursal)  
     
     def __unicode__(self):
-        return self.legajo
+        return str(self.legajo)
     
     
