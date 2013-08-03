@@ -2,6 +2,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from RecursosDeEmpresa.models import Empleado,TipoDocumento
+from RecursosDeEmpresa.forms import EmpleadoForm
 # Paginacion en Django
 from django.core.paginator import Paginator,EmptyPage,InvalidPage
 
@@ -26,6 +27,14 @@ def indexAdmin_view(request):
 
 def empleado_view(request, pagina):
     lista_empleado = Empleado.objects.all() 
+    if request.method=='POST':
+        formulario = EmpleadoForm(request.POST)
+        if formulario.is_valid():
+            buscar = formulario.cleaned_data['Buscar']
+            if not buscar=='':
+                lista_empleado = Empleado.objects.filter(nombre=buscar)
+    else:
+        formulario = EmpleadoForm()
     paginator = Paginator(lista_empleado,3) 
     try:
         page = int(pagina)
@@ -35,5 +44,8 @@ def empleado_view(request, pagina):
         empleados = paginator.page(page)
     except (EmptyPage,InvalidPage):
         empleados = paginator.page(paginator.num_pages)
-    ctx = {'empleados':empleados}
+    ctx = {'form':formulario,'empleados':empleados}
     return render_to_response('RecursosDeEmpresa/empleados.html',ctx,context_instance=RequestContext(request))
+
+
+    
