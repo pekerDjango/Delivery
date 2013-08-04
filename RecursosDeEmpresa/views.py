@@ -5,6 +5,7 @@ from RecursosDeEmpresa.models import Empleado,TipoDocumento
 from RecursosDeEmpresa.forms import EmpleadoForm
 # Paginacion en Django
 from django.core.paginator import Paginator,EmptyPage,InvalidPage
+from django.db.models import Q
 
 def tipoDocumento_view(request, pagina):
     lista_tipo = TipoDocumento.objects.all() 
@@ -32,7 +33,7 @@ def empleado_view(request, pagina):
         if formulario.is_valid():
             buscar = formulario.cleaned_data['Buscar']
             if not buscar=='':
-                lista_empleado = Empleado.objects.filter(nombre=buscar)
+                lista_empleado = Empleado.objects.filter(Q(nombre__contains=buscar)| Q(legajo__contains=buscar) | Q(apellido__contains=buscar))
     else:
         formulario = EmpleadoForm()
     paginator = Paginator(lista_empleado,3) 

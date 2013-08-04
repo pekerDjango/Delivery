@@ -6,8 +6,8 @@
 <br>
 <form action='.' method='post' enctype="multipart/form-data">
         {% csrf_token %}
-        {{form.as_p}}
-    <button type="submit" class="btn btn-small btn-primary">Buscar</button>
+        {{form.as_table}}
+    <button type="submit"  class="btn btn-small btn-primary">Buscar</button>
 </form> 
   <br/>
 {% if empleados %}
