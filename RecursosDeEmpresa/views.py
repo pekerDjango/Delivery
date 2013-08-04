@@ -2,10 +2,11 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from RecursosDeEmpresa.models import Empleado,TipoDocumento
-from RecursosDeEmpresa.forms import EmpleadoForm
+from RecursosDeEmpresa.forms import EmpleadoForm, addEmpleadoForm
 # Paginacion en Django
 from django.core.paginator import Paginator,EmptyPage,InvalidPage
-from django.db.models import Q
+from django.db.models import Q 
+from django.http import HttpResponseRedirect
 
 def tipoDocumento_view(request, pagina):
     lista_tipo = TipoDocumento.objects.all() 
@@ -48,5 +49,17 @@ def empleado_view(request, pagina):
     ctx = {'form':formulario,'empleados':empleados}
     return render_to_response('RecursosDeEmpresa/empleados.html',ctx,context_instance=RequestContext(request))
 
-
-    
+def add_empleado_view(request):
+    info = "iniciado"
+    if request.method == "POST":
+        form = addEmpleadoForm(request.POST,request.FILES)
+        if form.is_valid():
+            add = form.save(commit=False)
+            add.status = True
+            add.save() # Guardamos la informacion                  
+            info = "Guardado satisfactoriamente"
+            return HttpResponseRedirect('/recursosDeEmpresa/empleados/page/1/')
+    else:
+        form = addEmpleadoForm()
+    ctx = {'form':form,'informacion':info}
+    return render_to_response('RecursosDeEmpresa/addEmpleado.html',ctx,context_instance=RequestContext(request)) 

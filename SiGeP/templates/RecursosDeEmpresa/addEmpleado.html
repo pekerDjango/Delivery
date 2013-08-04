@@ -1,0 +1,14 @@
+{% extends 'baseAdmin.html' %}
+{% block title %} Agregar Producto {% endblock %}
+{% block content %}
+	<form action="." method='post' enctype="multipart/form-data">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit" class="btn btn-small btn-primary">Guardar</button>
+		<button type="reset" class="btn btn-small btn-primary">Limpiar</button>
+	</form>
+<br>
+	{{ informacion }}
+<br>
+<a href="/recursosDeEmpresa/empleados/page/1/">Regresar a la lista de Productos </a>
+{% endblock %}

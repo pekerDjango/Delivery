@@ -60,4 +60,7 @@
     </div>
     <h4> Página {{ empleados.number }} de {{ empleados.paginator.num_pages }}</h4> 
 {% endif %}
+
+<a href="{% url "vista_agregar_empleado" %}" class="btn"><i class="icon-plus"></i> Nuevo</a><br>
+
 {% endblock %}
