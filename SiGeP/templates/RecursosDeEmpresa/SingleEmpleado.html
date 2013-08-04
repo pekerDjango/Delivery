@@ -1,0 +1,28 @@
+{% extends 'baseAdmin.html' %}
+{% block title %} Empleado {{empleado.nombre}} {% endblock %}
+{%block content %}
+<p>Legajo:{{ empleado.legajo }}</p> 
+<p>Nombre:{{ empleado.nombre }}</p> 
+
+<p>Apellido: {{ empleado.apellido }}</p>
+<p>Sexo: {{ empleado.sexo}}</p>
+<p>Email:{{ empleado.email }}</p> 
+<p>Tipo Documento:{{ empleado.tipo_documento }}</p>
+<p>Numero Documento:{{ empleado.numero_documento}}</p>
+<p>Direccion:{{ empleado.direccion }}</p>
+<p>Nro:{{ empleado.numero_direccion }}</p>
+<p>Piso:{{ empleado.piso }}</p>
+<p>Depto:{{ empleado.depto }}</p>
+<p>Codigo Postal{{ empleado.codigo_postal }}</p>
+<p>Provincia:{{ empleado.provincia }}</p>
+ <p>Localidad:{{ empleado.localidad }}</p>
+ <p>Barrio:{{ empleado.barrio }}</p>
+ <p>Usuerio:{{ empleado.usuario }}</p>
+<p>Telefono Particular:{{ empleado.telefono_particular }}</p>
+<p>Telefono Domicilio:{{ empleado.telefono_domicilio }}</p>
+ <p>Turno:{{ empleado.turno }}</p>
+ <p>Sucursal:{{ empleado.sucursal }}</p>
+
+
+<a class="btn btn-primary" href="javascript:window.history.go(-1);"> Regresar a la Lista </a>
+{% endblock %}

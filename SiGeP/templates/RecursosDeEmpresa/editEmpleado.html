@@ -1,14 +1,16 @@
 {% extends 'baseAdmin.html' %}
-{% block title %} Agregar Empleado{% endblock %}
+{% block title %} Modificar Empleado{% endblock %}
 {% block content %}
+<div class="row">
+<div class="span6">
 	<form action="." method='post' enctype="multipart/form-data">
 		{% csrf_token %}
-		{{ form.as_p }}
+		{{form.as_p}}
 		<button type="submit" class="btn btn-small btn-primary">Guardar</button>
 		<button type="reset" class="btn btn-small btn-primary">Limpiar</button>
 	</form>
-<br>
-	{{ informacion }}
-<br>
-<a href="/recursosDeEmpresa/empleados/page/1/">Regresar a la lista de Productos </a>
+	<br>
+	<a href="/recursosDeEmpresa/empleados/page/1/">Regresar a la lista de Productos </a>
+</div>
+</div>
 {% endblock %}

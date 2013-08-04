@@ -17,7 +17,8 @@
                   <th>Legajo</th>
                   <th>Nombre</th>
                   <th>Apellido</th>
-                  <th>Documento</th>                  
+                  <th>Documento</th>  
+                  <th>Acciones</th>                
                 </tr>
         </thead>
     {% for e in empleados %}
@@ -27,11 +28,11 @@
                 <td>{{ e.nombre}}</td>
                 <td>{{e.apellido}}</td> 
                 <td>{{e.numero_documento}}</td>            
-                <td><a class="btn" href="#"><i class="icon-search"></i>   Ver</a></td>
-                <td><a class="btn" href="#"><i class="icon-shopping-cart"></i> Comprar</a></td>
-                <!--{% if user.is_authenticated and user.is_staff %}
-                    <td><a class="btn" href="/edit/producto/{{p.id}}/"><i class="icon-pencil"></i>  Editar </a></td>
-                {% endif %} -->         
+                <td><a class="btn" href="/empleado/{{e.legajo}}/"><i class="icon-search"></i>   Ver</a></td>
+                <!--<td><a class="btn" href="#"><i class="icon-shopping-cart"></i> Comprar</a></td>-->
+                {% if user.is_authenticated and user.is_staff %}
+                    <td><a class="btn" href="/edit/empleado/{{e.legajo}}/"><i class="icon-pencil"></i>  Editar </a></td>
+                {% endif %}         
             </tr>
         </tbody>
     {% endfor %}

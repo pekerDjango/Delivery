@@ -34,7 +34,7 @@ def empleado_view(request, pagina):
         if formulario.is_valid():
             buscar = formulario.cleaned_data['Buscar']
             if not buscar=='':
-                lista_empleado = Empleado.objects.filter(Q(nombre__contains=buscar)| Q(legajo__contains=buscar) | Q(apellido__contains=buscar))
+                lista_empleado = Empleado.objects.filter(Q(nombre__contains=buscar)| Q(legajo__contains=buscar) | Q(apellido__contains=buscar) | Q(numero_documento__contains=buscar))
     else:
         formulario = EmpleadoForm()
     paginator = Paginator(lista_empleado,3) 
@@ -63,3 +63,24 @@ def add_empleado_view(request):
         form = addEmpleadoForm()
     ctx = {'form':form,'informacion':info}
     return render_to_response('RecursosDeEmpresa/addEmpleado.html',ctx,context_instance=RequestContext(request)) 
+
+def edit_empleado_view(request,id_emp):
+    info = "iniciado"
+    emp = Empleado.objects.get(pk=id_emp)
+    if request.method == "POST":
+        form = addEmpleadoForm(request.POST,request.FILES,instance=emp)
+        if form.is_valid():
+            edit_prod = form.save(commit=False)            
+            edit_prod.status = True
+            edit_prod.save() # Guardamos el objeto
+            info = "Correcto"
+            return HttpResponseRedirect('/recursosDeEmpresa/empleados/page/1/')
+    else:
+        form = addEmpleadoForm(instance=emp)
+    ctx = {'form':form,'informacion':info}
+    return render_to_response('RecursosDeEmpresa/editEmpleado.html',ctx,context_instance=RequestContext(request)) 
+
+def singleEmpleado_view(request,id_emp):
+    emp = Empleado.objects.get(pk=id_emp)    
+    ctx = {'empleado':emp}
+    return render_to_response('RecursosDeEmpresa/singleEmpleado.html',ctx,context_instance=RequestContext(request))
