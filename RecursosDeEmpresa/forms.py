@@ -7,4 +7,5 @@ class EmpleadoForm(forms.Form):
 class addEmpleadoForm(forms.ModelForm):
     class Meta:
         model = Empleado
+        exclude = {'legajo',}
   

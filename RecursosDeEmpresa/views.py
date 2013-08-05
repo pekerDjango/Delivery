@@ -58,7 +58,7 @@ def add_empleado_view(request):
             add.status = True
             add.save() # Guardamos la informacion                  
             info = "Guardado satisfactoriamente"
-            return HttpResponseRedirect('/recursosDeEmpresa/empleados/page/1/')
+            return HttpResponseRedirect('/empleado/%s'%add.legajo)
     else:
         form = addEmpleadoForm()
     ctx = {'form':form,'informacion':info}
@@ -70,11 +70,11 @@ def edit_empleado_view(request,id_emp):
     if request.method == "POST":
         form = addEmpleadoForm(request.POST,request.FILES,instance=emp)
         if form.is_valid():
-            edit_prod = form.save(commit=False)            
-            edit_prod.status = True
-            edit_prod.save() # Guardamos el objeto
+            edit_emp = form.save(commit=False)            
+            edit_emp.status = True
+            edit_emp.save() # Guardamos el objeto
             info = "Correcto"
-            return HttpResponseRedirect('/recursosDeEmpresa/empleados/page/1/')
+            return HttpResponseRedirect('/empleado/%s/'%edit_emp.legajo)
     else:
         form = addEmpleadoForm(instance=emp)
     ctx = {'form':form,'informacion':info}
