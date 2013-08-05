@@ -1,0 +1,17 @@
+{% extends 'baseAdmin.html' %}
+{% block title %} Eliminar Empleado{% endblock %}
+{% block content %}
+<div class="row">
+<div class="span6">
+    <form action="." method='post' enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+        <p>Legajo: {{empleado.legajo}}</p>
+        <p>Nombre: {{empleado.nombre}} {{empleado.apellido}}</p>
+        <button type="submit" class="btn btn-small  btn-danger">Esta seguro que desea eliminar</button>        
+    </form>
+    <br>
+    <a  class="btn btn-small" href="/recursosDeEmpresa/empleados/page/1/">Regresar a la lista de Empleados </a>
+</div>
+</div>
+{% endblock %}

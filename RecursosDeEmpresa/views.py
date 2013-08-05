@@ -1,8 +1,8 @@
 #encoding:utf-8
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response,  get_object_or_404 
 from django.template import RequestContext
 from RecursosDeEmpresa.models import Empleado,TipoDocumento
-from RecursosDeEmpresa.forms import EmpleadoForm, addEmpleadoForm
+from RecursosDeEmpresa.forms import EmpleadoForm, addEmpleadoForm, DeleteEmpleadoForm
 # Paginacion en Django
 from django.core.paginator import Paginator,EmptyPage,InvalidPage
 from django.db.models import Q 
@@ -58,7 +58,7 @@ def add_empleado_view(request):
             add.status = True
             add.save() # Guardamos la informacion                  
             info = "Guardado satisfactoriamente"
-            return HttpResponseRedirect('/empleado/%s'%add.legajo)
+            return HttpResponseRedirect('/empleado/%s'%add.id)
     else:
         form = addEmpleadoForm()
     ctx = {'form':form,'informacion':info}
@@ -84,3 +84,19 @@ def singleEmpleado_view(request,id_emp):
     emp = Empleado.objects.get(pk=id_emp)    
     ctx = {'empleado':emp}
     return render_to_response('RecursosDeEmpresa/singleEmpleado.html',ctx,context_instance=RequestContext(request))
+
+def delete_empleado_view(request, id_emp):
+    new_to_delete = get_object_or_404(Empleado, legajo=id_emp)
+    #+some code to check if this object belongs to the logged in user
+    if request.method == 'POST':
+        form = DeleteEmpleadoForm(request.POST, instance=new_to_delete)
+        if form.is_valid(): # checks CSRF
+            new_to_delete.delete()
+            return HttpResponseRedirect("/recursosDeEmpresa/empleados/page/1/") # wherever to go after deleting
+    else:
+        form = DeleteEmpleadoForm(instance=new_to_delete)
+    ctx = {'form':form, 'empleado':new_to_delete}
+    return render_to_response('RecursosDeEmpresa/deleteEmpleado.html',ctx,context_instance=RequestContext(request)) 
+
+
+

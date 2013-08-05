@@ -8,4 +8,9 @@ class addEmpleadoForm(forms.ModelForm):
     class Meta:
         model = Empleado
         exclude = {'legajo',}
+        
+class DeleteEmpleadoForm(forms.ModelForm):
+    class Meta:
+        model = Empleado
+        fields = []
   
