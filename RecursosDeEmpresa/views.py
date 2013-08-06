@@ -1,32 +1,20 @@
 #encoding:utf-8
 from django.shortcuts import render_to_response,  get_object_or_404 
 from django.template import RequestContext
-from RecursosDeEmpresa.models import Empleado,TipoDocumento
+from RecursosDeEmpresa.models import Empleado
 from RecursosDeEmpresa.forms import EmpleadoForm, addEmpleadoForm, DeleteEmpleadoForm
 # Paginacion en Django
 from django.core.paginator import Paginator,EmptyPage,InvalidPage
 from django.db.models import Q 
 from django.http import HttpResponseRedirect
-
-def tipoDocumento_view(request, pagina):
-    lista_tipo = TipoDocumento.objects.all() 
-    paginator = Paginator(lista_tipo,3) 
-    try:
-        page = int(pagina)
-    except:
-        page = 1
-    try:
-        tipos = paginator.page(page)
-    except (EmptyPage,InvalidPage):
-        tipos = paginator.page(paginator.num_pages)
-    ctx = {'tipos':tipos}
-    return render_to_response('RecursosDeEmpresa/tipoDocumento.html',ctx,context_instance=RequestContext(request))
+from django.contrib.auth.decorators import login_required
 
 def indexAdmin_view(request):  
     mensaje = "Aquí realice su administración"
     ctx = {'msg':mensaje}
     return render_to_response('indexAdmin.html',ctx,context_instance=RequestContext(request))
 
+@login_required(login_url='/login')
 def empleado_view(request, pagina):
     lista_empleado = Empleado.objects.all() 
     if request.method=='POST':
