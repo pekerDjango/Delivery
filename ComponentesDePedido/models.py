@@ -106,7 +106,7 @@ class Menu (models.Model):
 
 class DetalleMenu (models.Model):
     cantidad = models.IntegerField ()
-    producto = models.OneToOneField (Producto)
+    producto = models.ForeignKey (Producto)
     menu = models.ForeignKey(Menu)
     
     def __unicode__(self):
@@ -142,6 +142,6 @@ class Promocion (models.Model):
     
 class DetallePromocion (models.Model):
     promocion = models.ForeignKey(Promocion)
-    producto = models.OneToOneField(Producto)
-    menu = models.OneToOneField(Menu)
+    producto = models.ForeignKey(Producto)
+    menu = models.ForeignKey(Menu)
     cantidad = models.IntegerField ()
