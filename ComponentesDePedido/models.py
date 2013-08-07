@@ -12,12 +12,22 @@ class TipoIngrediente(models.Model):
     def __unicode__(self):
         return self.nombreTipoIngrediente
     
+class Version(models.Model):
+    """Clase Version
+    Atributos: Clasificacion, codigo, nombre. """
+    codigo = models.IntegerField(primary_key = True)
+    nombre = models.CharField(max_length = 50)
+    
+    def __unicode__(self):
+        return self.nombre
+    
+    
 class Clasificacion(models.Model):
     """Clase clasificacion: 
     Atributos: Nombre, Descripcion """
     nombre = models.CharField(max_length = 50)
     descripcion = models.CharField(max_length = 50)
-    
+    version = models.ForeignKey(Version)
     def __unicode__(self):
         return self.nombre
     
@@ -40,14 +50,7 @@ class TipoProducto(models.Model):
         return self.nombre
 
     
-class Version(models.Model):
-    """Clase Version
-    Atributos: Clasificacion, codigo, nombre. """
-    codigo = models.IntegerField(primary_key = True)
-    nombre = models.CharField(max_length = 50)
-    
-    def __unicode__(self):
-        return self.nombre
+
     
 class Ingrediente(models.Model):
     
@@ -61,15 +64,8 @@ class Ingrediente(models.Model):
     
     def __unicode__(self):
         return self.nombre
-    
-class DetalleIngredientes(models.Model):
-    ingrediente = models.ForeignKey(Ingrediente)
-    tipoIngrediente = models.ForeignKey(TipoIngrediente)
-    cantidad = models.IntegerField()
-    
-    def __unicode__(self):
-        return self.ingrediente + self.cantidad
-    
+
+
 class Producto (models.Model):
     
     codigo = models.IntegerField (primary_key = True)
@@ -83,15 +79,27 @@ class Producto (models.Model):
         return self.nombre
 
     
+class DetalleIngredientes(models.Model):
+   
+    tipoIngrediente = models.ForeignKey(TipoIngrediente, verbose_name = "Tipo de Ingrediente")
+    ingrediente = models.ForeignKey(Ingrediente)
+    cantidad = models.IntegerField()
+    producto = models.ForeignKey(Producto)
+    def __unicode__(self):
+        return str(self.cantidad)
+    
+
+
+    
 class DetalleVersiones(models.Model):
     """Clase DetalleVersiones
     Atributos: Clasificacion, Imagen de producto, Precio """
     clasificacion = models.ForeignKey(Clasificacion)
-    imagenProducto = models.ImageField(upload_to='/imagenes', verbose_name='Im�gen Producto')
+    imagenProducto = models.ImageField(upload_to='imagenes', verbose_name='Im�gen Producto')
     precio = models.DecimalField(max_digits = 3, decimal_places = 2)
     producto = models.ForeignKey(Producto)
     def __unicode__(self):
-        return self.clasificacion 
+        return str(self.precio) 
     
     
 class Menu (models.Model):
@@ -110,7 +118,7 @@ class DetalleMenu (models.Model):
     menu = models.ForeignKey(Menu)
     
     def __unicode__(self):
-        return self.menu + self.producto
+        return str(self.cantidad)
     
     
 class Frecuencia (models.Model):
@@ -126,7 +134,7 @@ class Programacion (models.Model):
     horaHasta = models.TimeField()
     
     def __unicode__(self):
-        return self.fechaDesde + self.fechaHasta
+        return str(self.fechaDesde) + str(self.fechaHasta)
     
 class Promocion (models.Model):
     codigo = codigo = models.IntegerField ( primary_key = True)
