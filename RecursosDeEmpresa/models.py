@@ -68,9 +68,9 @@ class Persona(models.Model):
     provincia = models.ForeignKey(Provincia)
     localidad = models.ForeignKey(Localidad)
     barrio = models.ForeignKey(Barrio)
-    usuario = models.OneToOneField(User)
-    telefono_particular = models.ForeignKey(TelefonoPersona, related_name ="telefono_Particular")
-    telefono_domicilio = models.ForeignKey(TelefonoPersona, related_name ="telefono_Domicilio")
+#    usuario = models.OneToOneField(User)
+    telefono_particular = models.CharField(max_length=100)
+    telefono_domicilio =models.CharField(max_length=100)
     
     def __unicode__(self):
         return self.nombre + self.apellido 
