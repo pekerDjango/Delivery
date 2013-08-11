@@ -18,9 +18,17 @@ admin.site.register(DetalleVersiones)
 
 class DetalleVersionInLine(admin.TabularInline):
     model = DetalleVersiones
+    def get_max_num(self, request, obj=None, **kwargs):
+        max_num = 1
+        return max_num
+    
+class DetalleIngredientesInLine(admin.TabularInline):
+    model = DetalleIngredientes
+    verbose_name_plural = "Detalle de Ingredientes"
+    
 
 class ProductoAdmin(admin.ModelAdmin):
-    inlines = [DetalleVersionInLine, ]
+    inlines = [DetalleVersionInLine, DetalleIngredientesInLine]
 
 admin.site.register(TipoIngrediente)
 admin.site.register(Clasificacion)

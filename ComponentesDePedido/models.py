@@ -100,7 +100,8 @@ class DetalleVersiones(models.Model):
     producto = models.ForeignKey(Producto)
     def __unicode__(self):
         return str(self.precio) 
-    
+    class Meta:
+        verbose_name_plural = "Detalle de versiones"
     
 class Menu (models.Model):
     codigo = models.IntegerField (primary_key = True)
