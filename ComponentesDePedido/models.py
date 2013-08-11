@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 class TipoIngrediente(models.Model):
     """Clase Tipo Ingrediente
     Atributos: IdTipoIngrediente, NombreIngrediente """
-    codigoTipoIngrediente = models.IntegerField(primary_key = True)
-    nombreTipoIngrediente = models.CharField(max_length = 50)
+    codigoTipoIngrediente = models.IntegerField(primary_key = True, verbose_name = "Código")
+    nombreTipoIngrediente = models.CharField(max_length = 50, verbose_name = "Nombre")
     
     def __unicode__(self):
         return self.nombreTipoIngrediente
@@ -56,11 +56,11 @@ class Ingrediente(models.Model):
     
     codigo = models.IntegerField(primary_key = True)
     nombre = models.CharField(max_length = 50)
-    precio = models.DecimalField(max_digits = 3, decimal_places = 2 )
-    stockActual = models.IntegerField()
-    stockMinimo = models.IntegerField()
-    tipoIngrediente = models.ForeignKey (TipoIngrediente)
-    unidadDeMedida = models.ForeignKey(UnidadDeMedida)
+    precio = models.DecimalField(max_digits = 5, decimal_places = 2 )
+    stockActual = models.IntegerField(verbose_name = "Stock Actual")
+    stockMinimo = models.IntegerField(verbose_name = "Stock Mínimo")
+    tipoIngrediente = models.ForeignKey (TipoIngrediente, verbose_name = "Tipo de ingrediente")
+    unidadDeMedida = models.ForeignKey(UnidadDeMedida, verbose_name = "Unidad de Medida")
     
     def __unicode__(self):
         return self.nombre
@@ -71,9 +71,9 @@ class Producto (models.Model):
     codigo = models.IntegerField (primary_key = True)
     nombre = models.CharField (max_length = 50)
     tiempoPreparacion = models.IntegerField (max_length = 10, verbose_name = "Tiempo Preparacion estimado(minutos)")
-    tipoProducto = models.ForeignKey(TipoProducto)
+    tipoProducto = models.ForeignKey(TipoProducto, verbose_name = "Tipo de Producto")
     version = models.ForeignKey(Version)
-    unidadDeMedida = models.ForeignKey (UnidadDeMedida)
+    unidadDeMedida = models.ForeignKey (UnidadDeMedida, verbose_name =  "Unidad de Medida")
     
     def __unicode__(self):
         return self.nombre
@@ -96,7 +96,7 @@ class DetalleVersiones(models.Model):
     Atributos: Clasificacion, Imagen de producto, Precio """
     clasificacion = models.ForeignKey(Clasificacion)
     imagenProducto = models.ImageField(upload_to='imagenes', verbose_name='Im�gen Producto')
-    precio = models.DecimalField(max_digits = 3, decimal_places = 2)
+    precio = models.DecimalField(max_digits = 5, decimal_places = 2)
     producto = models.ForeignKey(Producto)
     def __unicode__(self):
         return str(self.precio) 
@@ -106,7 +106,7 @@ class Menu (models.Model):
     codigo = models.IntegerField (primary_key = True)
     nombre = models.CharField (max_length = 50)
     detalle = models.CharField(max_length = 200)
-    precioVenta = models.DecimalField(max_digits = 3, decimal_places = 2)
+    precioVenta = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio de venta")
     
     def __unicode__(self):
         return self.nombre
@@ -127,11 +127,11 @@ class Frecuencia (models.Model):
     
     
 class Programacion (models.Model):
-    diaSemana = models.IntegerField ()
-    fechaDesde = models.DateTimeField()
-    fechaHasta = models.DateTimeField()
-    horaDesde = models.TimeField()
-    horaHasta = models.TimeField()
+    diaSemana = models.IntegerField (verbose_name = "Dia de la semana")
+    fechaDesde = models.DateTimeField(verbose_name = "Fecha desde")
+    fechaHasta = models.DateTimeField(verbose_name = "Fecha Hasta")
+    horaDesde = models.TimeField(verbose_name = "Hora desde")
+    horaHasta = models.TimeField(verbose_name = "Hora hasta")
     
     def __unicode__(self):
         return str(self.fechaDesde) + str(self.fechaHasta)
