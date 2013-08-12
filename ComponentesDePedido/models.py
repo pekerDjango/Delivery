@@ -1,6 +1,5 @@
 #encoding:utf-8
 from django.db import models
-from django.contrib.auth.models import User
 # Create your models here.
 
 class TipoIngrediente(models.Model):
@@ -12,24 +11,25 @@ class TipoIngrediente(models.Model):
     def __unicode__(self):
         return self.nombreTipoIngrediente
     
-class Version(models.Model):
-    """Clase Version
-    Atributos: Clasificacion, codigo, nombre. """
-    codigo = models.IntegerField(primary_key = True)
-    nombre = models.CharField(max_length = 50)
-    
-    def __unicode__(self):
-        return self.nombre
-    
-    
 class Clasificacion(models.Model):
     """Clase clasificacion: 
     Atributos: Nombre, Descripcion """
     nombre = models.CharField(max_length = 50)
     descripcion = models.CharField(max_length = 50)
-    version = models.ForeignKey(Version)
     def __unicode__(self):
         return self.nombre
+    
+class Version(models.Model):
+    """Clase Version
+    Atributos: Clasificacion, codigo, nombre. """
+    codigo = models.IntegerField(primary_key = True)
+    nombre = models.CharField(max_length = 50)
+    clasificacion = models.ManyToManyField(Clasificacion)
+    def __unicode__(self):
+        return self.nombre
+    
+    
+
     
 class UnidadDeMedida(models.Model):
     """Clase Unidad de medida:
@@ -95,7 +95,7 @@ class DetalleVersiones(models.Model):
     """Clase DetalleVersiones
     Atributos: Clasificacion, Imagen de producto, Precio """
     clasificacion = models.ForeignKey(Clasificacion)
-    imagenProducto = models.ImageField(upload_to='imagenes', verbose_name='Im�gen Producto')
+    imagenProducto = models.ImageField(upload_to='imagenes', verbose_name='Imágen Producto')
     precio = models.DecimalField(max_digits = 5, decimal_places = 2)
     producto = models.ForeignKey(Producto)
     def __unicode__(self):
@@ -140,10 +140,10 @@ class Programacion (models.Model):
 class Promocion (models.Model):
     codigo = codigo = models.IntegerField ( primary_key = True)
     nombre = models.CharField (max_length = 50)
-    imagenProducto = models.ImageField(upload_to='/imagenes', verbose_name='Im�gen Promocion')
+    imagenProducto = models.ImageField(upload_to='/imagenes', verbose_name='Imágen Promocion')
     precio = models.DecimalField(max_digits = 3, decimal_places = 2)
     stock = models.IntegerField ( )
-    tiempoPreparacion = models.IntegerField(verbose_name = 'Tiempo estimado de preparaci�n(Minutos)')
+    tiempoPreparacion = models.IntegerField(verbose_name = 'Tiempo estimado de preparación(Minutos)')
     programacion = models.ForeignKey(Programacion)
     
     def __unicode__(self):

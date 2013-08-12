@@ -1,3 +1,4 @@
+#encoding:utf-8
 from ComponentesDePedido.models import TipoIngrediente
 from ComponentesDePedido.models import Clasificacion
 from ComponentesDePedido.models import UnidadDeMedida
@@ -28,6 +29,9 @@ class DetalleIngredientesInLine(admin.StackedInline, SortableInline):
 
 class ProductoAdmin(admin.ModelAdmin):
     inlines = [DetalleVersionInLine, DetalleIngredientesInLine]
+    search_fields = ('codigo', 'nombre', 'tipoProducto')
+    
+
 
 admin.site.register(TipoIngrediente)
 admin.site.register(Clasificacion)
