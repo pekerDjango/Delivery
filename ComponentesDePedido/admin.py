@@ -17,16 +17,14 @@ from django_admin_bootstrapped.admin.models import SortableInline
 
 admin.site.register(DetalleVersiones)
 
-class DetalleVersionInLine(admin.TabularInline, SortableInline):
+class DetalleVersionInLine(admin.StackedInline, SortableInline):
     model = DetalleVersiones
-    def get_max_num(self, request, obj=None, **kwargs):
-        max_num = 1
-        return max_num
+    extra = 1
     
 class DetalleIngredientesInLine(admin.StackedInline, SortableInline):
     model = DetalleIngredientes
     verbose_name_plural = "Detalle de Ingredientes"
-    
+    extra = 1
 
 class ProductoAdmin(admin.ModelAdmin):
     inlines = [DetalleVersionInLine, DetalleIngredientesInLine]
