@@ -13,16 +13,17 @@ from ComponentesDePedido.models import Programacion
 from ComponentesDePedido.models import Promocion
 from ComponentesDePedido.models import DetallePromocion
 from django.contrib import admin
+from django_admin_bootstrapped.admin.models import SortableInline
 
 admin.site.register(DetalleVersiones)
 
-class DetalleVersionInLine(admin.TabularInline):
+class DetalleVersionInLine(admin.TabularInline, SortableInline):
     model = DetalleVersiones
     def get_max_num(self, request, obj=None, **kwargs):
         max_num = 1
         return max_num
     
-class DetalleIngredientesInLine(admin.TabularInline):
+class DetalleIngredientesInLine(admin.StackedInline, SortableInline):
     model = DetalleIngredientes
     verbose_name_plural = "Detalle de Ingredientes"
     
