@@ -10,6 +10,8 @@ class TipoIngrediente(models.Model):
     
     def __unicode__(self):
         return self.nombreTipoIngrediente
+    class Meta:
+        verbose_name_plural = "Tipos de Ingredientes"
     
 class Clasificacion(models.Model):
     """Clase clasificacion: 
@@ -18,6 +20,8 @@ class Clasificacion(models.Model):
     descripcion = models.CharField(max_length = 50)
     def __unicode__(self):
         return self.nombre
+    class Meta:
+        verbose_name_plural = "Clasificaciones"
     
 class Version(models.Model):
     """Clase Version
@@ -27,7 +31,8 @@ class Version(models.Model):
     clasificacion = models.ManyToManyField(Clasificacion)
     def __unicode__(self):
         return self.nombre
-    
+    class Meta:
+        verbose_name_plural = "Versiones"
     
 
     
@@ -39,16 +44,19 @@ class UnidadDeMedida(models.Model):
     
     def __unicode__(self):
         return self.nombre
+    class Meta:
+        verbose_name_plural = "Unidades de medida"
     
 class TipoProducto(models.Model):
     """Clase TipoProducto 
-    Atributos: C�digoTipoProducto, Nombre """
+    Atributos: CódigoTipoProducto, Nombre """
     codigo = models.IntegerField(primary_key = True)
     nombre = models.CharField(max_length = 50)
     
     def __unicode__(self):
         return self.nombre
-
+    class Meta:
+        verbose_name_plural = "Tipos de Productos"
     
 
     
@@ -87,7 +95,8 @@ class DetalleIngredientes(models.Model):
     producto = models.ForeignKey(Producto)
     def __unicode__(self):
         return str(self.cantidad)
-    
+    class Meta:
+        verbose_name_plural = "Detalle de ingredientes"
 
 
     
@@ -111,7 +120,8 @@ class Menu (models.Model):
     
     def __unicode__(self):
         return self.nombre
-    
+    class Meta:
+        verbose_name_plural = "Menu"
 
 class DetalleMenu (models.Model):
     cantidad = models.IntegerField ()
@@ -121,6 +131,8 @@ class DetalleMenu (models.Model):
     def __unicode__(self):
         return str(self.cantidad)
     
+    class Meta:
+        verbose_name_plural = "Detalles de Menu"
     
 class Frecuencia (models.Model):
     codigo = models.IntegerField()
@@ -136,9 +148,11 @@ class Programacion (models.Model):
     
     def __unicode__(self):
         return str(self.fechaDesde) + str(self.fechaHasta)
+    class Meta:
+        verbose_name_plural = "Programaciones"
     
 class Promocion (models.Model):
-    codigo = codigo = models.IntegerField ( primary_key = True)
+    codigo = models.IntegerField ( primary_key = True)
     nombre = models.CharField (max_length = 50)
     imagenProducto = models.ImageField(upload_to='/imagenes', verbose_name='Imágen Promocion')
     precio = models.DecimalField(max_digits = 3, decimal_places = 2)
@@ -148,9 +162,14 @@ class Promocion (models.Model):
     
     def __unicode__(self):
         return self.nombre
-    
+    class Meta:
+        verbose_name_plural = "Promociones"
+        
 class DetallePromocion (models.Model):
     promocion = models.ForeignKey(Promocion)
     producto = models.ForeignKey(Producto)
     menu = models.ForeignKey(Menu)
     cantidad = models.IntegerField ()
+    
+    class Meta:
+        verbose_name_plural = "Detalle de promociones"
