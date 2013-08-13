@@ -64,15 +64,14 @@ class Ingrediente(models.Model):
     
     codigo = models.IntegerField(primary_key = True)
     nombre = models.CharField(max_length = 50)
-    precio = models.DecimalField(max_digits = 5, decimal_places = 2 )
-    stockActual = models.IntegerField(verbose_name = "Stock Actual")
-    stockMinimo = models.IntegerField(verbose_name = "Stock Mínimo")
     tipoIngrediente = models.ForeignKey (TipoIngrediente, verbose_name = "Tipo de ingrediente")
     unidadDeMedida = models.ForeignKey(UnidadDeMedida, verbose_name = "Unidad de Medida")
+    stockActual = models.IntegerField(verbose_name = "Stock Actual")
+    stockMinimo = models.IntegerField(verbose_name = "Stock Mínimo")
+    precio = models.DecimalField(max_digits = 5, decimal_places = 2 )
     
     def __unicode__(self):
         return self.nombre
-
 
 class Producto (models.Model):
     
@@ -91,8 +90,8 @@ class DetalleIngredientes(models.Model):
    
     tipoIngrediente = models.ForeignKey(TipoIngrediente, verbose_name = "Tipo de Ingrediente")
     ingrediente = models.ForeignKey(Ingrediente)
-    cantidad = models.IntegerField()
     producto = models.ForeignKey(Producto)
+    cantidad = models.IntegerField()
     def __unicode__(self):
         return u'%s, %s' % (self.producto.nombre, self.ingrediente.nombre) 
  
@@ -115,29 +114,30 @@ class DetalleVersiones(models.Model):
 class Menu (models.Model):
     codigo = models.IntegerField (primary_key = True)
     nombre = models.CharField (max_length = 50)
-    detalle = models.CharField(max_length = 200)
     precioVenta = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio de venta")
-    
+    imagen = models.ImageField(upload_to='imagenes', verbose_name='Vista Previa')
     def __unicode__(self):
         return self.nombre
     class Meta:
         verbose_name_plural = "Menu"
 
 class DetalleMenu (models.Model):
-    cantidad = models.IntegerField ()
-    producto = models.ForeignKey (Producto)
     menu = models.ForeignKey(Menu)
+    tipoProducto = models.ForeignKey(TipoProducto)
+    producto = models.ForeignKey (Producto)
+    cantidad = models.IntegerField ()
     
     def __unicode__(self):
-        return str(self.cantidad)
+        return u'%s, %s'%(self.menu.nombre, self.producto.nombre)
     
     class Meta:
         verbose_name_plural = "Detalles de Menu"
     
 class Frecuencia (models.Model):
-    codigo = models.IntegerField()
     descripcion = models.CharField(max_length = 200)
     
+    def __unicode__(self):
+        return self.descripcion
     
 class Programacion (models.Model):
     diaSemana = models.IntegerField (verbose_name = "Dia de la semana")
@@ -165,11 +165,20 @@ class Promocion (models.Model):
     class Meta:
         verbose_name_plural = "Promociones"
         
-class DetallePromocion (models.Model):
+        
+class DetallePromocionProducto(models.Model):
     promocion = models.ForeignKey(Promocion)
+    tipoProducto = models.ForeignKey(TipoProducto, verbose_name = 'Tipo de Producto')
     producto = models.ForeignKey(Producto)
+    cantidad = models.IntegerField ()
+    
+    class Meta:
+        verbose_name_plural = "Productos de la Promo"
+    
+class DetallePromocionMenu(models.Model):
+    promocion = models.ForeignKey(Promocion)
     menu = models.ForeignKey(Menu)
     cantidad = models.IntegerField ()
     
     class Meta:
-        verbose_name_plural = "Detalle de promociones"
+        verbose_name_plural = "Menus de la Promo"
