@@ -9,7 +9,7 @@ class TelefonoSucursalInLine(admin.StackedInline, SortableInline):
 
 class SucursalAdmin(admin.ModelAdmin):
     inlines = [TelefonoSucursalInLine,]
-    list_display=('codigo', 'nombre', 'direccion', 'barrio')
+    list_display=('codigo', 'nombre', 'direccion', 'barrio', 'Vista_Previa')
     list_filter=('codigo', 'nombre', 'direccion', 'barrio')
     ordering=('nombre',)
     search_fields=('codigo','nombre','barrio__nombre','localidad__nombre')

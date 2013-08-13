@@ -105,6 +105,12 @@ class CalificacionServicio(models.Model):
 class Sucursal(models.Model):
     """ Clase Sucursal
     Atributos: codigo, nombre, domicilio, calificacion_servicio, imagen"""
+    
+    def Vista_Previa(self):
+        return '<a href="/media/%s"><img src="/media/%s" width=50px heigth=50px/></a>'%(self.imagen,self.imagen)
+    
+    Vista_Previa.allow_tags = True
+    
     codigo = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100) 
     direccion = models.CharField(max_length=250, verbose_name='Dirección')
