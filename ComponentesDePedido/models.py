@@ -94,10 +94,10 @@ class DetalleIngredientes(models.Model):
     cantidad = models.IntegerField()
     producto = models.ForeignKey(Producto)
     def __unicode__(self):
-        return str(self.cantidad)
+        return u'%s, %s' % (self.producto.nombre, self.ingrediente.nombre) 
+ 
     class Meta:
         verbose_name_plural = "Detalle de ingredientes"
-
 
     
 class DetalleVersiones(models.Model):
