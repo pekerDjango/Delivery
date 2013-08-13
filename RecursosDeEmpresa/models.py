@@ -10,7 +10,9 @@ class TipoDocumento(models.Model):
     descripcion = models.TextField(verbose_name='Descripción')
     
     def __unicode__(self):
-        return self.nombre 
+        return self.nombre
+    class Meta:
+        verbose_name_plural = "Tipos de Documentos" 
 
 class Barrio(models.Model):
     """Clase Barrio
@@ -20,6 +22,7 @@ class Barrio(models.Model):
     def __unicode__(self):
         return self.nombre
     
+    
 class Localidad(models.Model):
     """Clase Localidad
     Atributos: nombre, barrio"""
@@ -28,6 +31,8 @@ class Localidad(models.Model):
     
     def __unicode__(self):
         return self.nombre
+    class Meta:
+        verbose_name_plural = "Localidades"
     
 class Provincia(models.Model):
     """Clase Provincia
@@ -94,6 +99,8 @@ class CalificacionServicio(models.Model):
     
     def __unicode__(self):
         return self.nombre
+    class Meta:
+        verbose_name_plural = "Calificación de Servicios"
     
 class Sucursal(models.Model):
     """ Clase Sucursal
@@ -106,11 +113,14 @@ class Sucursal(models.Model):
     depto = models.CharField(max_length=50)
     codigo_postal = models.CharField(max_length=100)
     barrio = models.ForeignKey(Barrio)
+    localidad = models.ForeignKey(Localidad)
     calificacion_servicio = models.ForeignKey(CalificacionServicio)
     imagen = models.ImageField(upload_to='imagenes', verbose_name='Imágen')
     
     def __unicode__(self):
         return self.nombre
+    class Meta:
+        verbose_name_plural = "Sucursales"
 
 class TelefonoSucursal(models.Model):
     """Clase TelfonoSucursal
@@ -120,6 +130,8 @@ class TelefonoSucursal(models.Model):
     
     def __unicode__(self):
         return self.numero
+    class Meta:
+        verbose_name_plural = "Telefonos de Sucursales"
     
 class Empleado(Persona, models.Model):
     """Clase Empleado hereda los atributos de Persona
