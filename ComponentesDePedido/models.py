@@ -140,14 +140,22 @@ class Frecuencia (models.Model):
         return self.descripcion
     
 class Programacion (models.Model):
+    frecuencia = models.ForeignKey(Frecuencia, default="Seleccione la Frecuencia")
+    lunes = models.BooleanField()
+    martes = models.BooleanField()
+    miercoles = models.BooleanField(verbose_name='Miércoles')
+    jueves = models.BooleanField()
+    viernes = models.BooleanField()
+    sabado = models.BooleanField()
+    domingo = models.BooleanField()
     diaSemana = models.IntegerField (verbose_name = "Dia de la semana")
-    fechaDesde = models.DateTimeField(verbose_name = "Fecha desde")
-    fechaHasta = models.DateTimeField(verbose_name = "Fecha Hasta")
-    horaDesde = models.TimeField(verbose_name = "Hora desde")
-    horaHasta = models.TimeField(verbose_name = "Hora hasta")
+    fechaDesde = models.DateField(verbose_name = "Fecha desde")
+    fechaHasta = models.DateField(verbose_name = "Fecha Hasta")
+    horaDesde = models.TimeField(verbose_name = "Hora desde", help_text="Formato 24hs")
+    horaHasta = models.TimeField(verbose_name = "Hora hasta", help_text="Formato 24hs")
     
     def __unicode__(self):
-        return str(self.fechaDesde) + str(self.fechaHasta)
+        return str(self.frecuencia.descripcion)
     class Meta:
         verbose_name_plural = "Programaciones"
     

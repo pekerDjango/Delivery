@@ -2,7 +2,7 @@
 from RecursosDeEmpresa.models import Empleado, Sucursal, TipoDocumento, Barrio, Localidad, TelefonoPersona, TelefonoSucursal, Turno, CalificacionServicio, Provincia 
 from django.contrib import admin
 from django_admin_bootstrapped.admin.models import SortableInline
-from django.forms import TextInput, Textarea
+from django.forms import TextInput, Textarea, Select
 from django.db import models
 class TelefonoSucursalInLine(admin.StackedInline, SortableInline):
     model = TelefonoSucursal
@@ -11,7 +11,7 @@ class TelefonoSucursalInLine(admin.StackedInline, SortableInline):
 
 class SucursalAdmin(admin.ModelAdmin):
     inlines = [TelefonoSucursalInLine,]
-    list_display=('codigo', 'nombre', 'direccion', 'barrio', 'Vista_Previa')
+    list_display=('codigo', 'nombre', 'direccion', 'barrio')
     list_filter=('codigo', 'nombre', 'direccion', 'barrio')
     ordering=('nombre',)
     search_fields=('codigo','nombre','barrio__nombre','localidad__nombre')
@@ -37,6 +37,22 @@ class EmpleadoAdmin(admin.ModelAdmin):
     list_filter=('legajo','apellido')
     ordering=('legajo',)
     search_fields=('legajo','nombre','apellido','numero_documento')
+    fieldsets = (
+        (None, {
+            'fields': ('legajo', ('nombre', 'apellido'),('sexo', 'email'),('tipo_documento','numero_documento'),('telefono_particular','telefono_domicilio'))
+        }),
+        ('Dirección', {
+            'classes': ('wide','extrapretty'),
+            'fields': (('direccion','numero_direccion','piso'),('depto','codigo_postal'),('provincia','localidad','barrio'))
+        }),
+                 )
+    readonly_fields =('legajo',)
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size':'100'})},
+        models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
+#        models.ForeignKey: {'widget':Select(attrs={'width': '200px'})},
+      
+    }
     
 class BarrioAdmin(admin.ModelAdmin): 
     ordering=('nombre',)

@@ -89,6 +89,13 @@ class PromocionAdmin(admin.ModelAdmin):
     list_filter = ('codigo', 'nombre')
     inlines = [DetallePromocionProductoInLine, DetallePromocionMenuInline]
     
+class ProgramacionAdmin(admin.ModelAdmin):
+#    list_display=('codigo', 'nombre', 'direccion', 'barrio', 'Vista_Previa')
+#    list_filter=('codigo', 'nombre', 'direccion', 'barrio')
+#    ordering=('nombre',)
+#    search_fields=('codigo','nombre','barrio__nombre','localidad__nombre')
+    fields =('frecuencia',('lunes','martes','miercoles'),('jueves','viernes'),('sabado','domingo'),'diaSemana','fechaDesde','fechaHasta','horaDesde','horaHasta')
+    
 admin.site.register(TipoIngrediente, TipoIngredienteAdmin)
 admin.site.register(Clasificacion, ClasificacionAdmin)
 admin.site.register(UnidadDeMedida, UnidadDeMedidaAdmin)
