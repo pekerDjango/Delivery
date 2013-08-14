@@ -1,7 +1,9 @@
+#encoding:utf-8
 from RecursosDeEmpresa.models import Empleado, Sucursal, TipoDocumento, Barrio, Localidad, TelefonoPersona, TelefonoSucursal, Turno, CalificacionServicio, Provincia 
 from django.contrib import admin
 from django_admin_bootstrapped.admin.models import SortableInline
-
+from django.forms import TextInput, Textarea
+from django.db import models
 class TelefonoSucursalInLine(admin.StackedInline, SortableInline):
     model = TelefonoSucursal
     verbose_name_plural = "Telefonos de Sucursales"
@@ -13,9 +15,25 @@ class SucursalAdmin(admin.ModelAdmin):
     list_filter=('codigo', 'nombre', 'direccion', 'barrio')
     ordering=('nombre',)
     search_fields=('codigo','nombre','barrio__nombre','localidad__nombre')
+#    fields =('codigo','nombre',('direccion','numero_direccion','piso','depto'),('codigo_postal','barrio','localidad'), 'calificacion_servicio','imagen')
+    fieldsets = (
+        (None, {
+            'fields': ('codigo', 'nombre', 'calificacion_servicio','imagen')
+        }),
+        ('Dirección', {
+            'classes': ('wide','extrapretty'),
+            'fields': (('direccion','numero_direccion','piso'),('depto','codigo_postal'),('barrio','localidad'))
+        }),
+                 )
+    readonly_fields =('codigo',)
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size':'20'})},
+        models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
+      
+    }
     
 class EmpleadoAdmin(admin.ModelAdmin):
-    list_display=('legajo','nombre','apellido')
+    list_display=('legajo','nombre','apellido','numero_documento')
     list_filter=('legajo','apellido')
     ordering=('legajo',)
     search_fields=('legajo','nombre','apellido','numero_documento')
