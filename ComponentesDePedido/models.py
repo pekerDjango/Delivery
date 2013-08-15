@@ -67,7 +67,7 @@ class Ingrediente(models.Model):
     unidadDeMedida = models.ForeignKey(UnidadDeMedida, verbose_name = "Unidad de Medida")
     stockActual = models.IntegerField(verbose_name = "Stock Actual")
     stockMinimo = models.IntegerField(verbose_name = "Stock Mínimo")
-    precio = models.DecimalField(max_digits = 5, decimal_places = 2 )
+    precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)" )
     
     def __unicode__(self):
         return self.nombre
@@ -103,7 +103,7 @@ class DetalleVersiones(models.Model):
     Atributos: Clasificacion, Imagen de producto, Precio """
     clasificacion = models.ForeignKey(Clasificacion)
     imagenProducto = models.ImageField(upload_to='imagenes', verbose_name='Imágen Producto')
-    precio = models.DecimalField(max_digits = 5, decimal_places = 2)
+    precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)")
     producto = models.ForeignKey(Producto)
     def __unicode__(self):
         return u'%s- %s'%(self.producto.nombre, self.clasificacion.nombre)
@@ -116,8 +116,8 @@ class Menu (models.Model):
     
     Vista_Previa.allow_tags = True
     codigo = models.AutoField(primary_key=True, verbose_name = "Código")
-    nombre = models.CharField (max_length = 50)
-    precioVenta = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio de venta")
+    nombre = models.CharField (max_length = 50, verbose_name = "Nombre Menú")
+    precioVenta = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)")
     imagen = models.ImageField(upload_to='imagenes', verbose_name='Vista Previa')
     def __unicode__(self):
         return self.nombre
@@ -127,6 +127,7 @@ class Menu (models.Model):
 class DetalleMenu (models.Model):
     menu = models.ForeignKey(Menu)
     tipoProducto = models.ForeignKey(TipoProducto)
+    versionProducto = models.ForeignKey(Version, verbose_name = "Version de Producto")
     producto = models.ForeignKey (Producto)
     cantidad = models.IntegerField ()
     
@@ -149,10 +150,10 @@ class Promocion (models.Model):
     Vista_Previa.allow_tags = True
     codigo = models.AutoField(primary_key=True, verbose_name = "Código")
     nombre = models.CharField (max_length = 50)
-    imagen = models.ImageField(upload_to='imagenes', verbose_name='Imágen Promocion')
-    precio = models.DecimalField(max_digits = 5, decimal_places = 2)
+    imagen = models.ImageField(upload_to="imagenes", verbose_name="Imágen Promocion")
+    precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name ="Precio($)")
     stock = models.IntegerField ( )
-    tiempoPreparacion = models.IntegerField(verbose_name = 'Tiempo estimado de preparación(Minutos)')    
+    tiempoPreparacion = models.IntegerField(verbose_name = "Tiempo estimado de preparación(Minutos)")    
     
     def __unicode__(self):
         return self.nombre
@@ -188,6 +189,7 @@ class Programacion (models.Model):
 class DetallePromocionProducto(models.Model):
     promocion = models.ForeignKey(Promocion)
     tipoProducto = models.ForeignKey(TipoProducto, verbose_name = 'Tipo de Producto')
+    versionProducto = models.ForeignKey(Version, verbose_name = "Version de Producto")
     producto = models.ForeignKey(Producto)
     cantidad = models.IntegerField ()
     

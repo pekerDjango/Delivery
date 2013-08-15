@@ -17,6 +17,7 @@ from ComponentesDePedido.models import DetallePromocionMenu
 from ComponentesDePedido.models import DetalleMenu
 from ComponentesDePedido.models import DiaSemana
 from django.contrib import admin
+from django.forms import ModelForm
 from django_admin_bootstrapped.admin.models import SortableInline
 
 admin.site.register(DetalleVersiones)
@@ -24,11 +25,12 @@ admin.site.register(DetalleVersiones)
 class DetalleVersionInline(admin.StackedInline, SortableInline):
     model = DetalleVersiones
     extra = 1
-    
 class DetalleIngredientesInline(admin.StackedInline, SortableInline):
     model = DetalleIngredientes
     verbose_name_plural = "Detalle de Ingredientes"
     extra = 1
+    
+
 
 class ProductoAdmin(admin.ModelAdmin):
     inlines = [DetalleVersionInline, DetalleIngredientesInline]
@@ -66,7 +68,7 @@ class ClasificacionAdmin(admin.ModelAdmin):
     
 class IngredienteAdmin(admin.ModelAdmin):
     search_fields = ('codigo', 'nombre' )
-    list_display = ('codigo', 'nombre')
+    list_display = ('codigo', 'nombre', 'unidadDeMedida', 'precio', 'stockActual', 'stockMinimo')
     list_filter = ('codigo', 'nombre', 'unidadDeMedida', 'precio', 'stockActual', 'stockMinimo') 
     fields =('codigo','nombre','tipoIngrediente','unidadDeMedida','stockActual','stockMinimo','precio')
     readonly_fields =('codigo',)   
