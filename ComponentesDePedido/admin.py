@@ -15,40 +15,49 @@ from ComponentesDePedido.models import Promocion
 from ComponentesDePedido.models import DetallePromocionProducto
 from ComponentesDePedido.models import DetallePromocionMenu
 from ComponentesDePedido.models import DetalleMenu
+from ComponentesDePedido.models import DiaSemana
 from django.contrib import admin
 from django_admin_bootstrapped.admin.models import SortableInline
 
 admin.site.register(DetalleVersiones)
 
-class DetalleVersionInLine(admin.StackedInline, SortableInline):
+class DetalleVersionInline(admin.StackedInline, SortableInline):
     model = DetalleVersiones
     extra = 1
     
-class DetalleIngredientesInLine(admin.StackedInline, SortableInline):
+class DetalleIngredientesInline(admin.StackedInline, SortableInline):
     model = DetalleIngredientes
     verbose_name_plural = "Detalle de Ingredientes"
     extra = 1
 
 class ProductoAdmin(admin.ModelAdmin):
-    inlines = [DetalleVersionInLine, DetalleIngredientesInLine]
-    search_fields = ('codigo', 'nombre', 'tipoProducto')
+    inlines = [DetalleVersionInline, DetalleIngredientesInline]
+    search_fields = ('codigo', 'nombre', 'tipoProducto__nombre')
     list_display = ('codigo', 'nombre' , 'tipoProducto', )
     list_filter = ('codigo', 'nombre', 'tipoProducto')
+    fields =('codigo','nombre', 'tiempoPreparacion', 'tipoProducto', 'version','unidadDeMedida')
+    readonly_fields =('codigo',)   
     
 class TipoIngredienteAdmin(admin.ModelAdmin):
-    search_fields = ('codigoTipoIngrediente', 'nombreTipoIngrediente')
-    list_display = ('codigoTipoIngrediente', 'nombreTipoIngrediente')
-    list_filter = ('codigoTipoIngrediente', 'nombreTipoIngrediente')
+    search_fields = ('codigo', 'nombre')
+    list_display = ('codigo', 'nombre')
+    list_filter = ('codigo', 'nombre')
+    fields =('codigo','nombre')
+    readonly_fields =('codigo',)   
 
 class UnidadDeMedidaAdmin(admin.ModelAdmin):
     search_fields = ('codigo', 'nombre')
     list_display = ('codigo', 'nombre')
     list_filter = ('codigo', 'nombre')
+    fields =('codigo','nombre')
+    readonly_fields =('codigo',)
 
 class TipoProductoAdmin(admin.ModelAdmin):
     search_fields = ('codigo', 'nombre')
     list_display = ('codigo', 'nombre')
     list_filter = ('codigo', 'nombre')
+    fields =('codigo','nombre')
+    readonly_fields =('codigo',)
 
 class ClasificacionAdmin(admin.ModelAdmin):
     search_fields = ('nombre', 'descripcion')
@@ -58,43 +67,53 @@ class ClasificacionAdmin(admin.ModelAdmin):
 class IngredienteAdmin(admin.ModelAdmin):
     search_fields = ('codigo', 'nombre' )
     list_display = ('codigo', 'nombre')
-    list_filter = ('codigo', 'nombre', 'unidadDeMedida', 'precio', 'stockActual', 'stockMinimo')    
+    list_filter = ('codigo', 'nombre', 'unidadDeMedida', 'precio', 'stockActual', 'stockMinimo') 
+    fields =('codigo','nombre','tipoIngrediente','unidadDeMedida','stockActual','stockMinimo','precio')
+    readonly_fields =('codigo',)   
 
 class VersionAdmin(admin.ModelAdmin):
     search_fields = ('codigo', 'nombre')
     list_display = ('codigo', 'nombre')
     list_filter = ('codigo', 'nombre')
+    fields =('codigo','nombre')
+    readonly_fields =('codigo',)
 
-class DetalleMenuInLine(admin.StackedInline, SortableInline):
+class DetalleMenuInline(admin.StackedInline, SortableInline):
     model = DetalleMenu
     extra = 1
     
-class DetallePromocionProductoInLine(admin.StackedInline, SortableInline):
+class MenuAdmin(admin.ModelAdmin):
+    search_fields = ('codigo', 'nombre')
+    list_display = ('codigo', 'nombre', 'precioVenta','Vista_Previa')
+    list_filter = ('codigo', 'nombre','precioVenta')
+    fields =('codigo','nombre','precioVenta','imagen')
+    readonly_fields =('codigo',)
+    inlines = [DetalleMenuInline]
+    
+    
+class DetallePromocionProductoInline(admin.StackedInline, SortableInline):
     model = DetallePromocionProducto
     extra = 1
     
 class DetallePromocionMenuInline(admin.StackedInline, SortableInline):
     model = DetallePromocionMenu
     extra = 1
-    
-class MenuAdmin(admin.ModelAdmin):
-    search_fields = ('codigo', 'nombre')
-    list_display = ('codigo', 'nombre', 'precioVenta')
-    list_filter = ('codigo', 'nombre')
-    inlines = [DetalleMenuInLine]
-    
+
+class ProgramacionInline(admin.StackedInline, SortableInline):
+    model = Programacion
+    extra = 1
+    max_num = 1    
+
 class PromocionAdmin(admin.ModelAdmin):
     search_fields = ('codigo', 'nombre')
-    list_display = ('codigo', 'nombre', 'precio', 'stock')
+    list_display = ('codigo', 'nombre', 'precio', 'stock','Vista_Previa')
     list_filter = ('codigo', 'nombre')
-    inlines = [DetallePromocionProductoInLine, DetallePromocionMenuInline]
+    fields =('codigo','nombre','imagen', 'precio', 'stock', 'tiempoPreparacion')
+    readonly_fields =('codigo',)
+    inlines = [ProgramacionInline, DetallePromocionProductoInline, DetallePromocionMenuInline]
     
 class ProgramacionAdmin(admin.ModelAdmin):
-#    list_display=('codigo', 'nombre', 'direccion', 'barrio', 'Vista_Previa')
-#    list_filter=('codigo', 'nombre', 'direccion', 'barrio')
-#    ordering=('nombre',)
-#    search_fields=('codigo','nombre','barrio__nombre','localidad__nombre')
-    fields =('frecuencia',('lunes','martes','miercoles'),('jueves','viernes'),('sabado','domingo'),'diaSemana','fechaDesde','fechaHasta','horaDesde','horaHasta')
+    fields =( 'diaSemana','fechaDesde','fechaHasta','horaDesde','horaHasta')
     
 admin.site.register(TipoIngrediente, TipoIngredienteAdmin)
 admin.site.register(Clasificacion, ClasificacionAdmin)
@@ -108,3 +127,4 @@ admin.site.register(Frecuencia)
 admin.site.register(Programacion)
 admin.site.register(Promocion, PromocionAdmin)
 admin.site.register(Version, VersionAdmin)
+admin.site.register(DiaSemana)

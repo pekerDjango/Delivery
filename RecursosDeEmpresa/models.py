@@ -85,7 +85,7 @@ class Persona(models.Model):
 class Turno(models.Model):
     """Clase Turno
     Atributos: codigo, descripcion"""
-    codigo = models.IntegerField()
+    codigo = models.AutoField(primary_key=True, verbose_name = "Código")
     descripcion = models.CharField(max_length=100)
     
     def __unicode__(self):
@@ -111,7 +111,7 @@ class Sucursal(models.Model):
     
     Vista_Previa.allow_tags = True
     
-    codigo = models.AutoField(primary_key=True)
+    codigo = models.AutoField(primary_key=True, verbose_name = "Código")
     nombre = models.CharField(max_length=100) 
     direccion = models.CharField(max_length=250, verbose_name='Dirección')
     numero_direccion = models.IntegerField(verbose_name='Número')

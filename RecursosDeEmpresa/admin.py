@@ -11,7 +11,7 @@ class TelefonoSucursalInLine(admin.StackedInline, SortableInline):
 
 class SucursalAdmin(admin.ModelAdmin):
     inlines = [TelefonoSucursalInLine,]
-    list_display=('codigo', 'nombre', 'direccion', 'barrio')
+    list_display=('codigo', 'nombre', 'direccion', 'barrio', 'Vista_Previa')
     list_filter=('codigo', 'nombre', 'direccion', 'barrio')
     ordering=('nombre',)
     search_fields=('codigo','nombre','barrio__nombre','localidad__nombre')
@@ -39,14 +39,14 @@ class EmpleadoAdmin(admin.ModelAdmin):
     search_fields=('legajo','nombre','apellido','numero_documento')
     fieldsets = (
         (None, {
-            'fields': ('legajo', ('nombre', 'apellido'),('sexo', 'email'),('tipo_documento','numero_documento'),('telefono_particular','telefono_domicilio'))
+            'fields': ('legajo', ('nombre', 'apellido'),('sexo', 'email'),('tipo_documento','numero_documento'),('telefono_particular','telefono_domicilio'),('turno','sucursal'))
         }),
         ('Dirección', {
             'classes': ('wide','extrapretty'),
             'fields': (('direccion','numero_direccion','piso'),('depto','codigo_postal'),('provincia','localidad','barrio'))
         }),
                  )
-    readonly_fields =('legajo',)
+#    readonly_fields =('legajo',)
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'100'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
@@ -81,6 +81,8 @@ class TurnoAdmin(admin.ModelAdmin):
     list_filter=('codigo','descripcion') 
     ordering=('codigo',)
     search_fields=('codigo','descripcion')
+    fields =('codigo','descripcion')
+    readonly_fields =('codigo',)
     
 class TelefonoSucursalAdmin(admin.ModelAdmin):
     list_display=('numero', )
