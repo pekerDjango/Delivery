@@ -152,6 +152,7 @@ class Promocion (models.Model):
     Vista_Previa.allow_tags = True
     codigo = models.AutoField(primary_key=True, verbose_name = "Código")
     nombre = models.CharField (max_length = 50)
+    descripcion = models.TextField(verbose_name='Descripción')
     imagen = models.ImageField(upload_to="imagenes", verbose_name="Imágen Promocion")
     precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name ="Precio($)")
     stock = models.IntegerField ( )

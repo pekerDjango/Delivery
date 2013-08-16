@@ -131,7 +131,7 @@ class PromocionAdmin(admin.ModelAdmin):
     list_display = ('codigo', 'nombre', 'precio', 'stock','Vista_Previa')
     list_filter = ('codigo', 'nombre')
     ordering=('codigo','nombre',)
-    fields =('codigo','nombre','imagen', 'precio', 'stock', 'tiempoPreparacion')
+    fields =('codigo','nombre','descripcion','imagen', 'precio', 'stock', 'tiempoPreparacion')
     readonly_fields =('codigo',)
     inlines = [ProgramacionInline, DetallePromocionProductoInline, DetallePromocionMenuInline]
     formfield_overrides = { models.ImageField: {'widget': ImageWidget}}
