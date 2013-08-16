@@ -65,9 +65,11 @@ class Ingrediente(models.Model):
     nombre = models.CharField(max_length = 50)
     tipoIngrediente = models.ForeignKey (TipoIngrediente, verbose_name = "Tipo de ingrediente")
     unidadDeMedida = models.ForeignKey(UnidadDeMedida, verbose_name = "Unidad de Medida")
+    imagen = models.ImageField(upload_to='imagenes', verbose_name='Vista Previa')
     stockActual = models.IntegerField(verbose_name = "Stock Actual")
     stockMinimo = models.IntegerField(verbose_name = "Stock Mínimo")
     precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)" )
+    
     
     def __unicode__(self):
         return self.nombre

@@ -120,7 +120,7 @@ INSTALLED_APPS = (
 #    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
+    # Uncomment the next line to enable the admin:    
     'django_admin_bootstrapped',
      'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -128,7 +128,9 @@ INSTALLED_APPS = (
      'ComponentesDePedido',
      'RecursosDeEmpresa',
      'PedidoRegistrado',
-     'ConfiguracionDeComponentes'
+     'ConfiguracionDeComponentes',
+     'sorl.thumbnail',
+     'form_utils', 
      
 )
 

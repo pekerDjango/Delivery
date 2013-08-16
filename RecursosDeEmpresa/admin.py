@@ -4,6 +4,8 @@ from django.contrib import admin
 from django_admin_bootstrapped.admin.models import SortableInline
 from django.forms import TextInput, Textarea, Select
 from django.db import models
+from form_utils.widgets import ImageWidget
+
 class TelefonoSucursalInLine(admin.StackedInline, SortableInline):
     model = TelefonoSucursal
     verbose_name_plural = "Telefonos de Sucursales"
@@ -29,13 +31,14 @@ class SucursalAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'20'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
+        models.ImageField: {'widget': ImageWidget}
       
     }
     
 class EmpleadoAdmin(admin.ModelAdmin):
     list_display=('legajo','nombre','apellido','numero_documento')
     list_filter=('legajo','apellido')
-    ordering=('legajo',)
+    ordering=('legajo','nombre', 'apellido')
     search_fields=('legajo','nombre','apellido','numero_documento')
     fieldsets = (
         (None, {
