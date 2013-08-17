@@ -62,20 +62,20 @@ class Persona(models.Model):
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
     sexo =  models.CharField(max_length=1, choices=sexo_choise)
-    email = models.EmailField(max_length=50)
+    email = models.EmailField(max_length=50, help_text='to@example.com')
     tipo_documento= models.ForeignKey(TipoDocumento)
     numero_documento = models.IntegerField(max_length=100)
     direccion = models.CharField(max_length=250, verbose_name='Dirección')
     numero_direccion = models.IntegerField(verbose_name='Número')
-    piso = models.IntegerField()
-    depto = models.CharField(max_length=50)
+    piso = models.IntegerField(blank=True)
+    depto = models.CharField(max_length=50, blank=True)
     codigo_postal = models.CharField(max_length=100)
     provincia = models.ForeignKey(Provincia)
     localidad = models.ForeignKey(Localidad)
     barrio = models.ForeignKey(Barrio)
 #    usuario = models.OneToOneField(User)
-    telefono_particular = models.CharField(max_length=100)
-    telefono_domicilio =models.CharField(max_length=100)
+    telefono_particular = models.CharField(max_length=100, help_text='Código de área + Nº. Ej.: (351) 473-9643.')
+    telefono_domicilio =models.CharField(max_length=100, blank=True, help_text='Código de área + Nº. Ej.: (351) 473-9643.')
     
     def __unicode__(self):
         return self.nombre + self.apellido 
@@ -115,8 +115,8 @@ class Sucursal(models.Model):
     nombre = models.CharField(max_length=100) 
     direccion = models.CharField(max_length=250, verbose_name='Dirección')
     numero_direccion = models.IntegerField(verbose_name='Número')
-    piso = models.IntegerField()
-    depto = models.CharField(max_length=50)
+    piso = models.IntegerField(blank=True)
+    depto = models.CharField(max_length=50,blank=True)
     codigo_postal = models.CharField(max_length=100)
     barrio = models.ForeignKey(Barrio)
     localidad = models.ForeignKey(Localidad)
@@ -131,7 +131,7 @@ class Sucursal(models.Model):
 class TelefonoSucursal(models.Model):
     """Clase TelfonoSucursal
     Atributos: numero, sucursal"""
-    numero = models.CharField(max_length=100)
+    numero = models.CharField(max_length=100, help_text='Código de área + Nº. Ej.: (351) 473-9643.')
     sucursal = models.ForeignKey(Sucursal)
     
     def __unicode__(self):

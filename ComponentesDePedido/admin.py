@@ -88,7 +88,11 @@ class IngredienteAdmin(admin.ModelAdmin):
     list_filter = ('codigo', 'nombre', 'unidadDeMedida', 'precio', 'stockActual', 'stockMinimo') 
     fields =('codigo','nombre','tipoIngrediente','unidadDeMedida','imagen','stockActual','stockMinimo','precio')
     readonly_fields =('codigo',)
-    formfield_overrides = { models.ImageField: {'widget': ImageWidget}}   
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size':'100'})},
+        models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
+        models.ImageField: {'widget': ImageWidget},     
+    } 
 
 class VersionAdmin(admin.ModelAdmin):
     search_fields = ('codigo', 'nombre')
@@ -110,8 +114,11 @@ class MenuAdmin(admin.ModelAdmin):
     fields =('codigo','nombre','precioVenta','imagen')
     readonly_fields =('codigo',)
     inlines = [DetalleMenuInline]
-    formfield_overrides = { models.ImageField: {'widget': ImageWidget}}
-    
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size':'100'})},
+        models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
+        models.ImageField: {'widget': ImageWidget},     
+    }    
     
 class DetallePromocionProductoInline(admin.StackedInline, SortableInline):
     model = DetallePromocionProducto
@@ -134,7 +141,11 @@ class PromocionAdmin(admin.ModelAdmin):
     fields =('codigo','nombre','descripcion','imagen', 'precio', 'stock', 'tiempoPreparacion')
     readonly_fields =('codigo',)
     inlines = [ProgramacionInline, DetallePromocionProductoInline, DetallePromocionMenuInline]
-    formfield_overrides = { models.ImageField: {'widget': ImageWidget}}
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size':'100'})},
+        models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
+        models.ImageField: {'widget': ImageWidget},     
+    } 
     
 class ProgramacionAdmin(admin.ModelAdmin):
     fields =( 'diaSemana','fechaDesde','fechaHasta','horaDesde','horaHasta')

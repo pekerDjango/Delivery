@@ -24,7 +24,7 @@ class SucursalAdmin(admin.ModelAdmin):
         }),
         ('Dirección', {
             'classes': ('wide','extrapretty'),
-            'fields': (('direccion','numero_direccion','piso'),('depto','codigo_postal'),('barrio','localidad'))
+            'fields': (('direccion','numero_direccion','codigo_postal'),('barrio','localidad'))
         }),
                  )
     readonly_fields =('codigo',)
@@ -42,7 +42,7 @@ class EmpleadoAdmin(admin.ModelAdmin):
     search_fields=('legajo','nombre','apellido','numero_documento')
     fieldsets = (
         (None, {
-            'fields': ('legajo', ('nombre', 'apellido'),('sexo', 'email'),('tipo_documento','numero_documento'),('telefono_particular','telefono_domicilio'),('turno','sucursal'))
+            'fields': ('legajo', 'nombre', 'apellido','sexo', 'email','tipo_documento','numero_documento','telefono_particular','telefono_domicilio','turno','sucursal')
         }),
         ('Dirección', {
             'classes': ('wide','extrapretty'),
@@ -52,9 +52,7 @@ class EmpleadoAdmin(admin.ModelAdmin):
 #    readonly_fields =('legajo',)
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'100'})},
-        models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
-#        models.ForeignKey: {'widget':Select(attrs={'width': '200px'})},
-      
+        models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},      
     }
     
 class BarrioAdmin(admin.ModelAdmin): 
