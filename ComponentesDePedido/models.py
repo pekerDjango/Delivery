@@ -81,7 +81,6 @@ class Producto (models.Model):
     tiempoPreparacion = models.IntegerField (max_length = 10, verbose_name = "Tiempo Preparacion estimado(minutos)")
     tipoProducto = models.ForeignKey(TipoProducto, verbose_name = "Tipo de Producto")
     version = models.ForeignKey(Version)
-    unidadDeMedida = models.ForeignKey (UnidadDeMedida, verbose_name =  "Unidad de Medida")
     
     def __unicode__(self):
         return self.nombre
@@ -129,8 +128,9 @@ class Menu (models.Model):
 class DetalleMenu (models.Model):
     menu = models.ForeignKey(Menu)
     tipoProducto = models.ForeignKey(TipoProducto)
-    versionProducto = models.ForeignKey(Version, verbose_name = "Version de Producto")
     producto = models.ForeignKey (Producto)
+    versionProducto = models.ForeignKey(Version, verbose_name = "Clasificación ")
+    
     cantidad = models.IntegerField ()
     
     def __unicode__(self):
@@ -197,7 +197,8 @@ class DetallePromocionProducto(models.Model):
     cantidad = models.IntegerField ()
     
     class Meta:
-        verbose_name_plural = "Productos de la Promo"
+        verbose_name = "Producto"
+        verbose_name_plural = "Productos Componentes"
     
 class DetallePromocionMenu(models.Model):
     promocion = models.ForeignKey(Promocion)
@@ -205,4 +206,5 @@ class DetallePromocionMenu(models.Model):
     cantidad = models.IntegerField ()
     
     class Meta:
-        verbose_name_plural = "Menus de la Promo"
+        verbose_name = "Menú"
+        verbose_name_plural = "Menus Componentes"

@@ -45,7 +45,7 @@ class ProductoAdmin(admin.ModelAdmin):
     list_display = ('codigo', 'nombre' , 'tipoProducto', )
     list_filter = ('codigo', 'nombre', 'tipoProducto')
     ordering=('codigo','nombre',)
-    fields =('codigo','nombre', 'tiempoPreparacion', 'tipoProducto', 'version','unidadDeMedida')
+    fields =('codigo','nombre', 'tiempoPreparacion', 'tipoProducto', 'version')
     readonly_fields =('codigo',)
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'20'})},
