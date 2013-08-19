@@ -155,8 +155,9 @@ class Promocion (models.Model):
     descripcion = models.TextField(verbose_name='Descripción')
     imagen = models.ImageField(upload_to="imagenes", verbose_name="Imágen Promocion")
     precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name ="Precio($)")
-    stock = models.IntegerField ( )
-    tiempoPreparacion = models.IntegerField(verbose_name = "Tiempo estimado de preparación(Minutos)")    
+    stock = models.IntegerField (blank=True )
+    tiempoPreparacion = models.IntegerField(verbose_name = "Tiempo estimado de preparación(Minutos)")
+    estado = models.BooleanField(default=True)    
     
     def __unicode__(self):
         return self.nombre

@@ -99,7 +99,7 @@ class VersionAdmin(admin.ModelAdmin):
     list_display = ('codigo', 'nombre')
     list_filter = ('codigo', 'nombre')
     ordering=('codigo','nombre',)
-    fields =('codigo','nombre')
+    fields =('codigo','nombre','clasificacion')
     readonly_fields =('codigo',)
 
 class DetalleMenuInline(admin.StackedInline, SortableInline):
@@ -135,7 +135,7 @@ class ProgramacionInline(admin.StackedInline, SortableInline):
 
 class PromocionAdmin(admin.ModelAdmin):
     search_fields = ('codigo', 'nombre')
-    list_display = ('codigo', 'nombre', 'precio', 'stock','Vista_Previa')
+    list_display = ('codigo', 'nombre', 'precio', 'stock','Vista_Previa', 'estado')
     list_filter = ('codigo', 'nombre')
     ordering=('codigo','nombre',)
     fields =('codigo','nombre','descripcion','imagen', 'precio', 'stock', 'tiempoPreparacion')
