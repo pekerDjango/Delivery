@@ -1,8 +1,8 @@
 #encoding:utf-8
-from RecursosDeEmpresa.models import Empleado, Sucursal, TipoDocumento, Barrio, Localidad, TelefonoPersona, TelefonoSucursal, Turno, CalificacionServicio, Provincia 
+from RecursosDeEmpresa.models import Empleado, Sucursal, TipoDocumento, Barrio, Localidad, TelefonoSucursal, Turno, CalificacionServicio, Provincia 
 from django.contrib import admin
 from django_admin_bootstrapped.admin.models import SortableInline
-from django.forms import TextInput, Textarea, Select
+from django.forms import TextInput, Textarea
 from django.db import models
 from form_utils.widgets import ImageWidget
 

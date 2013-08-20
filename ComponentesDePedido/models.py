@@ -129,7 +129,7 @@ class DetalleMenu (models.Model):
     menu = models.ForeignKey(Menu)
     tipoProducto = models.ForeignKey(TipoProducto)
     producto = models.ForeignKey (Producto)
-    versionProducto = models.ForeignKey(Version, verbose_name = "Clasificación ")
+    versionProducto = models.ForeignKey(Clasificacion, verbose_name = "Versiones de Producto ")
     
     cantidad = models.IntegerField ()
     
@@ -192,9 +192,9 @@ class Programacion (models.Model):
         
 class DetallePromocionProducto(models.Model):
     promocion = models.ForeignKey(Promocion)
-    tipoProducto = models.ForeignKey(TipoProducto, verbose_name = 'Tipo de Producto')
-    versionProducto = models.ForeignKey(Version, verbose_name = "Version de Producto")
+    tipoProducto = models.ForeignKey(TipoProducto, verbose_name = 'Tipo de Producto')    
     producto = models.ForeignKey(Producto)
+    versionProducto = models.ForeignKey(Clasificacion, verbose_name = "Version de Producto")
     cantidad = models.IntegerField ()
     
     class Meta:
