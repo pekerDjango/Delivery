@@ -1,6 +1,5 @@
 #encoding:utf-8
 from django.db import models
-from django.contrib.auth.models import User
 # Create your models here.
 
 class TipoDocumento(models.Model):
@@ -41,17 +40,8 @@ class Provincia(models.Model):
     localidad = models.ManyToManyField(Localidad)
       
     def __unicode__(self):
-        return self.nombre
-       
-class TelefonoPersona(models.Model):
-    """ Clase TelefonoPersona
-    Atributos: numero, descripcion(Ej:casa,trabajo,privado)"""
-    numero = models.CharField(max_length=100)
-    descripcion = models.CharField(max_length=100)
-    
-    def __unicode__(self):
-        return self.numero  
-    
+        return self.nombre      
+     
 class Persona(models.Model):
     """Clase Persona
     Atributos: nombre, apellido, sexo, email, numero_documento, tipo_documento, domicilio, usuario"""
@@ -67,21 +57,19 @@ class Persona(models.Model):
     numero_documento = models.IntegerField(max_length=100)
     direccion = models.CharField(max_length=250, verbose_name='Dirección')
     numero_direccion = models.IntegerField(verbose_name='Número')
-    piso = models.IntegerField(blank=True)
-    depto = models.CharField(max_length=50, blank=True)
-    codigo_postal = models.CharField(max_length=100)
+    piso = models.IntegerField(blank=True, null=True)
+    depto = models.CharField(max_length=50, blank=True, null=True)
+    codigo_postal = models.CharField(max_length=100, verbose_name="Código Postal")
     provincia = models.ForeignKey(Provincia)
     localidad = models.ForeignKey(Localidad)
     barrio = models.ForeignKey(Barrio)
 #    usuario = models.OneToOneField(User)
-    telefono_particular = models.CharField(max_length=100, help_text='Código de área + Nº. Ej.: (351) 473-9643.')
-    telefono_domicilio =models.CharField(max_length=100, blank=True, help_text='Código de área + Nº. Ej.: (351) 473-9643.')
+    telefono_particular = models.CharField(max_length=100, help_text='Código de área + Nº. Ej.: 351-473-9643.', verbose_name="Teléfono Particular")
+    telefono_domicilio =models.CharField(max_length=100, blank=True, null=True, help_text='Código de área + Nº. Ej.: 351-473-9643.', verbose_name="Teléfono Domicilio")
     
     def __unicode__(self):
-        return self.nombre + self.apellido 
-    
+        return self.nombre + self.apellido   
                  
-
 class Turno(models.Model):
     """Clase Turno
     Atributos: codigo, descripcion"""
@@ -117,7 +105,7 @@ class Sucursal(models.Model):
     numero_direccion = models.IntegerField(verbose_name='Número')
 #    piso = models.IntegerField(blank=True)
 #    depto = models.CharField(max_length=50,blank=True)
-    codigo_postal = models.CharField(max_length=100)
+    codigo_postal = models.CharField(max_length=100, verbose_name="Código Postal")
     barrio = models.ForeignKey(Barrio)
     localidad = models.ForeignKey(Localidad)
     calificacion_servicio = models.ForeignKey(CalificacionServicio)
@@ -131,13 +119,14 @@ class Sucursal(models.Model):
 class TelefonoSucursal(models.Model):
     """Clase TelfonoSucursal
     Atributos: numero, sucursal"""
-    numero = models.CharField(max_length=100, help_text='Código de área + Nº. Ej.: (351) 473-9643.')
+    numero = models.CharField(max_length=100, help_text='Código de área + Nº. Ej.: 351-473-9643.')
     sucursal = models.ForeignKey(Sucursal)
     
     def __unicode__(self):
         return self.numero
     class Meta:
-        verbose_name_plural = "Telefonos de Sucursales"
+        verbose_name = "Teléfono de Sucursal"
+        verbose_name_plural = "Teléfonos de Sucursales"
     
 class Empleado(Persona, models.Model):
     """Clase Empleado hereda los atributos de Persona

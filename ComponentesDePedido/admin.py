@@ -19,7 +19,7 @@ from ComponentesDePedido.models import DiaSemana
 from django.contrib import admin
 from django.forms import ModelForm
 from django_admin_bootstrapped.admin.models import SortableInline
-from django.forms import TextInput, Textarea, ImageField
+from django.forms import TextInput, Textarea
 from django.db import models
 from django.contrib.admin.widgets import AdminFileWidget
 from form_utils.widgets import ImageWidget
@@ -86,7 +86,7 @@ class IngredienteAdmin(admin.ModelAdmin):
     search_fields = ('codigo', 'nombre' )
     list_display = ('codigo', 'nombre', 'unidadDeMedida', 'precio', 'stockActual', 'stockMinimo')
     list_filter = ('codigo', 'nombre', 'unidadDeMedida', 'precio', 'stockActual', 'stockMinimo') 
-    fields =('codigo','nombre','tipoIngrediente','unidadDeMedida','imagen','stockActual','stockMinimo','precio')
+    fields =('codigo','nombre','tipoIngrediente','unidadDeMedida','imagen','stockActual','stockMinimo','stockCorte','precio')
     readonly_fields =('codigo',)
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'100'})},

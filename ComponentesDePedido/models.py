@@ -32,6 +32,7 @@ class Version(models.Model):
     def __unicode__(self):
         return self.nombre
     class Meta:
+        verbose_name = "Versión"
         verbose_name_plural = "Versiones"
     
 
@@ -68,6 +69,7 @@ class Ingrediente(models.Model):
     imagen = models.ImageField(upload_to='imagenes', verbose_name='Vista Previa')
     stockActual = models.IntegerField(verbose_name = "Stock Actual")
     stockMinimo = models.IntegerField(verbose_name = "Stock Mínimo")
+    stockCorte = models.IntegerField(verbose_name = "Stock Corte")
     precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)" )
     
     
@@ -123,7 +125,8 @@ class Menu (models.Model):
     def __unicode__(self):
         return self.nombre
     class Meta:
-        verbose_name_plural = "Menu"
+        verbose_name='Menú'
+        verbose_name_plural = "Menús"
 
 class DetalleMenu (models.Model):
     menu = models.ForeignKey(Menu)
@@ -137,7 +140,8 @@ class DetalleMenu (models.Model):
         return u'%s, %s'%(self.menu.nombre, self.producto.nombre)
     
     class Meta:
-        verbose_name_plural = "Detalles de Menu"
+        verbose_name="Detalle de Menú"
+        verbose_name_plural = "Detalles de Menú"
     
 class Frecuencia (models.Model):
     descripcion = models.CharField(max_length = 200)
@@ -155,13 +159,14 @@ class Promocion (models.Model):
     descripcion = models.TextField(verbose_name='Descripción')
     imagen = models.ImageField(upload_to="imagenes", verbose_name="Imágen Promocion")
     precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name ="Precio($)")
-    stock = models.IntegerField (blank=True )
+    stock = models.IntegerField (blank=True, null=True)
     tiempoPreparacion = models.IntegerField(verbose_name = "Tiempo estimado de preparación(Minutos)")
     estado = models.BooleanField(default=True)    
     
     def __unicode__(self):
         return self.nombre
     class Meta:
+        verbose_name = "Promoción"
         verbose_name_plural = "Promociones"
         
 class DiaSemana(models.Model):
@@ -194,7 +199,7 @@ class DetallePromocionProducto(models.Model):
     promocion = models.ForeignKey(Promocion)
     tipoProducto = models.ForeignKey(TipoProducto, verbose_name = 'Tipo de Producto')    
     producto = models.ForeignKey(Producto)
-    versionProducto = models.ForeignKey(Clasificacion, verbose_name = "Version de Producto")
+    versionProducto = models.ForeignKey(Clasificacion, verbose_name = "Versiones de Producto")
     cantidad = models.IntegerField ()
     
     class Meta:

@@ -8,7 +8,7 @@ from form_utils.widgets import ImageWidget
 
 class TelefonoSucursalInLine(admin.StackedInline, SortableInline):
     model = TelefonoSucursal
-    verbose_name_plural = "Telefonos de Sucursales"
+    verbose_name_plural = "Teléfonos de Sucursales"
     extra = 1
 
 class SucursalAdmin(admin.ModelAdmin):
