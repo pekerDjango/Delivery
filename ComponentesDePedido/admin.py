@@ -19,7 +19,7 @@ from ComponentesDePedido.models import DiaSemana
 from django.contrib import admin
 from django.forms import ModelForm
 from django_admin_bootstrapped.admin.models import SortableInline
-from django.forms import TextInput, Textarea
+from django.forms import TextInput, Textarea, SelectMultiple
 from django.db import models
 from django.contrib.admin.widgets import AdminFileWidget
 from form_utils.widgets import ImageWidget
@@ -131,7 +131,11 @@ class DetallePromocionMenuInline(admin.StackedInline, SortableInline):
 class ProgramacionInline(admin.StackedInline, SortableInline):
     model = Programacion
     extra = 1
-    max_num = 1    
+    max_num = 1
+    filter_horizontal = ("diaSemana",)
+    formfield_overrides = {
+                           models.ManyToManyField: {'widget': SelectMultiple(attrs={'width':'100'})}
+                           }    
 
 class PromocionAdmin(admin.ModelAdmin):
     search_fields = ('codigo', 'nombre')
@@ -166,7 +170,7 @@ admin.site.register(DetalleIngredientes)
 admin.site.register(Producto, ProductoAdmin)
 admin.site.register(Menu, MenuAdmin)
 admin.site.register(Frecuencia)
-admin.site.register(Programacion)
+admin.site.register(Programacion,ProgramacionAdmin)
 admin.site.register(Promocion, PromocionAdmin)
 admin.site.register(Version, VersionAdmin)
 admin.site.register(DiaSemana)
