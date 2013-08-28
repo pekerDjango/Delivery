@@ -132,7 +132,7 @@ class ProgramacionInline(admin.StackedInline, SortableInline):
     model = Programacion
     extra = 1
     max_num = 1
-    filter_horizontal = ("diaSemana",)
+#    filter_horizontal = ("diaSemana",)
     formfield_overrides = {
                            models.ManyToManyField: {'widget': SelectMultiple(attrs={'width':'100'})}
                            }    
@@ -166,12 +166,12 @@ admin.site.register(Clasificacion, ClasificacionAdmin)
 admin.site.register(UnidadDeMedida, UnidadDeMedidaAdmin)
 admin.site.register(TipoProducto, TipoProductoAdmin)
 admin.site.register(Ingrediente, IngredienteAdmin)
-admin.site.register(DetalleIngredientes)
+#admin.site.register(DetalleIngredientes)
 admin.site.register(Producto, ProductoAdmin)
 admin.site.register(Menu, MenuAdmin)
 admin.site.register(Frecuencia)
-admin.site.register(Programacion,ProgramacionAdmin)
+#admin.site.register(Programacion,ProgramacionAdmin)
 admin.site.register(Promocion, PromocionAdmin)
 admin.site.register(Version, VersionAdmin)
 admin.site.register(DiaSemana)
-admin.site.register(DetalleVersiones, DetalleVersionesAdmin)
+#admin.site.register(DetalleVersiones, DetalleVersionesAdmin)
