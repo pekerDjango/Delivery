@@ -58,7 +58,7 @@
 	</div><!--/navbar -->
 	<hr>
 
-<div><!--/div header -->
+</div><!--/div header -->
 	<div class="container-fluid">
       <div class="row-fluid">
         <div class="span9">
@@ -81,11 +81,18 @@
           </div><!--/.well -->
         </div><!--/span-->
       </div><!--/row-->
-    </div><!-- /container-fluid-->
-      <hr>
-      <footer style="text-align:center" >
-           <p>Copyright 2013 Todos los derechos reservados - <strong>SiGeP S.A. </strong> - Córdoba - Argentina <br /></p>
-      </footer>
-  </div><!-- Fin container fluid-->
+  
+  {% block contentInferior%}
+  {% endblock %}
+     
+    </div><!-- Fin container fluid-->
+    <br>
+
+    <hr>
+  <footer style="text-align:center" >
+        <p>Copyright 2013 Todos los derechos reservados - <strong>SiGeP S.A. </strong> - Córdoba - Argentina <br /></p>
+  </footer>
+   
+
 </body>
 </html>
