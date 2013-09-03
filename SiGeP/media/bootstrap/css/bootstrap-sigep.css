@@ -1,0 +1,53 @@
+/*!
+ * TiendaDIN CSS Theme
+ *
+ */
+ body{margin: 20px 0px 0px 0px;}
+ a{color: #333333;}
+ hr{border-top: 1px solid #777777;}
+ #header hr{margin: 0px; padding: 0px;}
+.navbar .brand {
+    color: #000000;
+    font-size: 30px;
+    font-weight: bold;
+}
+.navbar-inner {
+    background-color: #ffffff;
+    background-image: none;
+    background-repeat: none;
+    border: none;
+    border-radius: none;
+    box-shadow: none;
+    min-height: 40px;
+    padding: 0px;
+}
+.accordion-group {
+    border: none;
+    border-radius: 4px 4px 4px 4px;
+    margin-bottom: none;
+}
+.accordion-heading .accordion-toggle {
+    display: block;
+    padding: 0px;
+}
+blockquote{border-left: 1px solid #dadada;}
+.modal {border-radius: 0px;}
+.navbar {margin-bottom: 0px;}
+ul.nav > li{height: 43px;}
+.navbar .nav{margin: 9px 10px 0px 0px;}
+.navbar .nav > li > a:focus,
+.navbar .nav > li > a:hover {border-bottom: 3px solid black;padding-bottom: 15px;}
+.navbar .nav > .active > a,
+.navbar .nav > .active > a:hover,
+.navbar .nav > .active > a:focus {background-color: #FFFFFF;border-bottom: 3px solid black;box-shadow: none;padding-bottom: 15px;}
+.navbar .nav li.dropdown.open > .dropdown-toggle,
+.navbar .nav li.dropdown.active > .dropdown-toggle,
+.navbar .nav li.dropdown.open.active > .dropdown-toggle { background-color: #FFFFFF;}
+.dropdown-menu li > a:hover,
+.dropdown-menu li > a:focus,
+.dropdown-submenu:hover > a {background-color: #e5e5e5;background-image: none;color: #333333;}
+.dropdown-menu .active > a,
+.dropdown-menu .active > a:hover {background-color: #E5E5E5;background-image: none;color: #333333;}
+.nav-pills > li > a {border-radius: 0px; margin-bottom: 0px;}
+.nav-pills .dropdown-menu {border-radius: 0px;margin-top: 12px;}
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input { border-radius: 0px;color: #555555;display: inline-block;font-size: 14px;height: none;line-height: 20px;margin-bottom: 10px;padding: 4px 6px;vertical-align: middle;}

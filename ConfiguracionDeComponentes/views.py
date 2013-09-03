@@ -1,8 +1,14 @@
+#encoding:utf-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from ConfiguracionDeComponentes.forms import LoginForm
 from django.contrib.auth import login,logout,authenticate
 from django.http import HttpResponseRedirect
+
+def index_view(request):  
+    mensaje = "Aquí va carrousel"
+    ctx = {'msg':mensaje}
+    return render_to_response('index.html',ctx,context_instance=RequestContext(request))
 
 def login_view(request):
     mensaje = ""

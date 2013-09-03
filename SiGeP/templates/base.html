@@ -5,27 +5,70 @@
 	<title>SiGeP</title>
 	 <link href="/media/bootstrap/css/bootstrap.css" rel="stylesheet">
      <link href="/media/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+     <link href="/media/bootstrap/css/bootstrap-sigep.css" rel="stylesheet">
+     <link href="/media/bootstrap/css/custom.css" rel="stylesheet">
     <script src="/media/js/jquery.js"></script>
     <script src="/media/bootstrap/js/bootstrap.js"></script>
-    <style type="text/css">
+  <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+            
+    </style>
 </head>
 <body>
-
-	<div class="navbar">
+    <div id="header">
+<!--    <div class="container">-->
+	<div class="navbar ">
 		<div class="navbar-inner">
 			<div class="container-fluid">
+			    <a class="brand" href="{% url "vista_index" %}">Home</a>
 				<ul class="nav nav-pills">
-					<li>Home</li>
-					<li>Productos</li>
-					<li>Pedidos</li>
-					<li>Promociones</li>
-					<li>Sucursales</li>
-					<li>Contacto</li>
+					<li><a href="">Productos</a></li>					
+					<li><a href="">Pedido</a></li>
+					<li><a href="">Promociones</a></li>
+					<li><a href="">Sucursales</a></li>
+					<li><a href="">Contacto</a></li>
 				</ul>
+				      <div class="social">
+                <a class="" href="http://www.facebook.com/federicopeker"><img src="/media/imagenes/base/fb.png"></a>
+                <a class="" href="https://twitter.com/federicopeker"><img src="/media/imagenes/base/tw.png"></a>
+            </div>
 			</div>
 		</div>
 	</div>
-
-	
+	<hr>
+	</div>
+	<div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span9">
+          <div class="hero-unit">
+            {% block content %}
+            {% endblock%}
+          </div>
+        </div><!--/span-->
+        
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list" id="wellAux1">
+              <li class="nav-header"></li>              
+            </ul>
+          </div><!--/.well -->
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list" id="wellAux2">
+              <li class="nav-header"></li>              
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+      </div><!--/row-->
+      <hr>
+      <footer style="text-align:center" >
+           <p>Copyright 2013 Todos los derechos reservados - <strong>SiGeP S.A. </strong> - Córdoba - Argentina <br /></p>
+      </footer>
+  </div><!-- Fin container fluid-->
 </body>
 </html>
