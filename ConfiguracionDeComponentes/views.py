@@ -5,10 +5,8 @@ from ConfiguracionDeComponentes.forms import LoginForm
 from django.contrib.auth import login,logout,authenticate
 from django.http import HttpResponseRedirect
 
-def index_view(request):  
-    mensaje = "Aquí va carrousel"
-    ctx = {'msg':mensaje}
-    return render_to_response('index.html',ctx,context_instance=RequestContext(request))
+def index_view(request):     
+    return render_to_response('index.html', context_instance=RequestContext(request))
 
 def login_view(request):
     mensaje = ""
@@ -23,7 +21,7 @@ def login_view(request):
                 usuario = authenticate(username=username,password=password)
                 if usuario is not None and usuario.is_active:
                     login(request,usuario)
-                    return HttpResponseRedirect('/indexAdmin')
+                    return HttpResponseRedirect('/')
                 else:
                     mensaje = "usuario y/o password incorrecto"
         form = LoginForm()
