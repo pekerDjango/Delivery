@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %} Login {% endblock %}
+{% block breadcrumbs %}
+<a href="/">Home</a>
+       >    
+<a href="{% url "vista_pedidoInformacion" %}"> Pedido</a>
+{% endblock %}
+{% block content %}
+<h4>¿Este pedido es para Entregar o para Llevar?</h4>
+{% if servicios %}
+{% for s in servicios %}
+<input type="radio" name="servicios" value={{s.nombre}}>
+{{s.nombre}}
+{% endfor %}
+{% endif %}
+{% endblock %}
