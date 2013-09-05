@@ -13,4 +13,16 @@
 {{s.nombre}}
 {% endfor %}
 {% endif %}
+<h4>Indicanos en donde estas, para buscar la sucursal más cercana:</h4>
+{% if tipologias %}
+{% for t in tipologias %}
+<input type="radio" name="tipologias" value={{t.nombre}}/>
+{{t.nombre}}
+{% endfor %}
+{% endif %}
+<form action='.' method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+    <button type="submit"  class="btn btn-small btn-primary">Iniciar Pedido</button>   
+</form> 
 {% endblock %}
