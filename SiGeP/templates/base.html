@@ -47,6 +47,7 @@
       </div><!--/span3 -->
  <div class="login">
           {% if user.is_authenticated %}
+           {{ user.username }}|
           <a href="{% url "vista_logout" %}"> Cerrar Sesion </a>
           {% else %}
           <a href="{% url "vista_login" %}"> Login </a>
@@ -62,6 +63,7 @@
 <div class="breadcrumbs">
 {% block breadcrumbs %}
 {% endblock %}
+<hr>
 </div> 
 	<div class="container-fluid">
       <div class="row-fluid">
@@ -73,16 +75,8 @@
         </div><!--/span-->
         
         <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list" id="wellAux1">
-              <li class="nav-header"></li>              
-            </ul>
-          </div><!--/.well -->
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list" id="wellAux2">
-              <li class="nav-header"></li>              
-            </ul>
-          </div><!--/.well -->
+          {% block panelAux %}
+            {% endblock%}
         </div><!--/span-->
       </div><!--/row-->
   

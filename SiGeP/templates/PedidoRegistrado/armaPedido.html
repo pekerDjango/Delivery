@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %} Login {% endblock %}
+{% block breadcrumbs %}
+<a href="/">Home</a>
+       >    
+<a href="{% url "vista_pedidoInformacion" %}"> Pedido</a>
+>
+<a href="{% url "vista_armaTuPedido" %}"> Arma Tu Pedido</a>
+{% endblock %}
+{% block content %}
+{% if domicilio  %}
+Direccion<p>{% domicilio.direccion %}</p>
+{% endif %}
+{% endblock %}
