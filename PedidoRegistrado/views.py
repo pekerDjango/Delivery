@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from PedidoRegistrado.forms import DomicilioSearchForm
 from django.http import HttpResponseRedirect
+from PedidoRegistrado.models import DomicilioSearch
 
 def pedidoInformacion_view(request):
     if request.method == "POST":
@@ -22,6 +23,8 @@ def pedidoInformacion_view(request):
     return render_to_response('PedidoRegistrado/pedidoInformacion.html',ctx, context_instance=RequestContext(request))
 
 def armaTuPedido_view(request):
-    domicilio =   request.session['domicilio']
+    dom =   request.session['domicilio']
+    domicilio = DomicilioSearch.objects.get(id=dom)
+    print domicilio
     ctx = {'domicilio':domicilio}   
     return render_to_response('PedidoRegistrado/armaPedido.html',ctx,context_instance=RequestContext(request))
