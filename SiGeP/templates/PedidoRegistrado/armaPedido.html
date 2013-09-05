@@ -1,14 +1,31 @@
 {% extends "base.html" %}
 {% block title %} Login {% endblock %}
 {% block breadcrumbs %}
-<a href="/">Home</a>
-       >    
-<a href="{% url "vista_pedidoInformacion" %}"> Pedido</a>
->
-<a href="{% url "vista_armaTuPedido" %}"> Arma Tu Pedido</a>
+<ul class="breadcrumb">
+<li><a href="/">Home</a>  <span class="divider">></span> </li>
+<li><a href="{% url "vista_pedidoInformacion" %}"> Pedido</a> <span class="divider">></span> </li>
+<li><a href="{% url "vista_armaTuPedido" %}"> Arma Tu Pedido</a></li>
+</ul>
 {% endblock %}
 {% block content %}
-{% if domicilio  %}
-Direccion <p>{{% domicilio.direccion %}}</p> 
+{% endblock %}
+{% block panelAux %}
+<div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Mi Direccion</li>
+              <br><p align="justify">
+               {% if domicilio  %}
+ <p><strong>Direccion:</strong>{{domicilio.direccion}},{{domicilio.numero_direccion}},{{domicilio.barrio}},{{domicilio.localidad}},{{domicilio.codigo_postal}}</p>
+ <hr>
+ <p><strong>Sucursal:</strong></p>
+
 {% endif %}
+              </p>
+            </ul>
+          </div><!--/.well -->
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list" id="ProductosNuevos">
+              <li class="nav-header">Nuevos </li>              
+            </ul>
+          </div><!--/.well -->
 {% endblock %}

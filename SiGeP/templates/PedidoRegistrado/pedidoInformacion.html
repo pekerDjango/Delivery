@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block title %} Login {% endblock %}
 {% block breadcrumbs %}
-<a href="/">Home</a>
-       >    
-<a href="{% url "vista_pedidoInformacion" %}"> Pedido</a>
+<ul class="breadcrumb">
+<li><a href="/">Home</a>  <span class="divider">></span> </li>
+<li><a href="{% url "vista_pedidoInformacion" %}"> Pedido</a>  <span class="divider">></span> </li>
+</ul>
 {% endblock %}
 {% block content %}
 <h4>¿Este pedido es para Entregar o para Llevar?</h4>

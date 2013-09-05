@@ -27,4 +27,4 @@ def armaTuPedido_view(request):
     domicilio = DomicilioSearch.objects.get(id=dom)
     print domicilio
     ctx = {'domicilio':domicilio}   
-    return render_to_response('PedidoRegistrado/armaPedido.html',ctx,context_instance=RequestContext(request))
+    return render_to_response('PedidoRegistrado/armaPedido.html',ctx, context_instance=RequestContext(request))
