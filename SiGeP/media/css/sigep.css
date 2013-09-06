@@ -1,0 +1,11 @@
+/*!
+ * SiGeP CSS para la pagina
+ *
+ */
+/* Home */
+.social{margin: 15px 0 0 0;padding: 0;float: right;height: 37px;}
+.social > a{margin: 0 10px 0 0;padding: 0 0 16px;}
+.social > a:hover{border-bottom: 3px solid black;}
+.login{margin: 15px 0 0 0;padding: 0;float: right;height: 37px;}
+.login> a{margin: 0 10px 0 0;padding: 0 0 16px;}
+.login > a:hover{border-bottom: 3px solid black;}

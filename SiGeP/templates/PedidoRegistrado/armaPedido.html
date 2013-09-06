@@ -2,30 +2,136 @@
 {% block title %} Login {% endblock %}
 {% block breadcrumbs %}
 <ul class="breadcrumb">
-<li><a href="/">Home</a>  <span class="divider">></span> </li>
-<li><a href="{% url "vista_pedidoInformacion" %}"> Pedido</a> <span class="divider">></span> </li>
-<li><a href="{% url "vista_armaTuPedido" %}"> Arma Tu Pedido</a></li>
+    <li>
+        <a href="/">Home</a><span class="divider">></span>
+    </li>
+    <li>
+        <a href="{% url "vista_pedidoInformacion" %}"> Pedido</a><span class="divider">></span>
+    </li>
+    <li>
+        <a href="{% url "vista_armaTuPedido" %}"> Arma Tu Pedido</a>
+    </li>
 </ul>
 {% endblock %}
 {% block content %}
+<ul class="nav nav-pills">
+    <li class="active">
+        <a href="#home" data-toggle="tab">Ver Todo</a>
+    </li>
+    <li>
+        <a href="#productos" data-toggle="tab">Productos más solicitados</a>
+    </li>
+    <li>
+        <a href="#lomos" data-toggle="tab">Lomos</a>
+    </li>
+    <li>
+        <a href="#pizzas" data-toggle="tab">Pizzas</a>
+    </li>
+    <li>
+        <a href="#menu" data-toggle="tab">Menu</a>
+    </li>
+    <li>
+        <a href="#arma" data-toggle="tab">Arma tu Lomo</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="home">
+        <div class="well">
+            <a href="#productos" data-toggle="tab" ><img src="/media/imagenes/armaTuPedido/productosSolicitados.png" alt="Productos más Solicitados" />Productos más Solicitados</a>
+        </div>
+        <div class="well">
+            <a href="#lomos" data-toggle="tab" >Lomos</a>
+        </div>
+        <div class="well">
+            <a href="#pizzas" data-toggle="tab" ><img src="/media/imagenes/armaTuPedido/pizza.jpg" alt="Pizzas" width="140px" height="72px" /> Pizzas</a>
+        </div>
+        <div class="well">
+            <a href="#menu" data-toggle="tab" >Menu</a>
+        </div>
+        <div class="well">
+            <a href="#arma" data-toggle="tab" >Arma tu Lomo</a>
+        </div>
+    </div>
+    <div class="tab-pane" id="productos">
+        {% if productos %}
+        <table "table table-striped " cellspacing="5" cellpadding="5">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Producto</th>
+                    <th>Precio Unidad</th>
+                    <th>Cantidad</th>
+                    <th>Carrito</th>
+                </tr>
+            </thead>
+            {% for p in productos %}
+            {% if detalleProducto %}
+            {% for d in detalleProducto %}
+            {% if d.producto = p %}
+            <tbody>
+                <tr>
+                    <th><img src="/media/{{d.imagenProducto}}" alt="" width="50px" heigth="50px" /></th>
+                    <th> {{p.nombre}} </th>
+                    <th> {{d.precio}} </th>
+                    <th>
+                    <select name="cantidad" id="cantidad" style="width:50px">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select></th>
+                    <th><a class="btn" href="{% url "vista_armaTuPedido" %}"><i class="icon-shopping-cart"></i></a></th>
+                </tr>
+            </tbody>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+        </table>
+
+        {% endif %}
+    </div>
+    <div class="tab-pane" id="lomos">
+        lomos
+    </div>
+    <div class="tab-pane" id="pizzas">
+        pizzas
+    </div>
+    <div class="tab-pane" id="menu">
+        menu
+    </div>
+    <div class="tab-pane" id="arma">
+        arma tu gran lomo
+    </div>
+</div>
 {% endblock %}
 {% block panelAux %}
 <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">Mi Direccion</li>
-              <br><p align="justify">
-               {% if domicilio  %}
- <p><strong>Direccion:</strong>{{domicilio.direccion}},{{domicilio.numero_direccion}},{{domicilio.barrio}},{{domicilio.localidad}},{{domicilio.codigo_postal}}</p>
- <hr>
- <p><strong>Sucursal:</strong></p>
+    <ul class="nav nav-list">
+        <li class="nav-header">
+            Mi Direccion
+        </li>
+        <br>
+        <p align="justify">
+            {% if domicilio  %}
+        <p>
+            <strong>Direccion:</strong>{{domicilio.direccion}},{{domicilio.numero_direccion}},{{domicilio.barrio}},{{domicilio.localidad}},{{domicilio.codigo_postal}}
+        </p>
+        <hr>
+        <p>
+            <strong>Sucursal:</strong>
+        </p>
 
-{% endif %}
-              </p>
-            </ul>
-          </div><!--/.well -->
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list" id="ProductosNuevos">
-              <li class="nav-header">Nuevos </li>              
-            </ul>
-          </div><!--/.well -->
+        {% endif %}
+        </p>
+    </ul>
+</div><!--/.well -->
+<div class="well sidebar-nav">
+    <ul class="nav nav-list" id="ProductosNuevos">
+        <li class="nav-header">
+            Nuevos
+        </li>
+    </ul>
+</div><!--/.well -->
 {% endblock %}

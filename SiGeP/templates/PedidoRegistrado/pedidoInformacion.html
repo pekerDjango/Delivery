@@ -7,23 +7,24 @@
 </ul>
 {% endblock %}
 {% block content %}
-<h4>¿Este pedido es para Entregar o para Llevar?</h4>
+<h5>¿Este pedido es para Entregar o para Llevar?</h5>
 {% if servicios %}
+<div class="btn-group" data-toggle="buttons-radio">
 {% for s in servicios %}
-<input type="radio" name="servicios" value={{s.nombre}}>
-{{s.nombre}}
+<button type="button" class="btn btn-primary">{{s.nombre}}</button>
 {% endfor %}
+</div>
 {% endif %}
-<h4>Indicanos en donde estas, para buscar la sucursal más cercana:</h4>
+<h5>Indicanos en donde estas, para buscar la sucursal más cercana:</h5>
 {% if tipologias %}
 {% for t in tipologias %}
 <input type="radio" name="tipologias" value={{t.nombre}}/>
 {{t.nombre}}
 {% endfor %}
 {% endif %}
-<form action='.' method='POST' enctype="multipart/form-data">
+<form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_table }}
-    <button type="submit"  class="btn btn-small btn-primary pull-right">Iniciar Pedido</button>   
+        {{ form.as_p }}
+<button type="submit"  class="btn btn-small btn-primary pull-right">Iniciar Pedido</button> 
 </form> 
 {% endblock %}
