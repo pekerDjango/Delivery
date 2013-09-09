@@ -18,17 +18,30 @@
 
         <div class="item">
             <div class="header">
-                <a href="{% url "vista_productosSolicitados" %}"  ><img src="/media/imagenes/armaTuPedido/productosSolicitados.png" alt="Productos más Solicitados" />
+                <a href="#"  ><img src="/media/imagenes/armaTuPedido/productosSolicitados.png" alt="Productos más Solicitados" />
                 <div class="column">
                     Productos más Solicitados
                 </div> </a>
             </div>
         </div>
+        
+        {% if tipoProducto %}        
+        {% for t in tipoProducto %}
         <div class="item">
+            <div class="header">
+                <a href="/pedido/armaTuPedido/productosSolicitados/{{t.codigo}}/" ><img src="/media/imagenes/armaTuPedido/pizza.jpg" alt="Pizzas" />
+                <div class="column">
+                  {{t.nombre}}
+                </div> </a>
+            </div>
+        </div>
+        {% endfor %}
+       {% endif %}  
+       <div class="item">
             <div class="header">
                 <a href="#lomos" ><img src="/media/imagenes/armaTuPedido/productosSolicitados.png" alt="Productos más Solicitados" />
                 <div class="column">
-                    Lomos
+                    Menu
                 </div> </a>
             </div>
         </div>
@@ -36,22 +49,10 @@
             <div class="header">
                 <a href="#pizzas" ><img src="/media/imagenes/armaTuPedido/pizza.jpg" alt="Pizzas" />
                 <div class="column">
-                   Pizzas
+                   Promociones
                 </div> </a>
             </div>
-        </div>
-        {% if tipoProducto %}        
-        {% for t in tipoProducto %}
-        <div class="item">
-            <div class="header">
-                <a href="{% url "vista_productosSolicitados" %}" ><img src="/media/imagenes/armaTuPedido/pizza.jpg" alt="Pizzas" />
-                <div class="column">
-                  {{t.nombre}}
-                </div> </a>
-            </div>
-        </div>
-        {% endfor %}
-       {% endif %}     
+        </div>   
  
 {% endblock %}
 {% block panelAux %}

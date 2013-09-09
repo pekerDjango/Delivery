@@ -31,10 +31,11 @@ def armaTuPedido_view(request):
     ctx = {'domicilio':domicilio, 'tipoProducto': tipoProducto}   
     return render_to_response('PedidoRegistrado/armaPedido.html',ctx, context_instance=RequestContext(request))
 
-def productosSolicitados_view(request):
+def productosSolicitados_view(request, codigo):
     dom =   request.session['domicilio']
     domicilio = DomicilioSearch.objects.get(id=dom)    
-    productos = Producto.objects.all()
+    t= TipoProducto.objects.get(codigo=codigo) 
+    productos = Producto.objects.filter(tipoProducto=t.codigo)
     detalleProducto = DetalleVersiones.objects.all()
     ctx = {'dommicilio':domicilio, 'productos':productos, 'detalleProducto':detalleProducto}   
     return render_to_response('PedidoRegistrado/productosSolicitados.html',ctx, context_instance=RequestContext(request))
