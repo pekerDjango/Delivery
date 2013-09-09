@@ -5,7 +5,7 @@ from django.template import RequestContext
 from PedidoRegistrado.forms import DomicilioSearchForm
 from django.http import HttpResponseRedirect
 from PedidoRegistrado.models import DomicilioSearch
-from ComponentesDePedido.models import Producto, DetalleVersiones
+from ComponentesDePedido.models import Producto, DetalleVersiones, TipoProducto
 
 def pedidoInformacion_view(request):
     if request.method == "POST":
@@ -25,9 +25,10 @@ def pedidoInformacion_view(request):
 
 def armaTuPedido_view(request):
     dom =   request.session['domicilio']
-    domicilio = DomicilioSearch.objects.get(id=dom)    
+    domicilio = DomicilioSearch.objects.get(id=dom) 
+    tipoProducto = TipoProducto.objects.all()   
     print domicilio
-    ctx = {'domicilio':domicilio}   
+    ctx = {'domicilio':domicilio, 'tipoProducto': tipoProducto}   
     return render_to_response('PedidoRegistrado/armaPedido.html',ctx, context_instance=RequestContext(request))
 
 def productosSolicitados_view(request):
