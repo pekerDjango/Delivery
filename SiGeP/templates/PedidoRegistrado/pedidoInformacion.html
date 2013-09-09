@@ -22,9 +22,42 @@
 {{t.nombre}}
 {% endfor %}
 {% endif %}
-<form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
+<ul class="nav nav-pills">
+    <li class="active">
+        <a href="#casa" data-toggle="tab"><img src="/media/imagenes/armaTuPedido/casa.jpg" alt="" width="60px" height="60px"/>Casa</a>
+    </li>
+    <li>
+        <a href="#depto" data-toggle="tab"><img src="/media/imagenes/armaTuPedido/depto.jpg" alt="" width="60px" height="60px"/>Departamento</a>
+    </li>
+    <li>
+        <a href="#otro" data-toggle="tab"><img src="/media/imagenes/armaTuPedido/otro.jpg" alt="" width="60px" height="60px"/>Otro</a>
+    </li> 
+</ul>
+<div class="tab-content">
+    <div class="tab-pane active" id="casa">
+        <br />
+       <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-<button type="submit"  class="btn btn-small btn-primary pull-right">Iniciar Pedido</button> 
+<button type="submit"  class="btn btn-primary pull-right">Iniciar Pedido</button> 
 </form> 
+    </div>
+    <div class="tab-pane" id="depto">
+    <br />
+       <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+<button type="submit"  class="btn  btn-primary pull-right">Iniciar Pedido</button> 
+</form> 
+    </div>
+    <div class="tab-pane" id="otro">
+        <br />
+       <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+<button type="submit"  class="btn  btn-primary pull-right">Iniciar Pedido</button> 
+</form> 
+    </div>
+</div>
+
 {% endblock %}

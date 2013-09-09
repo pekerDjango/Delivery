@@ -9,3 +9,10 @@
 .login{margin: 15px 0 0 0;padding: 0;float: right;height: 37px;}
 .login> a{margin: 0 10px 0 0;padding: 0 0 16px;}
 .login > a:hover{border-bottom: 3px solid black;}
+.item{border:1px solid #d9d9d9;margin:0 0 10px 0;background-color:#e6e6e6}
+.header {position: relative;background-color: #fff;}
+.header .column { float: right;width: 452px;padding: 10px 0;}
+.header img {width:140px; height:72px;}
+.header a{display: block; overflow:hidden; cursor: pointer; }
+
+

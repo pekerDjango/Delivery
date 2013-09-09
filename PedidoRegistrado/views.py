@@ -25,9 +25,15 @@ def pedidoInformacion_view(request):
 
 def armaTuPedido_view(request):
     dom =   request.session['domicilio']
-    domicilio = DomicilioSearch.objects.get(id=dom)
+    domicilio = DomicilioSearch.objects.get(id=dom)    
+    print domicilio
+    ctx = {'domicilio':domicilio}   
+    return render_to_response('PedidoRegistrado/armaPedido.html',ctx, context_instance=RequestContext(request))
+
+def productosSolicitados_view(request):
+    dom =   request.session['domicilio']
+    domicilio = DomicilioSearch.objects.get(id=dom)    
     productos = Producto.objects.all()
     detalleProducto = DetalleVersiones.objects.all()
-    print domicilio
-    ctx = {'domicilio':domicilio, 'productos':productos, 'detalleProducto':detalleProducto}   
-    return render_to_response('PedidoRegistrado/armaPedido.html',ctx, context_instance=RequestContext(request))
+    ctx = {'dommicilio':domicilio, 'productos':productos, 'detalleProducto':detalleProducto}   
+    return render_to_response('PedidoRegistrado/productosSolicitados.html',ctx, context_instance=RequestContext(request))
