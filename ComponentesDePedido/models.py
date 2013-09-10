@@ -50,12 +50,17 @@ class UnidadDeMedida(models.Model):
     
 class TipoProducto(models.Model):
     """Clase TipoProducto 
-    Atributos: CódigoTipoProducto, Nombre """
+    Atributos: CódigoTipoProducto, Nombre,Imagen """
     codigo = models.AutoField(primary_key=True, verbose_name = "Código")
     nombre = models.CharField(max_length = 50)
+    imagen = models.ImageField(upload_to='imagenes', verbose_name='Vista Previa')
     
     def __unicode__(self):
         return self.nombre
+    def Vista_Previa(self):
+        return '<a href="/media/%s"><img src="/media/%s" width=50px heigth=50px/></a>'%(self.imagen,self.imagen)
+    
+    Vista_Previa.allow_tags = True
     class Meta:
         verbose_name_plural = "Tipos de Productos"
     

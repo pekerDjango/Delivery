@@ -70,10 +70,10 @@ class UnidadDeMedidaAdmin(admin.ModelAdmin):
 
 class TipoProductoAdmin(admin.ModelAdmin):
     search_fields = ('codigo', 'nombre')
-    list_display = ('codigo', 'nombre')
+    list_display = ('codigo', 'nombre','Vista_Previa')
     list_filter = ('codigo', 'nombre')
     ordering=('codigo','nombre',)
-    fields =('codigo','nombre')
+    fields =('codigo','nombre','imagen')
     readonly_fields =('codigo',)
 
 class ClasificacionAdmin(admin.ModelAdmin):

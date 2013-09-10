@@ -5,7 +5,7 @@ from django.template import RequestContext
 from PedidoRegistrado.forms import DomicilioSearchForm
 from django.http import HttpResponseRedirect
 from PedidoRegistrado.models import DomicilioSearch
-from ComponentesDePedido.models import Producto, DetalleVersiones, TipoProducto
+from ComponentesDePedido.models import Producto, DetalleVersiones, TipoProducto, Menu, Promocion
 
 def pedidoInformacion_view(request):
     if request.method == "POST":
@@ -38,4 +38,26 @@ def productosSolicitados_view(request, codigo):
     productos = Producto.objects.filter(tipoProducto=t.codigo)
     detalleProducto = DetalleVersiones.objects.all()
     ctx = {'dommicilio':domicilio, 'productos':productos, 'detalleProducto':detalleProducto}   
+    return render_to_response('PedidoRegistrado/productosSolicitados.html',ctx, context_instance=RequestContext(request))
+
+def menuDisponibles_view(request):
+    dom =   request.session['domicilio']
+    domicilio = DomicilioSearch.objects.get(id=dom)    
+    menus = Menu.objects.all()
+    ctx = {'dommicilio':domicilio, 'menus':menus}   
+    return render_to_response('PedidoRegistrado/menuDisponibles.html',ctx, context_instance=RequestContext(request))
+
+def promocionDisponibles_view(request):
+    dom =   request.session['domicilio']
+    domicilio = DomicilioSearch.objects.get(id=dom)    
+    promos = Promocion.objects.all()
+    ctx = {'dommicilio':domicilio, 'promos':promos}   
+    return render_to_response('PedidoRegistrado/promosDisponibles.html',ctx, context_instance=RequestContext(request))
+
+def productosPopulares_view(request):
+    dom =   request.session['domicilio']
+    domicilio = DomicilioSearch.objects.get(id=dom)    
+    productos = Producto.objects.all()
+    detalleProducto = DetalleVersiones.objects.all()
+    ctx = {'dommicilio':domicilio, 'productos':productos, 'detalleProducto':detalleProducto}  
     return render_to_response('PedidoRegistrado/productosSolicitados.html',ctx, context_instance=RequestContext(request))

@@ -18,7 +18,7 @@
 
         <div class="item">
             <div class="header">
-                <a href="#"  ><img src="/media/imagenes/armaTuPedido/productosSolicitados.png" alt="Productos más Solicitados" />
+                <a href="{% url "vista_productosPopulares" %}"  ><img src="/media/imagenes/armaTuPedido/productosSolicitados.png" alt="Productos más Solicitados" />
                 <div class="column">
                     Productos más Solicitados
                 </div> </a>
@@ -29,7 +29,7 @@
         {% for t in tipoProducto %}
         <div class="item">
             <div class="header">
-                <a href="/pedido/armaTuPedido/productosSolicitados/{{t.codigo}}/" ><img src="/media/imagenes/armaTuPedido/pizza.jpg" alt="Pizzas" />
+                <a href="/pedido/armaTuPedido/productosSolicitados/{{t.codigo}}/" ><img src="/media/{{t.imagen}}" alt="{{t.nombre}}" />
                 <div class="column">
                   {{t.nombre}}
                 </div> </a>
@@ -39,15 +39,15 @@
        {% endif %}  
        <div class="item">
             <div class="header">
-                <a href="#lomos" ><img src="/media/imagenes/armaTuPedido/productosSolicitados.png" alt="Productos más Solicitados" />
+                <a href="{% url "vista_menuDisponibles" %}" ><img src="/media/imagenes/armaTuPedido/menu.jpg" alt="Menu" />
                 <div class="column">
-                    Menu
+                    Menú
                 </div> </a>
             </div>
         </div>
         <div class="item">
             <div class="header">
-                <a href="#pizzas" ><img src="/media/imagenes/armaTuPedido/pizza.jpg" alt="Pizzas" />
+                <a href="{% url "vista_promosDisponibles" %}"  ><img src="/media/imagenes/armaTuPedido/promocion.jpg" alt="Promocion" />
                 <div class="column">
                    Promociones
                 </div> </a>
