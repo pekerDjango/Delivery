@@ -13,6 +13,15 @@
 .header {position: relative;background-color: #fff;}
 .header .column { float: right;width: 452px;padding: 10px 0;}
 .header img {width:140px; height:72px;}
-.header a{display: block; overflow:hidden; cursor: pointer; }
+.header a{color:#0078ae; font-weight: bold; display: block; overflow:hidden; cursor: pointer; }
+.header a:hover,
+.header a:focus { color: #ffffff; background-color:#0078ae;}
+.header h2 {
+font-family: DominosFont,Arial,Helvetica,sans-serif;
+font-size: 18px;
+}
+#wrapper{width:200px;height150px;margin:auto;}
+.carousel-inner {text-align:center;}
+.carousel .item > img{display: inline-block;width:870px; height:350px;}
 
 

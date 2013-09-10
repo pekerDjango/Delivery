@@ -20,7 +20,7 @@
             <div class="header">
                 <a href="{% url "vista_productosPopulares" %}"  ><img src="/media/imagenes/armaTuPedido/productosSolicitados.png" alt="Productos más Solicitados" />
                 <div class="column">
-                    Productos más Solicitados
+                    <h2>Productos más Solicitados</h2>
                 </div> </a>
             </div>
         </div>
@@ -45,14 +45,14 @@
                 </div> </a>
             </div>
         </div>
-        <div class="item">
+    <!--    <div class="item">
             <div class="header">
                 <a href="{% url "vista_promosDisponibles" %}"  ><img src="/media/imagenes/armaTuPedido/promocion.jpg" alt="Promocion" />
                 <div class="column">
                    Promociones
                 </div> </a>
             </div>
-        </div>   
+        </div>-->   
  
 {% endblock %}
 {% block panelAux %}
@@ -61,13 +61,17 @@
         <li class="nav-header">
            Historicos de Pedidos
         </li>
+        <p align="justify">
+           No ha ingresado aún
+        <p>
     </ul>
 </div><!--/.well -->
 <div class="well sidebar-nav">
     <ul class="nav nav-list" id="ProductosNuevos">
         <li class="nav-header">
-           Tu pedido
+           Promociones Imperdibles
         </li>
+        <img src="/media/imagenes/armaTuPedido/promocion.jpg" alt="Promocion" />        
     </ul>
 </div><!--/.well -->
 <div class="well sidebar-nav">
