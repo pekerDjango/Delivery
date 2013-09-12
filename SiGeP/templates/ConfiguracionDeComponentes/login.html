@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block title %} Login {% endblock %}
 {% block breadcrumbs %}
-<a href="/">Home</a>
-       >    
-<a href="{% url "vista_login" %}"> Login </a>
+<ul class="breadcrumb">
+<li><a href="/">Home</a>  <span class="divider">></span> </li>
+<li>Login </li>
+</ul>
 {% endblock %}
 {% block content %}
 <form id='formularioLogin' action="." method='post'>
