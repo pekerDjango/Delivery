@@ -5,9 +5,10 @@
 <li><a href="/">Home</a>  <span class="divider">></span> </li>
 </ul>
 {% endblock %}
+
 {% block content %}
 
-<div id="myCarousel" class="carousel slide">
+<div id="myCarousel" class="carousel slide"  >
     <div class="carousel-inner">
       <div class="item">
         <img src="/media/imagenes/carousel/menu.jpg"    alt="">
@@ -38,14 +39,19 @@
   </div>
 {% endblock %}
 {% block panelAux %}
+<div class="well well-large" >
 <a href="http://www.quilmes.com.ar"  ><img src="/media/imagenes/publicidades/quilmes.jpg" alt="quilmes" /> </a> 
 <a href="http://www.coca-cola.com.ar"  ><img src="/media/imagenes/publicidades/cocacola.jpg" alt="cocacola" /></a>  
 <a href="http://www.mccain.com.ar" ><img src="/media/imagenes/publicidades/mccain.jpg" alt="mccain" /></a>   
+</div>
 {% endblock %}
+
 {% block contentInferior%}
  <hr>
+
   <div class="accordion" id="accordion2">
       <span class="span4">
+       <div class="well well-large">
           <div class="accordion-group">
                <div class="accordion-heading">
                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
@@ -58,12 +64,14 @@
                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, odio, corrupti, facilis, dolore possimus qui eligendi rem quae obcaecati perspiciatis similique voluptatum doloribus ex! Odio voluptas mollitia veniam esse molestias?
                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, optio, similique autem officia rerum suscipit. Odio, vel minima provident dolores voluptatum est ea ex cumque optio magni. Nemo, voluptates, hic.
                <br>
-               <a href="#" class="btn btn-primary"> Mas info</a>
+               <a href="#" class="btn btn-primary btn-block"> Mas info</a>
               </div>
                </div>
           </div>
+          </div>
       </span>
 <span class="span4">
+<div class="well well-large">
 <div class="accordion-group">
                <div class="accordion-heading">
                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
@@ -76,12 +84,14 @@
                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, odio, corrupti, facilis, dolore possimus qui eligendi rem quae obcaecati perspiciatis similique voluptatum doloribus ex! Odio voluptas mollitia veniam esse molestias?
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, optio, similique autem officia rerum suscipit. Odio, vel minima provident dolores voluptatum est ea ex cumque optio magni. Nemo, voluptates, hic.
                        <br>
-                        <a href="#" class="btn btn-primary"> Mas info</a>
+                        <a href="#" class="btn btn-primary btn-block"> Mas info</a>
                      </div>
                </div>
           </div>
+</div>
 </span>
 <span class="span4">
+<div class="well well-large">
 <div class="accordion-group">
                <div class="accordion-heading">
                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
@@ -95,10 +105,11 @@
                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, odio, corrupti, facilis, dolore possimus qui eligendi rem quae obcaecati perspiciatis similique voluptatum doloribus ex! Odio voluptas mollitia veniam esse molestias?
                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, optio, similique autem officia rerum suscipit. Odio, vel minima provident dolores voluptatum est ea ex cumque optio magni. Nemo, voluptates, hic.
                        <br>
-                        <a href="#" class="btn btn-primary"> Mas info</a>
+                        <a href="#" class="btn btn-primary btn-block"> Mas info</a>
                      </div>
                </div>
           </div>
+</div>
 </span>
 </div>
 {% endblock %}

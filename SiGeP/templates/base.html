@@ -8,7 +8,9 @@
      <link href="/media/bootstrap/css/bootstrap-sigep.css" rel="stylesheet">
     <link href="/media/css/sigep.css" rel="stylesheet">
     <script src="/media/js/jquery.js"></script>
-    <script src="/media/bootstrap/js/bootstrap.js"></script>     
+    <script src="/media/bootstrap/js/bootstrap.js"></script>  
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">   
   <style type="text/css">
       body {
         padding-top: 60px;
@@ -20,6 +22,7 @@
     </style>
 </head>
 <body>
+<a name="enlace1"></a>
 <div id="header">
 <!--    <div class="container">-->
 	<div class="navbar ">
@@ -49,7 +52,38 @@
            {{ user.username }}|
           <a href="{% url "vista_logout" %}"> Cerrar Sesion </a>
           {% else %}
+        
           <a href="{% url "vista_login" %}"> Login </a>
+          <!-- comienzo del model-->
+          <a href="#myModal" class="" data-toggle="modal"> <i class="icon-user"></i> Login here</a>
+            <div class="modal hide fade " id="myModal" aria-labelledby="modalLabel" aria-hidden="true">
+              <div class="modal-header">
+                <h3 id="modalLabel">Login</h3>
+              </div>
+              <div class="modal-body">
+                <form  class="form-horizontal">
+                  <div class="control-group">
+                <label for="nombre" class="control-label">Nombre de Usuario</label>
+                <div class="controls">
+                  <input type="text" placeholder="nombre de usuario" name="nombre">
+                </div>
+              </div>
+              <div class="control-group">
+                <label for="apellido" class="control-label">Contraseña</label>
+                <div class="controls">
+                  <input type="password" name="contraseña">
+                </div>
+              </div>
+                  <br><br>
+                  <button type="submit" class="btn btn-primary" >Login</button>
+                  <button type="reset" class="btn">Clear</button>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+              </div>
+            </div>
+            <!-- fin del model -->
           {% endif %}
           </div>
 				      
@@ -64,10 +98,10 @@
 {% endblock %}
 <!--<hr>-->
 </div> 
-	<div class="container-fluid">
+	<div class="container-fluid" >
       <div class="row-fluid">
         <div class="span9">
-          <div class="hero-unit">
+          <div class="hero-unit" style="overflow:hidden " >
             {% block content %}
             {% endblock%}
           </div>
@@ -87,7 +121,12 @@
 
     <hr>
   <footer style="text-align:center" >
-        <p>Copyright 2013 Todos los derechos reservados - <strong>SiGeP S.A. </strong> - Córdoba - Argentina <br /></p>
+    <div class="span12">
+      <div class="pull-right">
+       <a href="#enlace1"><i class="icon-hand-up"></i>Subir</a>
+      </div>
+          <p>Copyright 2013 Todos los derechos reservados - <strong>SiGeP S.A. </strong> - Córdoba - Argentina <br /></p>
+     </div>
   </footer>
    
 
