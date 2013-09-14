@@ -1,5 +1,5 @@
 from django.contrib import admin
-from PedidoRegistrado.models import Servicio, TipologiaVivienda, DomicilioSearch, Cliente, EstadoPedido, Pedido, EstadoDetallePedido, DetallePedido
+from PedidoRegistrado.models import Servicio, TipologiaVivienda, DomicilioSearch, Cliente, EstadoPedido, Pedido, DetallePedido
 from form_utils.widgets import ImageWidget
 from django.db import models
 from django.forms import TextInput, Textarea
@@ -38,15 +38,8 @@ class EstadoPedidoAdmin(admin.ModelAdmin):
         models.CharField: {'widget': TextInput(attrs={'size':'100'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
         models.ImageField: {'widget': ImageWidget},     
-    }
-    
-class EstadoDetallePedidoAdmin(admin.ModelAdmin):
-    formfield_overrides = {
-        models.CharField: {'widget': TextInput(attrs={'size':'100'})},
-        models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
-        models.ImageField: {'widget': ImageWidget},     
-    }
-    
+    }  
+
 class DetallePedidoInline(admin.StackedInline, SortableInline):
     model = DetallePedido
     extra = 1
@@ -69,5 +62,4 @@ admin.site.register(TipologiaVivienda, TipologiaViviendaAdmin)
 admin.site.register(DomicilioSearch, DomicilioSearchAdmin)
 admin.site.register(Cliente, ClienteAdmin)
 admin.site.register(EstadoPedido, EstadoPedidoAdmin)
-admin.site.register(EstadoDetallePedido, EstadoDetallePedidoAdmin )
 admin.site.register(Pedido, PedidoAdmin)

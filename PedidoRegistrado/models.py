@@ -2,7 +2,7 @@
 from django.db import models
 from RecursosDeEmpresa.models import Localidad, Barrio
 from django.contrib.auth.models import User
-from ComponentesDePedido.models import Producto
+from ComponentesDePedido.models import DetalleVersiones
 
 class Servicio(models.Model):
     """Clase Servicio
@@ -42,10 +42,12 @@ class DomicilioSearch(models.Model):
     depto = models.CharField(max_length=50, blank=True, null=True)
     codigo_postal = models.CharField(max_length=100, verbose_name="Código Postal")   
     localidad = models.ForeignKey(Localidad)
-    barrio = models.ForeignKey(Barrio)
-    
+    barrio = models.ForeignKey(Barrio)    
     def __unicode__(self):
         return self.direccion + str(self.numero_direccion)
+    class Meta:
+        verbose_name="Domicilio Cliente"        
+        verbose_name_plural = "Domicilios"
 
 class Cliente(models.Model):
     """Clase Cliente
@@ -61,40 +63,38 @@ class Cliente(models.Model):
     telefono_particular = models.CharField(max_length=100, help_text='Código de área + Nº. Ej.: 351-473-9643.', verbose_name="Teléfono Particular")
 #    usuario = models.OneToOneField(User)  
     def __unicode__(self):
-        return self.nombre + self.apellido
+        return u'%s, %s'%(self.nombre, self.apellido)
 
 class EstadoPedido(models.Model):
     """Clase Estado Pedido
     Atributos:nombre, descripcion"""
     nombre = models.CharField(max_length=100)
     descripcion = models.CharField(max_length=200)
+    def __unicode__(self):
+        return self.nombre
         
 class Pedido(models.Model):
     """Clase Pedido 
     Atributos:cliente, fechaPedido, hora_entrega, estado, servicio, tipologia_vivienda, precio_envio, precio_total"""
     cliente = models.ForeignKey(Cliente)
-    fechaPedido = models.DateField()
-    hora_entrega = models.TimeField()
+    fechaPedido = models.DateTimeField()
+    hora_entrega = models.TimeField(blank=True, null=True)
     estado = models.ForeignKey(EstadoPedido)
     servicio = models.ForeignKey(Servicio)
     tipologia_vivienda = models.ForeignKey(TipologiaVivienda)
-    precio_envio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Costo de Envio($)" )
-    precio_total = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Total($)" )
-    
-class EstadoDetallePedido(models.Model):
-    """Clase Estado de Detalle Pedido
-    Atributos:nombre, descripcion"""
-    nombre = models.CharField(max_length=100)
-    descripcion = models.CharField(max_length=200)
+    precio_envio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Costo de Envio($)" )    
+    def __unicode__(self):
+        return str(self.fechaPedido)    
     
 class DetallePedido(models.Model):
     """Clase Detalle de Pedido
     Atributos: pedido, cantidad, producto, estado, precio"""
     pedido = models.ForeignKey(Pedido)
     cantidad = models.IntegerField()
-    producto = models.ForeignKey(Producto)
-    estado = models.ForeignKey(EstadoDetallePedido)
+    producto = models.ForeignKey(DetalleVersiones)
     precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)" )
+    def __unicode__(self):
+        return u'%s, %s'%(self.pedido.nombre, self.producto.nombre)   
     
     
     
