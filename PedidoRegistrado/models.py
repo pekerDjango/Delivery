@@ -61,7 +61,7 @@ class Cliente(models.Model):
     sexo =  models.CharField(max_length=1, choices=sexo_choise)
     email = models.EmailField(max_length=50, help_text='to@example.com')
     telefono_particular = models.CharField(max_length=100, help_text='Código de área + Nº. Ej.: 351-473-9643.', verbose_name="Teléfono Particular")
-#    usuario = models.OneToOneField(User)  
+    usuario = models.OneToOneField(User)  
     def __unicode__(self):
         return u'%s, %s'%(self.nombre, self.apellido)
 
@@ -84,7 +84,22 @@ class Pedido(models.Model):
     tipologia_vivienda = models.ForeignKey(TipologiaVivienda)
     precio_envio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Costo de Envio($)" )    
     def __unicode__(self):
-        return str(self.fechaPedido)    
+        return str(self.fechaPedido)
+    def subTotal(self):
+        total = 0
+        for d in self.getDetallePedido():
+            total += (d.precio * d.cantidad)
+        return total
+    def precioTotal(self):
+        total = self.subTotal() + self.precio_envio
+        return total
+    def cantidadTotalProductos(self):
+        total = 0
+        for d in self.getDetallePedido():
+            total +=  d.cantidad
+        return total
+    def getDetallePedido(self):
+        return DetallePedido.objects.filter(pedido=self)                   
     
 class DetallePedido(models.Model):
     """Clase Detalle de Pedido
@@ -95,6 +110,9 @@ class DetallePedido(models.Model):
     precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)" )
     def __unicode__(self):
         return u'%s, %s'%(self.pedido.nombre, self.producto.nombre)   
+    def precioTotalUnidad(self):
+        total = (self.precio * self.cantidad)
+        return total
     
     
     

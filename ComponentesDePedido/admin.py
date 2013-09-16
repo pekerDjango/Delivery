@@ -42,10 +42,10 @@ class DetalleIngredientesInline(admin.StackedInline, SortableInline):
 class ProductoAdmin(admin.ModelAdmin):
     inlines = [DetalleVersionInline, DetalleIngredientesInline]
     search_fields = ('codigo', 'nombre', 'tipoProducto__nombre')
-    list_display = ('codigo', 'nombre' , 'tipoProducto', )
+    list_display = ('codigo', 'nombre' , 'tipoProducto', 'estado')
     list_filter = ('codigo', 'nombre', 'tipoProducto')
     ordering=('codigo','nombre',)
-    fields =('codigo','nombre', 'tiempoPreparacion', 'tipoProducto', 'version')
+    fields =('codigo','nombre', 'tiempoPreparacion', 'tipoProducto', 'version','estado')
     readonly_fields =('codigo',)
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'20'})},

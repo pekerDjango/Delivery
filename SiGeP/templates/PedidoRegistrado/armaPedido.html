@@ -9,7 +9,7 @@
         <a href="{% url "vista_pedidoInformacion" %}"> Pedido</a><span class="divider">></span>
     </li>
     <li>
-        <a href="{% url "vista_armaTuPedido" %}"> Arma Tu Pedido</a>
+        Arma Tu Pedido
     </li>
 </ul>
 {% endblock %}
@@ -57,7 +57,7 @@
 {% endblock %}
 {% block panelAux %}
 <div class="well sidebar-nav">
-    <ul class="nav nav-list" id="ProductosNuevos">
+    <ul class="nav nav-list" id="HistoricoPedido">
         <li class="nav-header">
            Historicos de Pedidos
         </li>
@@ -67,7 +67,7 @@
     </ul>
 </div><!--/.well -->
 <div class="well sidebar-nav">
-    <ul class="nav nav-list" id="ProductosNuevos">
+    <ul class="nav nav-list" id="Promociones">
         <li class="nav-header">
            Promociones Imperdibles
         </li>
@@ -75,7 +75,7 @@
     </ul>
 </div><!--/.well -->
 <div class="well sidebar-nav">
-    <ul class="nav nav-list">
+    <ul class="nav nav-list" id="Configuracion">
         <li class="nav-header">
            Configuración del Pedido
         </li>
@@ -83,14 +83,26 @@
         <p align="justify">
             {% if domicilio  %}
         <p>
-            <strong>Direccion:</strong>{{domicilio.direccion}},{{domicilio.numero_direccion}},{{domicilio.barrio}},{{domicilio.localidad}},{{domicilio.codigo_postal}}
+            <strong>Mi ubicación:</strong>{{domicilio.direccion}},{{domicilio.numero_direccion}},{{domicilio.barrio}},{{domicilio.localidad}},{{domicilio.codigo_postal}}
+             {% endif %}
         </p>
-        <hr>
+       
         <p>
-            <strong>Sucursal:</strong>
+            {% if sucursal  %}
+            <strong>Mi Sucursal:</strong>{{sucursal.nombre}},{{sucursal.direccion}}, {{sucursal.numero_direccion}},{{sucursal.barrio}}
+             {% endif %}
+        </p>
+         <p>
+          
+            <strong>Servicio Elegido:</strong>No ha seleccionado
+         
+        </p>
+         <p>
+     
+            <strong>Horario del pedido:</strong>No ha seleccionado
         </p>
 
-        {% endif %}
+       
         </p>
     </ul>
 </div><!--/.well -->

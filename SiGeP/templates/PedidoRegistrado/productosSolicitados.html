@@ -12,12 +12,14 @@
         <a href="{% url "vista_armaTuPedido" %}"> Arma Tu Pedido</a><span class="divider">></span>
     </li>
     <li>
-        <a href="#"> Productos </a>
+        Productos 
     </li>
 </ul>
 {% endblock %}
 {% block content %}
-
+<div class="cabecera">
+    <ul> <li><p>Información Dirección</p></li><li><p>Arma Tu pedido</p></li><li><p>Detalle de Pedido</p></li><li><p>Detalle de Pago y Entrega</p></li><li><p>Pedido Finalizado</p></li></ul>
+</div>
         {% if productos %}
         <table "table table-striped " cellspacing="5" cellpadding="5">
             <thead>
@@ -29,14 +31,13 @@
                     <th>Carrito</th>
                 </tr>
             </thead>
-            {% for p in productos %}
-            {% if detalleProducto %}
-            {% for d in detalleProducto %}
-            {% if d.producto = p %}
+            {% for p in productos %}     
+            {% for d in p.getDetalleVersiones %}
+           
             <tbody>
                 <tr>
                     <th><img src="/media/{{d.imagenProducto}}" alt="" width="50px" heigth="50px" /></th>
-                    <th> {{p.nombre}} {{d.clasificacion}} </th>
+                    <th> {{p.nombre}} {{d.clasificacion}}</th>
                     <th> ${{d.precio}} </th>
                     <th>
                     <select name="cantidad" id="cantidad" style="width:50px">
@@ -45,48 +46,89 @@
                         <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
-                    </select></th>
-                    <th><a class="btn" href="{% url "vista_armaTuPedido" %}"><i class="icon-shopping-cart"></i></a></th>
-                </tr>
+                    </select></th>           
+                    <th>{% if p.estado %}
+                        <a href="/pedido/armaTuPedido/productosPopulares/4/{{d.id}}/" class="btn" type="submit"><i class="icon-shopping-cart"></i></a>
+                        {% else %}
+                        <p style="color:#FF0000">No Disponible</p>
+                        {% endif %}
+                        </th>
+                </tr>               
             </tbody>
-            {% endif %}
-            {% endfor %}
-            {% endif %}
+            
+            {% endfor %}           
             {% endfor %}
         </table>
-
         {% endif %}
         <a class="btn btn-danger"  href="#">Cancelar </a>
         <a class="btn "  href="{% url "vista_armaTuPedido" %}">Volver </a>
-        <a class="btn btn-primary pull-right"  href="#">Continuar</a>
+        <a class="btn btn-primary pull-right"  href="{% url "vista_detallePedido" %}">Continuar</a>
 {% endblock %}
 {% block panelAux %}
 <div class="well sidebar-nav">
-    <ul class="nav nav-list">
+    <ul class="nav nav-list" id="ProductosNuevos">
         <li class="nav-header">
-            Mi Direccion
+           Historicos de Pedidos
         </li>
-        <br>
         <p align="justify">
-            {% if domicilio  %}
+           No ha ingresado aún
         <p>
-            <strong>Direccion:</strong>{{domicilio.direccion}},{{domicilio.numero_direccion}},{{domicilio.barrio}},{{domicilio.localidad}},{{domicilio.codigo_postal}}
-        </p>
-        <hr>
-        <p>
-            <strong>Sucursal:</strong>
-        </p>
-
-        {% endif %}
-        </p>
     </ul>
 </div><!--/.well -->
 <div class="well sidebar-nav">
-    <ul class="nav nav-list" id="ProductosNuevos">
+    <ul class="nav nav-list" id="Pedido">
         <li class="nav-header">
-            Nuevos
+           Tu Pedido
         </li>
+            <p align="justify">
+       {% if pedido %}      
+           
+            {% for d in pedido.getDetallePedido %}
+               
+            
+        <p>
+            {{d.producto.producto.nombre}} {{d.producto.clasificacion}}
+            
+            <select name="cantidad" id="cantidad"  style="width:50px">
+                        <option {% if d.cantidad == 0 %} selected="selected" {% endif %} value="1">0</option>
+                        <option {% if d.cantidad == 1 %} selected="selected" {% endif %}  value="1">1</option>
+                        <option {% if d.cantidad == 2 %} selected="selected" {% endif %}  value="2">2</option>
+                        <option  {% if d.cantidad == 3 %} selected="selected" {% endif %} value="3">3</option>
+                        <option {% if d.cantidad == 4 %} selected="selected" {% endif %} value="4">4</option>
+                    </select></th> 
+                      </p>
+         <p>Precio: {{d.precioTotalUnidad}} </p>        
+          <hr />
+            
+  
+       
+        {% endfor %}
+       
+        <p>Envio:{{pedido.precio_envio}}</p>
+        <hr />
+        <p>Total:{{pedido.precioTotal}}</p>
+        {% endif %}
+    </ul>
+</div><!--/.well -->
+<div class="well sidebar-nav">
+    <ul class="nav nav-list">
+        <li class="nav-header">
+           Configuración del Pedido
+        </li>
+        <br>
+        <p align="justify">          
+        <p>
+            <strong>Direccion:</strong>{{domicilio.direccion}},{{domicilio.numero_direccion}},{{domicilio.barrio}},{{domicilio.localidad}},{{domicilio.codigo_postal}}                      
+        </p>
+        <hr>
+        <p>          
+            <strong>Sucursal:</strong>{{sucursal.nombre}},{{sucursal.direccion}}, {{sucursal.numero_direccion}},{{sucursal.barrio}}           
+        </p>
+
+       
+        </p>
     </ul>
 </div><!--/.well -->
 {% endblock %}
+
 

@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %} Login {% endblock %}
+{% block breadcrumbs %}
+<ul class="breadcrumb">
+    <li>
+        <a href="/">Home</a><span class="divider">></span>
+    </li>
+    <li>
+        <a href="{% url "vista_pedidoInformacion" %}"> Pedido</a><span class="divider">></span>
+    </li>
+    <li>
+        <a href="{% url "vista_armaTuPedido" %}"> Arma Tu Pedido</a><span class="divider">></span>
+    </li>
+    <li>
+         Detalle de Pedido
+    </li>
+</ul>
+{% endblock %}
+{% block content %}
+
+        {% if pedido %}
+        <table "table table-striped " cellspacing="5" cellpadding="5">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Producto</th>                    
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Precio Total</th>                   
+                </tr>
+            </thead>
+            {% for d in pedido.getDetallePedido %}
+               
+            <tbody>
+                <tr>
+                    <th><img src="/media/imagenes/armaTuPedido/menu.jpg" alt="" width="50px" heigth="50px" /></th>
+                    <th> {{d.producto.producto.nombre}} {{d.producto.clasificacion}} </th>                   
+                    <th>
+                    <select name="cantidad" id="cantidad"  style="width:50px">
+                        <option {% if d.cantidad == 0 %} selected="selected" {% endif %} value="1">0</option>
+                        <option {% if d.cantidad == 1 %} selected="selected" {% endif %}  value="1">1</option>
+                        <option {% if d.cantidad == 2 %} selected="selected" {% endif %}  value="2">2</option>
+                        <option  {% if d.cantidad == 3 %} selected="selected" {% endif %} value="3">3</option>
+                        <option {% if d.cantidad == 4 %} selected="selected" {% endif %} value="4">4</option>
+                    </select></th>
+                       <th>${{d.precio}}</th>
+                     <th> ${{d.precioTotalUnidad}} </th>
+                </tr>
+                 
+            {% endfor %}
+                 <tr><th></th><th>Envio</th><th></th><th></th><th>${{pedido.precio_envio}}</th></tr>              
+                 <tr><th></th><th>TOTAL</th><th></th><th></th><th>${{pedido.precioTotal}}</th></tr>
+            </tbody>
+         
+        </table>
+
+        {% endif %}
+        <div class="añadir">
+                  
+            <a href="#"  ><img src="/media/imagenes/bebida.png" alt="quilmes" /> Bebidad</a>    <a href="#"  ><img src="/media/imagenes/publicidades/cocacola.jpg" alt="cocacola" />Postre</a>            <a href="#" ><img src="/media/imagenes/publicidades/mccain.jpg" alt="mccain" />Guarnicion</a>
+            </div>
+  
+        <a class="btn btn-danger"  href="#">Cancelar </a>
+     <!--  <a class="btn "  href="javascript:window.history.go(-1);">Volver </a>-->
+        <a class="btn btn-primary pull-right"  href="{% url "vista_detallePago" %}">Confirmar Comprar</a>
+{% endblock %}
+{% block panelAux %}
+<div class="well sidebar-nav">
+    <ul class="nav nav-list" id="ProductosNuevos">
+        <li class="nav-header">
+           Historicos de Pedidos
+        </li>
+        <p align="justify">
+           No ha ingresado aún
+        <p>
+    </ul>
+</div><!--/.well -->
+<div class="well sidebar-nav">
+    <ul class="nav nav-list" id="Configuracion">
+        <li class="nav-header">
+           Configuración del Pedido
+        </li>
+        <br>
+        <p align="justify">
+            {% if domicilio  %}
+        <p>
+            <strong>Mi ubicación:</strong>{{domicilio.direccion}},{{domicilio.numero_direccion}},{{domicilio.barrio}},{{domicilio.localidad}},{{domicilio.codigo_postal}}
+             {% endif %}
+        </p>
+       
+        <p>
+            {% if sucursal  %}
+            <strong>Mi Sucursal:</strong>{{sucursal.nombre}},{{sucursal.direccion}}, {{sucursal.numero_direccion}},{{sucursal.barrio}}
+             {% endif %}
+        </p>
+         <p>
+          
+            <strong>Servicio Elegido:</strong>No ha seleccionado
+         
+        </p>
+         <p>
+     
+            <strong>Horario del pedido:</strong>No ha seleccionado
+        </p>
+
+       
+        </p>
+    </ul>
+</div><!--/.well -->
+<div class="well sidebar-nav">
+    <ul class="nav nav-list" id="ProductosNuevos">
+        <li class="nav-header">
+           Promociones Imperdibles
+        </li>
+        <img src="/media/imagenes/armaTuPedido/promocion.jpg" alt="Promocion" />        
+    </ul>
+</div><!--/.well -->
+{% endblock %}

@@ -12,7 +12,17 @@ class DomicilioSearchForm(forms.ModelForm):
                   }
 #        piso = forms.CharField(widget=forms.TextInput(attrs={'size':'60','maxlength':'70'})) 
 
-
+class ProductoPedidoForm(forms.Form):
+    cantidad_choice=(
+                     (1,1),
+                     (2,2),
+                     (3,3),
+                     (4,4),
+                     )                    
+#    imagen = forms.ImageField()
+    producto = forms.CharField( label='', initial='{{p.id}}', widget=forms.HiddenInput, required=False)
+#    precio = forms.CharField()
+    cantidad = forms.CharField(widget=forms.Select(choices=cantidad_choice, attrs={'width':'50px'}))
 
 
 

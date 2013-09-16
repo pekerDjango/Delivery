@@ -33,9 +33,7 @@ class Version(models.Model):
         return self.nombre
     class Meta:
         verbose_name = "Versión"
-        verbose_name_plural = "Versiones"
-    
-
+        verbose_name_plural = "Versiones"   
     
 class UnidadDeMedida(models.Model):
     """Clase Unidad de medida:
@@ -62,9 +60,7 @@ class TipoProducto(models.Model):
     
     Vista_Previa.allow_tags = True
     class Meta:
-        verbose_name_plural = "Tipos de Productos"
-    
-
+        verbose_name_plural = "Tipos de Productos" 
     
 class Ingrediente(models.Model):        
     codigo = models.AutoField(primary_key=True, verbose_name = "Código")
@@ -76,22 +72,22 @@ class Ingrediente(models.Model):
     stockMinimo = models.IntegerField(verbose_name = "Stock Mínimo")
     stockCorte = models.IntegerField(verbose_name = "Stock Corte")
     precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)" )
-    
-    
+        
     def __unicode__(self):
         return self.nombre
 
-class Producto (models.Model):
-    
+class Producto (models.Model):    
     codigo = models.AutoField(primary_key=True, verbose_name = "Código")
     nombre = models.CharField (max_length = 50)
     tiempoPreparacion = models.IntegerField (max_length = 10, verbose_name = "Tiempo Preparacion estimado(minutos)")
     tipoProducto = models.ForeignKey(TipoProducto, verbose_name = "Tipo de Producto")
     version = models.ForeignKey(Version)
+    estado = models.BooleanField(default=True) 
     
     def __unicode__(self):
         return self.nombre
-
+    def getDetalleVersiones(self):
+        return DetalleVersiones.objects.filter(producto=self)
     
 class DetalleIngredientes(models.Model):
    
@@ -104,7 +100,6 @@ class DetalleIngredientes(models.Model):
  
     class Meta:
         verbose_name_plural = "Detalle de ingredientes"
-
     
 class DetalleVersiones(models.Model):
     """Clase DetalleVersiones

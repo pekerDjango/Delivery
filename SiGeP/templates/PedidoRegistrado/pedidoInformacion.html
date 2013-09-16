@@ -2,26 +2,16 @@
 {% block title %} Login {% endblock %}
 {% block breadcrumbs %}
 <ul class="breadcrumb">
-<li><a href="/">Home</a>  <span class="divider">></span> </li>
-<li><a href="{% url "vista_pedidoInformacion" %}"> Pedido</a>  <span class="divider">></span> </li>
+    <li>
+        <a href="/">Home</a><span class="divider">></span>
+    </li>
+    <li>
+        Pedido
+    </li>
 </ul>
 {% endblock %}
 {% block content %}
-<h5>¿Este pedido es para Entregar o para Llevar?</h5>
-{% if servicios %}
-<div class="btn-group" data-toggle="buttons-radio">
-{% for s in servicios %}
-<button type="button" class="btn btn-primary">{{s.nombre}}</button>
-{% endfor %}
-</div>
-{% endif %}
 <h5>Indicanos en donde estas, para buscar la sucursal más cercana:</h5>
-<!--{% if tipologias %}
-{% for t in tipologias %}
-<input type="radio" name="tipologias" value={{t.nombre}}/>
-{{t.nombre}}
-{% endfor %}
-{% endif %}-->
 <ul class="nav nav-pills">
     <li class="active">
         <a href="#casa" data-toggle="tab"><img src="/media/imagenes/armaTuPedido/casa.jpg" alt="" width="60px" height="60px"/>Casa</a>
@@ -31,33 +21,123 @@
     </li>
     <li>
         <a href="#otro" data-toggle="tab"><img src="/media/imagenes/armaTuPedido/otro.jpg" alt="" width="60px" height="60px"/>Otro</a>
-    </li> 
+    </li>
 </ul>
 <div class="tab-content">
     <div class="tab-pane active" id="casa">
         <br />
-       <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-<button type="submit"  class="btn btn-primary pull-right">Iniciar Pedido</button> 
-</form> 
+        <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <h5>¿Este pedido es para Entregar o para Llevar?</h5>
+            {% if servicios %}
+            <div class="btn-group" data-toggle="buttons-radio">
+                {% for s in servicios %}
+                <button type="button" class="btn btn-primary">
+                    {{s.nombre}}
+                </button>
+                {% endfor %}
+            </div>
+                        {% endif %}
+            <br />
+            <button type="submit"  class="btn btn-primary pull-right">
+                Iniciar Pedido
+            </button>
+        </form>
     </div>
     <div class="tab-pane" id="depto">
-    <br />
-       <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-<button type="submit"  class="btn  btn-primary pull-right">Iniciar Pedido</button> 
-</form> 
+        <br />
+        <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <h5>¿Este pedido es para Entregar o para Llevar?</h5>
+            {% if servicios %}
+            <div class="btn-group" data-toggle="buttons-radio">
+                {% for s in servicios %}
+                <button type="button" class="btn btn-primary">
+                    {{s.nombre}}
+                </button>
+                {% endfor %}
+            </div>
+                        {% endif %}
+            <br />
+            <button type="submit"  class="btn  btn-primary pull-right">
+                Iniciar Pedido
+            </button>
+        </form>
     </div>
     <div class="tab-pane" id="otro">
         <br />
-       <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-<button type="submit"  class="btn  btn-primary pull-right">Iniciar Pedido</button> 
-</form> 
+        <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <h5>¿Este pedido es para Entregar o para Llevar?</h5>
+            {% if servicios %}
+            <div class="btn-group" data-toggle="buttons-radio">
+                {% for s in servicios %}
+                <button type="button" class="btn btn-primary">
+                    {{s.nombre}}
+                </button>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <br />
+            <button type="submit"  class="btn  btn-primary pull-right">
+                Iniciar Pedido
+            </button>
+        </form>
     </div>
 </div>
+{% endblock %}
+{% block panelAux %}
+<div class="well sidebar-nav">
+    <ul class="nav nav-list" id="HistoricoPedido">
+        <li class="nav-header">
+           Historicos de Pedidos
+        </li>
+        <p align="justify">
+           No ha ingresado aún
+        <p>
+    </ul>
+</div><!--/.well -->
+<div class="well sidebar-nav">
+    <ul class="nav nav-list" id="Promociones">
+        <li class="nav-header">
+           Promociones Imperdibles
+        </li>
+        <img src="/media/imagenes/armaTuPedido/promocion.jpg" alt="Promocion" />        
+    </ul>
+</div><!--/.well -->
+<div class="well sidebar-nav">
+    <ul class="nav nav-list" id="Configuracion">
+        <li class="nav-header">
+           Configuración del Pedido
+        </li>
+        <br>
+        <p align="justify">
+            {% if domicilio  %}
+        <p>
+            <strong>Mi ubicación:</strong>{{domicilio.direccion}},{{domicilio.numero_direccion}},{{domicilio.barrio}},{{domicilio.localidad}},{{domicilio.codigo_postal}}
+             {% endif %}
+        </p>
+       
+        <p>
+            {% if sucursal  %}
+            <strong>Mi Sucursal:</strong>{{sucursal.nombre}},{{sucursal.direccion}}, {{sucursal.numero_direccion}},{{sucursal.barrio}}
+             {% endif %}
+        </p>
+         <p>
+          
+            <strong>Servicio Elegido:</strong>No ha seleccionado
+         
+        </p>
+         <p>
+     
+            <strong>Horario del pedido:</strong>No ha seleccionado
+        </p>
 
+       
+        </p>
+    </ul>
+</div><!--/.well -->
 {% endblock %}

@@ -8,6 +8,10 @@ urlpatterns = patterns('PedidoRegistrado.views',
      url(r'^pedido/armaTuPedido/menusDisponibles/$','menuDisponibles_view',name='vista_menuDisponibles'),
      url(r'^pedido/armaTuPedido/promosDisponibles/$','promocionDisponibles_view',name='vista_promosDisponibles'),
      url(r'^pedido/armaTuPedido/productosPopulares/$','productosPopulares_view',name='vista_productosPopulares'),
+     url(r'^pedido/armaTuPedido/productosPopulares/(?P<cantidad>.*)/(?P<id_pro>.*)/$','agregarPedido_view',name='vista_agregarProducto'),
+     url(r'^pedido/armaTuPedido/detallePedido/$','detallePedido_view',name='vista_detallePedido'),
+     url(r'^pedido/armaTuPedido/detallePedido/detallePago/$','detallePago_view',name='vista_detallePago'),
+     url(r'^pedido/armaTuPedido/detallePedido/detallePago/pedidoFinalizado/$','pedidoFinalizado_view',name='vista_pedidoFinalizado'),
 
 
 

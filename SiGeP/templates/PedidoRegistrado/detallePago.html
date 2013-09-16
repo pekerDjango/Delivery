@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %} Login {% endblock %}
+{% block breadcrumbs %}
+<ul class="breadcrumb">
+    <li>
+        <a href="/">Home</a><span class="divider">></span>
+    </li>
+    <li>
+        <a href="{% url "vista_pedidoInformacion" %}"> Pedido</a><span class="divider">></span>
+    </li>
+    <li>
+        <a href="{% url "vista_armaTuPedido" %}"> Arma Tu Pedido</a><span class="divider">></span>
+    </li>
+    <li>
+       <a href="{% url "vista_detallePedido" %}"> Detalle de Pedido</a><span class="divider">></span>
+    </li>
+    <li>
+        Detalle de Pago y Entrega
+    </li>
+</ul>
+{% endblock %}
+{% block content %}
+
+        {% if pedido %}
+        <table "table table-striped " cellspacing="5" cellpadding="5">
+           
+                <tr>
+                   <th>Productos Solicitados</th><th>{{pedido.cantidadTotalProductos}}</th><th>${{pedido.subTotal}}</th>
+                  
+                </tr>
+               
+                 <tr><th>Envio</th><th></th><th>${{pedido.precio_envio}}</th></tr>
+                
+                 <tr><th>TOTAL</th><th></th><th>${{pedido.precioTotal}}</th></tr>
+           
+       
+        </table>
+
+        {% endif %}
+      
+        <a class="btn btn-primary pull-right"  href="{% url "vista_pedidoFinalizado" %}">Confirmar</a>
+{% endblock %}
+{% block panelAux %}
+<div class="well sidebar-nav">
+    <ul class="nav nav-list" id="ProductosNuevos">
+        <li class="nav-header">
+           Historicos de Pedidos
+        </li>
+        <p align="justify">
+           No ha ingresado aún
+        <p>
+    </ul>
+</div><!--/.well -->
+<div class="well sidebar-nav">
+    <ul class="nav nav-list" id="Configuracion">
+        <li class="nav-header">
+           Configuración del Pedido
+        </li>
+        <br>
+        <p align="justify">
+            {% if domicilio  %}
+        <p>
+            <strong>Mi ubicación:</strong>{{domicilio.direccion}},{{domicilio.numero_direccion}},{{domicilio.barrio}},{{domicilio.localidad}},{{domicilio.codigo_postal}}
+             {% endif %}
+        </p>
+       
+        <p>
+            {% if sucursal  %}
+            <strong>Mi Sucursal:</strong>{{sucursal.nombre}},{{sucursal.direccion}}, {{sucursal.numero_direccion}},{{sucursal.barrio}}
+             {% endif %}
+        </p>
+         <p>
+          
+            <strong>Servicio Elegido:</strong>No ha seleccionado
+         
+        </p>
+         <p>
+     
+            <strong>Horario del pedido:</strong>No ha seleccionado
+        </p>
+
+       
+        </p>
+    </ul>
+</div><!--/.well -->
+{% endblock %}
