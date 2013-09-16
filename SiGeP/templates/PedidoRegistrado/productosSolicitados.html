@@ -17,6 +17,18 @@
 </ul>
 {% endblock %}
 {% block content %}
+<label id = "lblCantidad"></label>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("select").change(function() {
+			var valor = $(this).find("option:selected").val();
+			//alert(valor);
+			//var str
+			console.log(valor);
+			$("#lblCantidad").text(valor);
+		});
+	}); 
+</script>
 <div class="cabecera">
     <ul> <li><p>Información Dirección</p></li><li><p>Arma Tu pedido</p></li><li><p>Detalle de Pedido</p></li><li><p>Detalle de Pago y Entrega</p></li><li><p>Pedido Finalizado</p></li></ul>
 </div>
