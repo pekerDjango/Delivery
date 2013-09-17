@@ -1,0 +1,49 @@
+{% extends 'baseAdmin.html' %}
+{% block title %} Contacto{% endblock %}
+{%block content %}
+<h3>Adminstración de Empleados</h3>
+<p>Por favor complete el siguiente formulario y a la brevedad nos contactaremos con usted</p>
+<form action="POST">
+		<div class="container">
+			<form action="" class="form-horizontal">
+				<div class="control-group">
+					<label for="nombre" class="control-label">Nombre</label>
+					<div class="controls">
+						<input type="text" id="nombre" onfocus="">
+					</div>
+				</div>
+				<div class="control-group">
+					<label for="apellido" class="control-label">Apellido</label>
+					<div class="controls">
+						<input type="text" id="apellido">
+					</div>
+				</div>
+				<div class="control-group">
+					<label for="telefono" class="control-label">Telefono</label>
+					<div class="controls">
+						<input type="text" id="telefono">
+					</div>
+				</div>
+				<div class="control-group">
+					<label for="mail" class="control-label">Email</label>
+					<div class="controls">
+						<div class="input-prepend">
+							<span class="add-on">@</span>
+							<input type="text" name="mail" placeholder="example@gmail.com">
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label for="mensaje" class="control-label">Mensaje</label>
+					<div class="controls">
+						<textarea name="mensaje"  cols="30" rows="10"></textarea>
+					</div>
+				</div>
+				<br><br>
+                  <button type="submit" class="btn btn-primary" >Login</button>
+                  <button type="reset" class="btn">Clear</button>
+			</form>
+		</div>
+</form>
+
+{% endblock %}

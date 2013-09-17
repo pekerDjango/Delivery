@@ -12,7 +12,9 @@
     <script src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">   
   <style type="text/css">
+      
       body {
+
         padding-top: 60px;
         padding-bottom: 40px;
       }
@@ -34,8 +36,8 @@
 					   <li><a href="{% url "vista_pedidoInformacion" %}">Pedido</a></li>
 					   <li><a href="">Productos</a></li>			
 					   <li><a href="">Promociones</a></li>
-					   <li><a href="">Sucursales</a></li>
-					   <li><a href="">Contacto</a></li>
+					   <li><a href="{% url "vista_sucursal" %}">Sucursales</a></li>
+					   <li><a href="/contacto/">Contacto</a></li>
 				  </ul>
           <div class="pull-right">
             <div class="social">
@@ -99,19 +101,21 @@
 <!--<hr>-->
 </div> 
 	<div class="container-fluid" >
+
       <div class="row-fluid">
-        <div class="span9">
-          <div class="hero-unit" style="overflow:hidden " >
+        <div class="span9" >
+          <div class="hero-unit"  >
             {% block content %}
             {% endblock%}
           </div>
         </div><!--/span-->
         
-        <div class="span3">
+        <div class="span3" >
           {% block panelAux %}
             {% endblock%}
         </div><!--/span-->
       </div><!--/row-->
+ 
   
   {% block contentInferior%}
   {% endblock %}

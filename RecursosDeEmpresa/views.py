@@ -2,6 +2,7 @@
 from django.shortcuts import render_to_response,  get_object_or_404 
 from django.template import RequestContext
 from RecursosDeEmpresa.models import Empleado
+from RecursosDeEmpresa.models import Sucursal
 from RecursosDeEmpresa.forms import EmpleadoForm, addEmpleadoForm, DeleteEmpleadoForm
 # Paginacion en Django
 from django.core.paginator import Paginator,EmptyPage,InvalidPage
@@ -13,6 +14,7 @@ def indexAdmin_view(request):
     mensaje = "Aquí realice su administración"
     ctx = {'msg':mensaje}
     return render_to_response('indexAdmin.html',ctx,context_instance=RequestContext(request))
+
 
 @login_required(login_url='/login')
 def empleado_view(request, pagina):
@@ -86,5 +88,8 @@ def delete_empleado_view(request, id_emp):
     ctx = {'form':form, 'empleado':new_to_delete}
     return render_to_response('RecursosDeEmpresa/deleteEmpleado.html',ctx,context_instance=RequestContext(request)) 
 
+def sucursal_view(request):
+    lista_sucursal=Sucursal.objects.all()
+    return render_to_response('RecursosDeEmpresa/sucursales.html',{'lista_sucursal':lista_sucursal},context_instance=RequestContext(request))
 
 

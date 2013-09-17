@@ -6,13 +6,23 @@ from django.forms import TextInput, Textarea
 from django_admin_bootstrapped.admin.models import SortableInline
 
 class ServicioAdmin(admin.ModelAdmin):
-    formfield_overrides = {
+
+        search_fields = ('nombre', 'descripcion')
+        list_display = ('nombre', 'descripcion')
+        list_filter = ('nombre', )
+        ordering=('nombre',)
+        fields =('nombre','descripcion')   
+        formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'100'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
         models.ImageField: {'widget': ImageWidget},     
     }
     
 class TipologiaViviendaAdmin(admin.ModelAdmin):
+    list_display=('nombre',)
+    list_filter=('nombre',)
+    ordering=('nombre',)
+    search_fields=('nombre',)
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'100'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
@@ -20,6 +30,10 @@ class TipologiaViviendaAdmin(admin.ModelAdmin):
     }
     
 class DomicilioSearchAdmin(admin.ModelAdmin):
+    list_display=('barrio','direccion', 'numero_direccion','depto','piso','localidad','codigo_postal')
+    list_filter=('direccion', 'numero_direccion','piso','depto','codigo_postal','localidad','barrio')
+    ordering=('barrio',)
+    search_fields=('localidad','barrio','direccion')
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'100'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
@@ -27,6 +41,10 @@ class DomicilioSearchAdmin(admin.ModelAdmin):
     }
 
 class ClienteAdmin(admin.ModelAdmin):
+    list_display=('apellido', 'nombre', 'sexo', 'email', 'telefono_particular')
+    list_filter=('nombre', 'apellido', 'sexo', 'email', 'telefono_particular')
+    ordering=('apellido',)
+    search_fields=('nombre','apellido')
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'100'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
@@ -34,6 +52,11 @@ class ClienteAdmin(admin.ModelAdmin):
     }
 
 class EstadoPedidoAdmin(admin.ModelAdmin):
+    search_fields = ('nombre', 'descripcion')
+    list_display = ('nombre', 'descripcion')
+    list_filter = ('nombre', )
+    ordering=('nombre',)
+    fields =('nombre','descripcion') 
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'100'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
@@ -49,6 +72,11 @@ class DetallePedidoInline(admin.StackedInline, SortableInline):
     }
     
 class PedidoAdmin(admin.ModelAdmin):
+    search_fields = ('cliente','fechaPedido','estado','servicio', 'tipologia_vivienda')
+    list_display = ('cliente', 'fechaPedido', 'hora_entrega', 'servicio', 'tipologia_vivienda', 'precio_envio', 'estado')
+    list_filter = ('cliente', 'fechaPedido', 'hora_entrega', 'estado', 'servicio', 'tipologia_vivienda', 'precio_envio')
+    ordering=('cliente','fechaPedido','estado')
+    
     inlines = [DetallePedidoInline]
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'100'})},

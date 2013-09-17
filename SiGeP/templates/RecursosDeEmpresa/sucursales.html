@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %} Lista de Sucursales{% endblock %}
+{%block content %}
+<h3>Sucursales</h3>
+
+
+{% with total=lista_sucursal.count %}
+<p><small>Actualmente tenemos registradas {{total}} sucursal/es</small></p>
+{% endwith %}
+ <div class="accordion" id="accordion2">
+{% for sucursal in lista_sucursal %}
+
+	
+
+			 <div class="well well-large">
+
+		          <div class="accordion-group">
+		               <div class="accordion-heading">
+		                   <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{sucursal.numero_direccion}}">
+		                     <h4> {{sucursal.nombre}}</h4>
+		                   </a>
+		               </div>
+		               {% if forloop.first %}
+		                   <div id="{{sucursal.numero_direccion}}" class="accordion-body collapse in ">
+		                   {% else %}
+		                   <div id="{{sucursal.numero_direccion}}" class="accordion-body collapse ">
+		                {% endif %}
+		                        <div class="accordion-inner">
+		                            <table align="center" border="0" width="100%" height="20%" >
+
+										<tr>
+											<td rowspan="3"><img class="img-rounded" src="/media/{{sucursal.imagen}}" height="300" width="300" alt=""></td>
+											<td><p><strong>Código:</strong> {{sucursal.codigo}} </p></td>
+										</tr>
+										<tr>
+											<td><p><strong>Domicilio: </strong>{{sucursal.direccion}} {{sucursal.numero_direccion}} </p>
+											<p><strong>Barrio: </strong>{{sucursal.barrio}} </p>
+											<p><strong>Codigo postal: </strong>{{sucursal.codigo_postal}}</p>
+											<p><strong>Localidad: </strong>{{sucursal.localidad}}</p></td>
+										</tr>
+										<tr>
+											<td><p><strong>Calificación del servicio: </strong>{{sucursal.calificacion_servicio}}</p></td>
+										</tr>
+									</table>
+		                             <br>
+		                            <a href="https://maps.google.com.ar" class="btn btn-primary btn-block"> Ver Ubicación en mapa</a>
+		                         </div>
+		                   </div>
+		          </div>
+		      </div>
+		      
+	{% endfor %}
+
+	</div>
+
+
+		
+{% endblock %}
