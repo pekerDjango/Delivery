@@ -57,7 +57,7 @@
         
           <a href="{% url "vista_login" %}"> Login </a>
           <!-- comienzo del model-->
-          <a href="#myModal" class="" data-toggle="modal"> <i class="icon-user"></i> Login here</a>
+      <!--   <a href="#myModal" class="" data-toggle="modal"> <i class="icon-user"></i> Login here</a>
             <div class="modal hide fade " id="myModal" aria-labelledby="modalLabel" aria-hidden="true">
               <div class="modal-header">
                 <h3 id="modalLabel">Login</h3>
@@ -104,6 +104,8 @@
 
       <div class="row-fluid">
         <div class="span9" >
+            {% block estadoPedido %}           
+            {% endblock %}
           <div class="hero-unit"  >
             {% block content %}
             {% endblock%}

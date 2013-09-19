@@ -16,6 +16,19 @@
     </li>
 </ul>
 {% endblock %}
+{% block estadoPedido %}
+<div class="cabecera" >
+ <ul class="nav nav-pills " >
+    <li >
+    <a >INFORMACIÓN DIRECCIÓN</a>
+    </li>
+    <li class="active"><a href="#" data-toggle="tab" >ARMA TU PEDIDO</a></li>
+    <li><a >DETALLE DE PEDIDO</a></li>
+    <li><a >DETALLE DE PAGO Y ENTREGA</a></li>
+    <li><a >PEDIDO FINALIZADO</a></li>
+    </ul>
+    </div>
+    {% endblock %}
 {% block content %}
 <label id = "lblCantidad"></label>
 <script type="text/javascript">
@@ -25,13 +38,11 @@
 			//alert(valor);
 			//var str
 			console.log(valor);
+			$("#id_producto").value({{d.id}});
 			$("#lblCantidad").text(valor);
 		});
 	}); 
 </script>
-<div class="cabecera">
-    <ul> <li><p>Información Dirección</p></li><li><p>Arma Tu pedido</p></li><li><p>Detalle de Pedido</p></li><li><p>Detalle de Pago y Entrega</p></li><li><p>Pedido Finalizado</p></li></ul>
-</div>
         {% if productos %}
         <table "table table-striped " cellspacing="5" cellpadding="5">
             <thead>
@@ -45,27 +56,31 @@
             </thead>
             {% for p in productos %}     
             {% for d in p.getDetalleVersiones %}
-           
+      <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
             <tbody>
                 <tr>
                     <th><img src="/media/{{d.imagenProducto}}" alt="" width="50px" heigth="50px" /></th>
                     <th> {{p.nombre}} {{d.clasificacion}}</th>
                     <th> ${{d.precio}} </th>
-                    <th>
-                    <select name="cantidad" id="cantidad" style="width:50px">
+                   <th>{{form.producto}}{{form.cantidad}}<input id="id_pro{{d.id}}" name="pro" value={{d.id}} type="hidden"></th>
+                <!-- <select name="cantidad" id="cantidad" style="width:50px">
                         <option value="1">0</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
-                    </select></th>           
+                    </select></th>-->           
                     <th>{% if p.estado %}
                         <a href="/pedido/armaTuPedido/productosPopulares/4/{{d.id}}/" class="btn" type="submit"><i class="icon-shopping-cart"></i></a>
                         {% else %}
                         <p style="color:#FF0000">No Disponible</p>
                         {% endif %}
-                        </th>
-                </tr>               
+               <!--  <th> <button type="submit"  class="btn btn-primary">
+                confirmar
+            </button>  </th>-->
+                </tr>
+              </form>       
             </tbody>
             
             {% endfor %}           

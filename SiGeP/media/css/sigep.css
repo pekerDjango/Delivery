@@ -24,8 +24,8 @@ font-size: 18px;
 .carousel-inner {text-align:center;}
 .carousel .item > img{display: inline-block;width:870px; height:350px;}
 .añadir img {width:250px; height:150px;}
-.cabecera {display: block;padding: 8px 10px;text-transform: uppercase; position:relative;background:#0078ae;min-height:55px;-moz-border-radius-topright:10px;border-top-right-radius:10px}
-.cabecera ul{list-style: none;float: left;display: block;}
-.cabecera li{float: left;} 
+.cabecera {background-color: #f5f5f5;}
+
+img.img-rounded{height: 213px;width:290px}
 
 

@@ -20,9 +20,12 @@ class ProductoPedidoForm(forms.Form):
                      (4,4),
                      )                    
 #    imagen = forms.ImageField()
-    producto = forms.CharField( label='', initial='{{p.id}}', widget=forms.HiddenInput, required=False)
+#    producto = forms.CharField( label='',  widget=forms.HiddenInput, required=False)
 #    precio = forms.CharField()
     cantidad = forms.CharField(widget=forms.Select(choices=cantidad_choice, attrs={'width':'50px'}))
+    
+class PagoForm(forms.Form):
+    importePagar = forms.DecimalField(label='Importe a pagar:$')
 
 
 

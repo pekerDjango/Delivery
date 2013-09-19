@@ -16,9 +16,21 @@
     </li>
 </ul>
 {% endblock %}
-{% block content %}
-
-        {% if pedido %}
+{% block estadoPedido %}
+<div class="cabecera" >
+ <ul class="nav nav-pills " >
+    <li >
+    <a >INFORMACIÓN DIRECCIÓN</a>
+    </li>
+    <li ><a >ARMA TU PEDIDO</a></li>
+    <li class="active"><a href="#" data-toggle="tab" >DETALLE DE PEDIDO</a></li>
+    <li><a >DETALLE DE PAGO Y ENTREGA</a></li>
+    <li><a >PEDIDO FINALIZADO</a></li>
+    </ul>
+    </div>
+    {% endblock %}
+{% block content %} 
+    {% if pedido %}
         <table "table table-striped " cellspacing="5" cellpadding="5">
             <thead>
                 <tr>
@@ -33,7 +45,7 @@
                
             <tbody>
                 <tr>
-                    <th><img src="/media/imagenes/armaTuPedido/menu.jpg" alt="" width="50px" heigth="50px" /></th>
+                    <th><img src="/media/{{d.producto.imagenProducto}}" alt="" width="50px" heigth="50px" /></th>
                     <th> {{d.producto.producto.nombre}} {{d.producto.clasificacion}} </th>                   
                     <th>
                     <select name="cantidad" id="cantidad"  style="width:50px">

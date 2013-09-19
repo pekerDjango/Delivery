@@ -19,9 +19,21 @@
     </li>
 </ul>
 {% endblock %}
+{% block estadoPedido %}
+<div class="cabecera" >
+ <ul class="nav nav-pills " >
+    <li >
+    <a >INFORMACIÓN DIRECCIÓN</a>
+    </li>
+    <li ><a >ARMA TU PEDIDO</a></li>
+    <li ><a  >DETALLE DE PEDIDO</a></li>
+    <li class="active"><a href="#" data-toggle="tab" >DETALLE DE PAGO Y ENTREGA</a></li>
+    <li><a >PEDIDO FINALIZADO</a></li>
+    </ul>
+    </div>
+    {% endblock %}
 {% block content %}
-
-        {% if pedido %}
+     {% if pedido %}
         <table "table table-striped " cellspacing="5" cellpadding="5">
            
                 <tr>
@@ -35,6 +47,18 @@
            
        
         </table>
+                    <h3>Detalle de Pago</h3>
+<p>Importe Total:${{pedido.precioTotal}}</p>
+
+  <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+          {{form.importePagar.label}}{{form.importePagar}}<p>Vuelto:</p><p>{{request.session.vuelto}}</p>
+   <button type="submit"  class="btn btn-primary">
+                confirmar
+            </button>            </form>
+                   <h3>Detalle de Entrega</h3>
+<p>Hora actual:$</p>
+<p>Solicitud de pedido</p>
 
         {% endif %}
       

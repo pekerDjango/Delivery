@@ -13,9 +13,21 @@
     </li>
 </ul>
 {% endblock %}
+{% block estadoPedido %}
+<div class="cabecera" >
+ <ul class="nav nav-pills " >
+    <li >
+    <a >INFORMACIÓN DIRECCIÓN</a>
+    </li>
+    <li class="active"><a href="#" data-toggle="tab" >ARMA TU PEDIDO</a></li>
+    <li><a >DETALLE DE PEDIDO</a></li>
+    <li><a >DETALLE DE PAGO Y ENTREGA</a></li>
+    <li><a >PEDIDO FINALIZADO</a></li>
+    </ul>
+    </div>
+    {% endblock %}
 {% block content %}
-
-
+ 
         <div class="item">
             <div class="header">
                 <a href="{% url "vista_productosPopulares" %}"  ><img src="/media/imagenes/armaTuPedido/productosSolicitados.png" alt="Productos más Solicitados" />
@@ -94,7 +106,7 @@
         </p>
          <p>
           
-            <strong>Servicio Elegido:</strong>No ha seleccionado
+            <strong>Servicio Elegido:</strong>Delivery
          
         </p>
          <p>

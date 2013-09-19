@@ -1,7 +1,18 @@
 {% extends 'base.html' %}
 {% block title %} Lista de Sucursales{% endblock %}
+{% block breadcrumbs %}
+<ul class="breadcrumb">
+    <li>
+        <a href="/">Home</a><span class="divider">></span>
+    </li>    
+    <li>
+        Sucursales
+    </li>
+</ul>
+{% endblock %}
 {%block content %}
 <h3>Sucursales</h3>
+
 
 
 {% with total=lista_sucursal.count %}

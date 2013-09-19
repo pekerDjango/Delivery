@@ -22,37 +22,58 @@
     </li>
 </ul>
 {% endblock %}
+{% block estadoPedido %}
+<div class="cabecera" >
+ <ul class="nav nav-pills " >
+    <li >
+    <a >INFORMACIÓN DIRECCIÓN</a>
+    </li>
+    <li ><a >ARMA TU PEDIDO</a></li>
+    <li ><a  >DETALLE DE PEDIDO</a></li>
+    <li ><a  >DETALLE DE PAGO Y ENTREGA</a></li>
+    <li class="active"><a href="#" data-toggle="tab">PEDIDO FINALIZADO</a></li>
+    </ul>
+    </div>
+    {% endblock %}
 {% block content %}
-
-     {% if pedido %}      
-           
+    {% if pedido %}
+        <table "table table-striped " cellspacing="5" cellpadding="5">
+            <thead>
+                <tr>               
+                    <th>Producto</th>                    
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Precio Total</th>                   
+                </tr>
+            </thead>
             {% for d in pedido.getDetallePedido %}
                
-            
-        <p>
-            {{d.producto.producto.nombre}} {{d.producto.clasificacion}}
-            
-            <select name="cantidad" id="cantidad"  style="width:50px">
-                        <option {% if d.cantidad == 0 %} selected="selected" {% endif %} value="1">0</option>
-                        <option {% if d.cantidad == 1 %} selected="selected" {% endif %}  value="1">1</option>
-                        <option {% if d.cantidad == 2 %} selected="selected" {% endif %}  value="2">2</option>
-                        <option  {% if d.cantidad == 3 %} selected="selected" {% endif %} value="3">3</option>
-                        <option {% if d.cantidad == 4 %} selected="selected" {% endif %} value="4">4</option>
-                    </select></th> 
-                      </p>
-         <p>Precio: {{d.precioTotalUnidad}} </p>        
-          <hr />
-            
-  
-       
-        {% endfor %}
-       
-        <p>Envio:{{pedido.precio_envio}}</p>
-        <hr />
-        <p>Total:{{pedido.precioTotal}}</p>
-        {% endif %}
-      
-        <a class="btn btn-primary pull-right"  href="#">Cerrar</a>
+            <tbody>
+                <tr>
+                    <th> {{d.producto.producto.nombre}} {{d.producto.clasificacion}} </th>                   
+                    <th>{{d.cantidad}}                       </th>
+                       <th>${{d.precio}}</th>
+                     <th> ${{d.precioTotalUnidad}} </th>
+                </tr>
+                 
+            {% endfor %}
+                 <tr><th>Envio</th><th></th><th></th><th>${{pedido.precio_envio}}</th></tr>              
+                 <tr><th>TOTAL</th><th></th><th></th><th>${{pedido.precioTotal}}</th></tr>
+                 <tr><th>Se abona con</th><th></th><th></th><th>$</th></tr>              
+                 <tr><th>Vuelto</th><th></th><th></th><th>$</th></tr>
+            </tbody>         
+        </table>
+
+        {% if domicilio  %}
+        <p>Pedido va ser enviado: <strong>{{domicilio.direccion}}-{{domicilio.numero_direccion}}-{{domicilio.barrio}}-{{domicilio.localidad}}</strong></p>
+             {% endif %}
+             {% if sucursal  %}
+        <p>Sucursal Asignada: <strong >{{sucursal.nombre}}-{{sucursal.direccion}}</strong></p>
+             {% endif %}
+              <p>Solicitud de pedido: <strong>{{p.hora_entrega}}</strong></p>
+              <p>Estado de Pedido: <strong style="color:#FF0000">{{pedido.estado}}</strong></p>
+                {% endif %}
+        <a class="btn btn-primary pull-right"  href="{% url "vista_cerrarPedido" %}">Cerrar</a>
 {% endblock %}
 {% block panelAux %}
 <div class="well sidebar-nav">
