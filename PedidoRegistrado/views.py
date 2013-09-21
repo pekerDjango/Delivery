@@ -1,13 +1,14 @@
 # Create your views here.
 from django.shortcuts import render_to_response 
 from django.template import RequestContext
-from PedidoRegistrado.forms import DomicilioSearchForm, ProductoPedidoForm, PagoForm
+from PedidoRegistrado.forms import DomicilioSearchForm, ProductoPedidoForm, PagoForm, horaPedidoForm
 from django.http import HttpResponseRedirect
 from PedidoRegistrado.models import DomicilioSearch, Pedido, DetallePedido, Cliente, Servicio, TipologiaVivienda, EstadoPedido
 from ComponentesDePedido.models import Producto, DetalleVersiones, TipoProducto, Menu, Promocion
 from RecursosDeEmpresa.models import Sucursal
 import datetime
 from decimal import Decimal
+from django.contrib.auth.decorators import login_required
 
 def pedidoInformacion_view(request):
     if request.method == "POST":
@@ -22,15 +23,13 @@ def pedidoInformacion_view(request):
     else:
         form = DomicilioSearchForm() 
     servicio = Servicio.objects.all()
-    tipologia = TipologiaVivienda.objects.all()
-    tabActivo = True
-    ctx = {'form': form, 'servicios':servicio, 'tipologias' : tipologia,'tabActivo':tabActivo}
+    tipologia = TipologiaVivienda.objects.all()   
+    ctx = {'form': form, 'servicios':servicio, 'tipologias' : tipologia}
     return render_to_response('PedidoRegistrado/pedidoInformacion.html',ctx, context_instance=RequestContext(request))
 
 def armaTuPedido_view(request): 
-    tipoProducto = TipoProducto.objects.all()
-    tabActivo = True   
-    ctx = { 'tipoProducto': tipoProducto,'tabActivo':tabActivo}   
+    tipoProducto = TipoProducto.objects.all()    
+    ctx = { 'tipoProducto': tipoProducto}   
     return render_to_response('PedidoRegistrado/armaPedido.html',ctx, context_instance=RequestContext(request))
 
 def productosSolicitados_view(request, codigo):    
@@ -73,40 +72,52 @@ def agregarPedido_view(request,cantidad,id_pro):
     d = DetallePedido(pedido=ped,cantidad=cant,producto=pro,precio=precion)
 #    d = DetallePedido(cantidad=cant,producto=pro,precio=precion)
     d.save()
-    lista = request.session["detalles"]
-    lista.append(d)
-    request.session["detalles"] = lista                      
+#    lista = request.session["detalles"]
+#    lista.append(d)
+#    request.session["detalles"] = lista                      
     productos= Producto.objects.all()   
     ctx = {'productos':productos, 'pedido':ped}
     return render_to_response('PedidoRegistrado/productosSolicitados.html',ctx,context_instance=RequestContext(request))
 
 def detallePedido_view(request):       
     ped = request.session["pedido"]
-    tabActivo = True             
-    ctx = { 'pedido':ped, 'tabActivo':tabActivo}  
+#    ped.save()
+#    for d in ped.getDetallePedido():
+#        d.pedido = ped.id
+#        d.save()                
+    ctx = { 'pedido':ped}  
     return render_to_response('PedidoRegistrado/detallePedido.html',ctx, context_instance=RequestContext(request))
 
+@login_required(login_url='/login')
 def detallePago_view(request):
-    ped = request.session["pedido"] 
+    ped = request.session["pedido"]
+    total = ped.precio_envio
+    vuelto=0
+    for d in ped.getDetallePedido():
+        total += float(d.precio) * float(d.cantidad)    
     if request.method == "POST":
-        form = PagoForm(request.POST)
+        form = PagoForm(request.POST, precioTotal = total)        
         if form.is_valid():
             importe= form.cleaned_data['importePagar']
-            importeFloat = float(importe)
-            vuelto = ped.precioTotal - importeFloat          
-            request.session ["vuelto"]=vuelto   
-            return HttpResponseRedirect('/pedido/armaTuPedido/')
+#            importeFloat = float(importe)
+#            vuelto = importeFloat - total
+            
+            vuelto = float(0 if importe is None else importe) - total          
+#            request.session ["vuelto"]=vuelto
+        form2 = horaPedidoForm(request.POST)
+        if form2.is_valid():
+            hora = form2.cleaned_data["horaPedir"]       
     else:
-        form = PagoForm()        
-    ped = request.session["pedido"] 
-    tabActivo = True     
-    ctx = { 'pedido':ped, 'form':form, 'tabActivo':tabActivo}  
+        form = PagoForm(precioTotal = total)
+        form2 = horaPedidoForm()        
+    horaActual = datetime.datetime.now().time()
+    ped = request.session["pedido"]      
+    ctx = { 'pedido':ped, 'form':form, 'vuelto':vuelto, 'horaActual':horaActual, 'form2':form2}  
     return render_to_response('PedidoRegistrado/detallePago.html',ctx, context_instance=RequestContext(request))
 
 def pedidoFinalizado_view(request):
-    ped = request.session["pedido"]
-    tabActivo = True       
-    ctx = { 'pedido':ped, 'tabActivo':tabActivo}  
+    ped = request.session["pedido"]         
+    ctx = { 'pedido':ped}  
     return render_to_response('PedidoRegistrado/pedidoFinalizado.html',ctx, context_instance=RequestContext(request))
 
 def cerrarPedido_view(request):
@@ -114,31 +125,6 @@ def cerrarPedido_view(request):
     request.session["pedido"] = None 
     return render_to_response('index.html', context_instance=RequestContext(request))
 
-def pedidoSol_view(request,id_pro):  
-    fechaPed = datetime.datetime.now()
-    cli=Cliente.objects.get(pk=1)
-    est=EstadoPedido.objects.get(pk=1)
-    ser=Servicio.objects.get(pk=1)
-    tip=TipologiaVivienda.objects.get(pk=1)  
-    if not "pedido" in request.session: 
-        p = Pedido(cliente=cli,fechaPedido=fechaPed,estado=est,servicio=ser,tipologia_vivienda=tip,precio_envio=34)
-        p.save()
-        request.session["pedido"]=p
-    ped = request.session["pedido"]
-    if request.method == "POST":
-        form = ProductoPedidoForm(request.POST)
-        if form.is_valid():           
-            cantidad = form.cleaned_data['cantidad']        
-            pro= DetalleVersiones.objects.get(pk=id_pro)              
-            precion = pro.precio
-            d = DetallePedido(pedido=ped,cantidad=cantidad,producto=pro,precio=precion)
-            d.save()   
-            return HttpResponseRedirect('/pedido/armaTuPedido/')
-    else:
-        form = ProductoPedidoForm()                         
-    productos = Producto.objects.all()   
-    ctx = {'productos':productos, 'pedido':ped,'form':form}
-    return render_to_response('PedidoRegistrado/productosSolicitados.html',ctx,context_instance=RequestContext(request))
 
      
     

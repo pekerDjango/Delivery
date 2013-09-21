@@ -12,8 +12,7 @@ urlpatterns = patterns('PedidoRegistrado.views',
      url(r'^pedido/armaTuPedido/detallePedido/$','detallePedido_view',name='vista_detallePedido'),
      url(r'^pedido/armaTuPedido/detallePedido/detallePago/$','detallePago_view',name='vista_detallePago'),
      url(r'^pedido/armaTuPedido/detallePedido/detallePago/pedidoFinalizado/$','pedidoFinalizado_view',name='vista_pedidoFinalizado'),
-     url(r'^$','cerrarPedido_view',name='vista_cerrarPedido'),
-     url(r'^pedido/armaTuPedido/productosPopulares2/productos/(?P<id_pro>.*)/$','pedidoSol_view',name='vista_pedidoSol'),
+     url(r'^$','cerrarPedido_view',name='vista_cerrarPedido'),  
 
 
 )   

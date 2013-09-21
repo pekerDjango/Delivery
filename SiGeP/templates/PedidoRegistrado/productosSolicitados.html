@@ -38,10 +38,25 @@
 			//alert(valor);
 			//var str
 			console.log(valor);
-			$("#id_producto").value({{d.id}});
 			$("#lblCantidad").text(valor);
 		});
+		
+		$( "a" ).click(function() {
+        var clase  = $(this).attr('class');
+        if(clase == 'btn')
+        {
+            var fila = $(this).closest("tr");
+            var numeroCombo = $(fila).find("select").find("option:selected").val();
+            var idProducto = $(this).attr('id');
+            console.log(idProducto);
+            console.log(numeroCombo);
+            $(this).attr("href", "/pedido/armaTuPedido/productosPopulares/ "+numeroCombo+"/"+idProducto+"/");
+        }
+        console.log(clase);
 	}); 
+	
+	
+});
 </script>
         {% if productos %}
         <table "table table-striped " cellspacing="5" cellpadding="5">
@@ -63,16 +78,15 @@
                     <th><img src="/media/{{d.imagenProducto}}" alt="" width="50px" heigth="50px" /></th>
                     <th> {{p.nombre}} {{d.clasificacion}}</th>
                     <th> ${{d.precio}} </th>
-                   <th>{{form.producto}}{{form.cantidad}}<input id="id_pro{{d.id}}" name="pro" value={{d.id}} type="hidden"></th>
-                <!-- <select name="cantidad" id="cantidad" style="width:50px">
-                        <option value="1">0</option>
+                   <th><!--{{form.producto}}{{form.cantidad}}<input id="id_pro{{d.id}}" name="pro" value={{d.id}} type="hidden"></th>-->
+                <select id="{{d.id}}" name="cantidad" id="cantidad" style="width:50px">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
-                    </select></th>-->           
+                    </select></th>           
                     <th>{% if p.estado %}
-                        <a href="/pedido/armaTuPedido/productosPopulares/4/{{d.id}}/" class="btn" type="submit"><i class="icon-shopping-cart"></i></a>
+                        <a id="{{d.id}}" href="/pedido/armaTuPedido/productosPopulares/4/{{d.id}}/" class="btn" type="submit"><i class="icon-shopping-cart"></i></a>
                         {% else %}
                         <p style="color:#FF0000">No Disponible</p>
                         {% endif %}
@@ -80,7 +94,7 @@
                 confirmar
             </button>  </th>-->
                 </tr>
-              </form>       
+           <!--   </form>-->       
             </tbody>
             
             {% endfor %}           

@@ -88,12 +88,11 @@ class Pedido(models.Model):
     def subTotal(self):
         total = 0
         for d in self.getDetallePedido():
-            total += (d.precio * d.cantidad)
+            total += float(d.precio) * float(d.cantidad)
         return total
     def precioTotal(self):
-        total = self.subTotal() + self.precio_envio
-        totalFloat = float(total)
-        return totalFloat
+        total = float(self.subTotal()) + float(self.precio_envio)        
+        return total
     def cantidadTotalProductos(self):
         total = 0
         for d in self.getDetallePedido():

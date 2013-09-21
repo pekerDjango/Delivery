@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import Textarea, TextInput
-from PedidoRegistrado.models import DomicilioSearch
+from PedidoRegistrado.models import DomicilioSearch, Pedido
 
 class DomicilioSearchForm(forms.ModelForm):
     class Meta:
@@ -25,7 +25,33 @@ class ProductoPedidoForm(forms.Form):
     cantidad = forms.CharField(widget=forms.Select(choices=cantidad_choice, attrs={'width':'50px'}))
     
 class PagoForm(forms.Form):
-    importePagar = forms.DecimalField(label='Importe a pagar:$')
+    importePagar =  forms.FloatField(label='Importe a pagar:$')
+    
+#    def __init__(self, request, *args, **kwargs):
+#        self.request = request
+#        super(PagoForm, self).__init__(*args, **kwargs)
+
+#    def __init__(self, *args, **kwargs):
+#        self.request = kwargs.pop('request', None)
+#        super(PagoForm, self).__init__(*args, **kwargs)
+
+    def __init__(self,*args,**kwargs):
+        self.precioTotal=kwargs.get('precioTotal',None)
+        if kwargs['precioTotal'] is not None:
+            del kwargs['precioTotal']
+        super(PagoForm, self).__init__(*args, **kwargs)
+    
+    def clean_importePagar(self):
+        importePagar = self.cleaned_data['importePagar']
+#        pedido = self.request.session["pedido"]
+#        ped = Pedido.objects.get(id = pedido.id)         
+        if importePagar >= self.precioTotal:
+            pass
+        else:
+            raise forms.ValidationError('Su importe es menor al total')
+        
+class horaPedidoForm(forms.Form):
+    horaPedir = forms.DateTimeField()
 
 
 
