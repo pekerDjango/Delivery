@@ -23,6 +23,8 @@ font-size: 18px;
 #wrapper{width:200px;height150px;margin:auto;}
 .carousel-inner {text-align:center;}
 .carousel .item > img{display: inline-block;width:870px; height:350px;}
+.añadir {margin-bottom: 10px;display: block; height: 240px;width:800px;}
+.añadir .producto {width:255px;float: left;margin: 10px 0 0 0;}
 .añadir img {width:250px; height:150px;}
 .cabecera {background-color: #f5f5f5;}
 

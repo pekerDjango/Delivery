@@ -18,7 +18,8 @@ def pedidoInformacion_view(request):
             add.status = True
             add.save() # Guardamos la informacion           
             request.session ["domicilio"] = add
-            request.session["pedido"] = None   
+            request.session["pedido"] = None
+            request.session["detalles"]={}   
             return HttpResponseRedirect('/pedido/armaTuPedido/')
     else:
         form = DomicilioSearchForm() 
@@ -74,9 +75,19 @@ def agregarPedido_view(request,cantidad,id_pro):
     d.save()
 #    lista = request.session["detalles"]
 #    lista.append(d)
-#    request.session["detalles"] = lista                      
+#    request.session["detalles"] = lista
+    dic = request.session["detalles"]
+    keys = dic.keys()
+    if not pro.id in keys:       
+        dic[pro.id] = [cantidad,pro]
+    else:
+        valor = int (dic[pro.id][0]) + int(cantidad)
+        dic[pro.id] = [valor,pro ]
+    print dic
+    request.session['detalles'] = dic
+    deta = request.session['detalles']            
     productos= Producto.objects.all()   
-    ctx = {'productos':productos, 'pedido':ped}
+    ctx = {'productos':productos, 'pedido':ped,'detalles':deta}
     return render_to_response('PedidoRegistrado/productosSolicitados.html',ctx,context_instance=RequestContext(request))
 
 def detallePedido_view(request):       
@@ -99,25 +110,22 @@ def detallePago_view(request):
         form = PagoForm(request.POST, precioTotal = total)        
         if form.is_valid():
             importe= form.cleaned_data['importePagar']
-#            importeFloat = float(importe)
-#            vuelto = importeFloat - total
-            
+            importeFloat = float(importe)
+#            vuelto = importeFloat - total            
             vuelto = float(0 if importe is None else importe) - total          
-#            request.session ["vuelto"]=vuelto
-        form2 = horaPedidoForm(request.POST)
-        if form2.is_valid():
-            hora = form2.cleaned_data["horaPedir"]       
+#            request.session ["vuelto"]=vuelto            
     else:
         form = PagoForm(precioTotal = total)
         form2 = horaPedidoForm()        
-    horaActual = datetime.datetime.now().time()
+    
     ped = request.session["pedido"]      
-    ctx = { 'pedido':ped, 'form':form, 'vuelto':vuelto, 'horaActual':horaActual, 'form2':form2}  
+    ctx = { 'pedido':ped, 'form':form, 'vuelto':vuelto}  
     return render_to_response('PedidoRegistrado/detallePago.html',ctx, context_instance=RequestContext(request))
 
 def pedidoFinalizado_view(request):
-    ped = request.session["pedido"]         
-    ctx = { 'pedido':ped}  
+    ped = request.session["pedido"]
+    horaActual = datetime.datetime.now().time()         
+    ctx = { 'pedido':ped, 'horaActual':horaActual}  
     return render_to_response('PedidoRegistrado/pedidoFinalizado.html',ctx, context_instance=RequestContext(request))
 
 def cerrarPedido_view(request):

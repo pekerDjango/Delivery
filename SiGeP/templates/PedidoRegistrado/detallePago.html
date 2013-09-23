@@ -56,13 +56,7 @@
    <button type="submit"  class="btn btn-primary">
                 confirmar
             </button>            </form>
-                   <h3>Detalle de Entrega</h3>
-<p>Hora actual:</p><p>{{horaActual}}</p>
-<p>Solicitud de pedido para:</p>
-<form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
-            {% csrf_token %}
-          {{form2.as_p}}
-          </form>
+                   
         {% endif %}
       
         <a class="btn btn-primary pull-right"  href="{% url "vista_pedidoFinalizado" %}">Confirmar</a>

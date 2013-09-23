@@ -122,7 +122,24 @@
            Tu Pedido
         </li>
             <p align="justify">
-       {% if pedido %}      
+        <!--        {% if detalles %}             
+                 {% for key,value in detalles.items %}
+                      
+                      <p>{{value.1.producto.nombre}} {{value.1.clasificacion}}</p>
+                       <select name="cantidad" id="cantidad"  style="width:50px">                         
+                        <option {% if value.0  == '1'  %} selected="selected" {% endif %}  value="1">1</option>
+                        <option {% if value.0  == '2' %} selected="selected" {% endif %}  value="2">2</option>
+                        <option  {% if value.0 == 3 %} selected="selected" {% endif %} value="3">3</option>
+                        <option {% if value.0 == '4' %} selected="selected" {% endif %} value="4">4</option>
+                    </select>
+                     {{value.0}}
+                        <hr />
+                       
+                 {% endfor %}
+                 {% endif %}-->
+            
+        
+    {% if pedido %}      
            
             {% for d in pedido.getDetallePedido %}
                
@@ -138,7 +155,8 @@
                         <option {% if d.cantidad == 4 %} selected="selected" {% endif %} value="4">4</option>
                     </select></th> 
                       </p>
-         <p>Precio: {{d.precioTotalUnidad}} </p>        
+         <p>Precio: {{d.precioTotalUnidad}} </p>
+                    <a href="">quitar</a> 
           <hr />
             
   

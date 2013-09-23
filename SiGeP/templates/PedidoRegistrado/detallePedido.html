@@ -67,11 +67,17 @@
         </table>
 
         {% endif %}
-        <div class="añadir">
-                  
-            <a href="#"  ><img src="/media/imagenes/bebida.png" alt="quilmes" /> Bebidad</a>    <a href="#"  ><img src="/media/imagenes/publicidades/cocacola.jpg" alt="cocacola" />Postre</a>            <a href="#" ><img src="/media/imagenes/publicidades/mccain.jpg" alt="mccain" />Guarnicion</a>
-            </div>
-  
+<div class="añadir">
+    <div class="producto" >
+        <a href="#"  ><img src="/media/imagenes/bebida.png" alt="quilmes" /> </a> <p>Bebidas</p>
+    </div>
+    <div class="producto" >
+        <a href="#"  ><img src="/media/imagenes/publicidades/cocacola.jpg" alt="cocacola" /></a><p>Postres</p>
+    </div>
+    <div class="producto" >
+        <a href="#" ><img src="/media/imagenes/publicidades/mccain.jpg" alt="mccain" /></a><p>Guarniciones</p>
+    </div>
+</div>
         <a class="btn btn-danger"  href="#">Cancelar </a>
      <!--  <a class="btn "  href="javascript:window.history.go(-1);">Volver </a>-->
       {% if user.is_authenticated %}
