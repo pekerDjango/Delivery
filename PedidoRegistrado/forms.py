@@ -25,16 +25,7 @@ class ProductoPedidoForm(forms.Form):
     cantidad = forms.CharField(widget=forms.Select(choices=cantidad_choice, attrs={'width':'50px'}))
     
 class PagoForm(forms.Form):
-    importePagar =  forms.FloatField(label='Importe a pagar:$')
-    
-#    def __init__(self, request, *args, **kwargs):
-#        self.request = request
-#        super(PagoForm, self).__init__(*args, **kwargs)
-
-#    def __init__(self, *args, **kwargs):
-#        self.request = kwargs.pop('request', None)
-#        super(PagoForm, self).__init__(*args, **kwargs)
-
+    importePagar =  forms.FloatField(label='Importe a pagar:$')  
     def __init__(self,*args,**kwargs):
         self.precioTotal=kwargs.get('precioTotal',None)
         if kwargs['precioTotal'] is not None:
@@ -42,13 +33,12 @@ class PagoForm(forms.Form):
         super(PagoForm, self).__init__(*args, **kwargs)
     
     def clean_importePagar(self):
-        importePagar = self.cleaned_data['importePagar']
-#        pedido = self.request.session["pedido"]
-#        ped = Pedido.objects.get(id = pedido.id)         
+        importePagar = self.cleaned_data['importePagar']        
         if importePagar >= self.precioTotal:
             pass
         else:
             raise forms.ValidationError('Su importe es menor al total')
+        return importePagar
         
 class horaPedidoForm(forms.Form):
     horaPedir = forms.DateTimeField()

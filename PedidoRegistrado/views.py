@@ -107,16 +107,13 @@ def detallePago_view(request):
     for d in ped.getDetallePedido():
         total += float(d.precio) * float(d.cantidad)    
     if request.method == "POST":
-        form = PagoForm(request.POST, precioTotal = total)        
+        form = PagoForm(request.POST,request.FILES, precioTotal = total)        
         if form.is_valid():
-            importe= form.cleaned_data['importePagar']
-            importeFloat = float(importe)
-#            vuelto = importeFloat - total            
-            vuelto = float(0 if importe is None else importe) - total          
-#            request.session ["vuelto"]=vuelto            
+            importe= form.cleaned_data['importePagar']           
+            vuelto = float(0 if importe is None else importe) - total        
+            request.session["importe"] = (importe,vuelto)
     else:
-        form = PagoForm(precioTotal = total)
-        form2 = horaPedidoForm()        
+        form = PagoForm(precioTotal = total)            
     
     ped = request.session["pedido"]      
     ctx = { 'pedido':ped, 'form':form, 'vuelto':vuelto}  
@@ -124,8 +121,11 @@ def detallePago_view(request):
 
 def pedidoFinalizado_view(request):
     ped = request.session["pedido"]
-    horaActual = datetime.datetime.now().time()         
-    ctx = { 'pedido':ped, 'horaActual':horaActual}  
+    horaActual = datetime.datetime.now().time()  
+    tupla = request.session["importe"]
+    importe = tupla[0]
+    vuelto = tupla[1]
+    ctx = { 'pedido':ped, 'horaActual':horaActual,'importe':importe, 'vuelto': vuelto}  
     return render_to_response('PedidoRegistrado/pedidoFinalizado.html',ctx, context_instance=RequestContext(request))
 
 def cerrarPedido_view(request):
