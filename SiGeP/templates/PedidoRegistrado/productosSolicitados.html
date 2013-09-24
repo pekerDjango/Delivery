@@ -60,7 +60,7 @@
 </script>
 <div class="encabezado">Productos</div>
         {% if productos %}
-        <table "table table-striped " cellspacing="5" cellpadding="5">
+        <table class="table table-hover   " cellspacing="5" cellpadding="5">
             <thead>
                 <tr>
                     <th>Imagen</th>
@@ -80,7 +80,7 @@
                     <th> {{p.nombre}} {{d.clasificacion}}</th>
                     <th> ${{d.precio}} </th>
                    <th><!--{{form.producto}}{{form.cantidad}}<input id="id_pro{{d.id}}" name="pro" value={{d.id}} type="hidden"></th>-->
-                <select id="{{d.id}}" name="cantidad" id="cantidad" style="width:50px">
+                <select id="{{d.id}}" name="cantidad" id="cantidad" style="width:50px" {% if not p.estado %}disabled="true" {% endif %}>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>

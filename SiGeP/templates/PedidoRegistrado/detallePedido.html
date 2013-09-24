@@ -33,7 +33,7 @@
 <div class="encabezado">Detalle de Pedido</div> 
 <br />
     {% if pedido %}
-        <table "table table-striped " cellspacing="5" cellpadding="5">
+        <table class="table table-hover   "  cellspacing="5" cellpadding="5">
             <thead>
                 <tr>
                     <th>Imagen</th>
@@ -43,9 +43,11 @@
                     <th>Precio Total</th>                   
                 </tr>
             </thead>
-            {% for d in pedido.getDetallePedido %}
+   
+          
                
             <tbody>
+                  {% for d in pedido.getDetallePedido %}
                 <tr>
                     <th><img src="/media/{{d.producto.imagenProducto}}" alt="" width="50px" heigth="50px" /></th>
                     <th> {{d.producto.producto.nombre}} {{d.producto.clasificacion}} </th>                   

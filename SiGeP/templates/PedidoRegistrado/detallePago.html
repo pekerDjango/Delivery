@@ -53,7 +53,7 @@
 
   <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
             {% csrf_token %}
-          {{form.importePagar.label}}{{form.importePagar}}  <button type="submit"  class="btn btn-primary">confirmar</button><p>Vuelto:</p><p>{{vuelto}}</p>
+          {{form.importePagar.label}}{{form.importePagar}}  <button type="submit"  class="btn btn-primary">confirmar</button><p>Vuelto:</p><p style="color:#FF0000">{{vuelto}}</p>
             </form>
                    
         {% endif %}
