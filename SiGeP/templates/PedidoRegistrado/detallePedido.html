@@ -29,7 +29,9 @@
     </ul>
     </div>
     {% endblock %}
-{% block content %} 
+{% block content %}
+<div class="encabezado">Detalle de Pedido</div> 
+<br />
     {% if pedido %}
         <table "table table-striped " cellspacing="5" cellpadding="5">
             <thead>
@@ -67,6 +69,9 @@
         </table>
 
         {% endif %}
+        <br />
+<div class="encabezado">También podes disfrutar</div>
+
 <div class="añadir">
     <div class="producto" >
         <a href="#"  ><img src="/media/imagenes/bebida.png" alt="quilmes" /> </a> <p>Bebidas</p>

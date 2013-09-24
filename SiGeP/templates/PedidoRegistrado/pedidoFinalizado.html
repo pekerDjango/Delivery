@@ -36,6 +36,7 @@
     </div>
     {% endblock %}
 {% block content %}
+<div class="encabezado">pedido finalizado</div>
     {% if pedido %}
         <table "table table-striped " cellspacing="5" cellpadding="5">
             <thead>
@@ -63,26 +64,21 @@
                  <tr><th>Vuelto</th><th></th><th></th><th>${{vuelto}}</th></tr>
             </tbody>         
         </table>
-
+<br />
         {% if domicilio  %}
         <p>Pedido va ser enviado: <strong>{{domicilio.direccion}}-{{domicilio.numero_direccion}}-{{domicilio.barrio}}-{{domicilio.localidad}}</strong></p>
              {% endif %}
              {% if sucursal  %}
         <p>Sucursal Asignada: <strong >{{sucursal.nombre}}-{{sucursal.direccion}}</strong></p>
              {% endif %}
-              <p>Solicitud de pedido: <strong>{{p.hora_entrega}}</strong></p>
+              <p>Solicitud de pedido: <strong>{{horaPedir}}</strong>hs</p>
               <p>Estado de Pedido: <strong style="color:#FF0000">{{pedido.estado}}</strong></p>
+              <p>Tiempo estimado preparación: <strong></strong>hs</p>
+              <p>Hora entrega de pedido: <strong >{{pedido.hora_entrega}}</strong>hs</p>
+                {% endif %}             
               
-              <h3>Detalle de Entrega</h3>
-<p>Hora actual:</p><p>{{horaActual}}</p>
-<p>Solicitud de pedido para:</p>
-<form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
-            {% csrf_token %}
-          {{form.as_p}}
-          </form>
               
-                {% endif %}
-        <a class="btn btn-primary pull-right"  href="{% url "vista_cerrarPedido" %}">Cerrar</a>
+        
 {% endblock %}
 {% block panelAux %}
 <div class="well sidebar-nav">

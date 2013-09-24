@@ -1,7 +1,7 @@
 # Create your views here.
 from django.shortcuts import render_to_response 
 from django.template import RequestContext
-from PedidoRegistrado.forms import DomicilioSearchForm, ProductoPedidoForm, PagoForm, horaPedidoForm
+from PedidoRegistrado.forms import DomicilioSearchForm, ProductoPedidoForm, PagoForm, HoraPedidoForm
 from django.http import HttpResponseRedirect
 from PedidoRegistrado.models import DomicilioSearch, Pedido, DetallePedido, Cliente, Servicio, TipologiaVivienda, EstadoPedido
 from ComponentesDePedido.models import Producto, DetalleVersiones, TipoProducto, Menu, Promocion
@@ -35,24 +35,28 @@ def armaTuPedido_view(request):
 
 def productosSolicitados_view(request, codigo):    
     t= TipoProducto.objects.get(codigo=codigo) 
-    productos = Producto.objects.filter(tipoProducto=t.codigo)       
-    ctx = {'productos':productos}   
+    productos = Producto.objects.filter(tipoProducto=t.codigo)
+    ped = request.session["pedido"]        
+    ctx = {'productos':productos, 'pedido':ped}   
     return render_to_response('PedidoRegistrado/productosSolicitados.html',ctx, context_instance=RequestContext(request))
 
 def menuDisponibles_view(request):       
     menus = Menu.objects.all()
-    ctx = {'menus':menus}   
+    ped = request.session["pedido"] 
+    ctx = {'menus':menus, 'pedido':ped}   
     return render_to_response('PedidoRegistrado/menuDisponibles.html',ctx, context_instance=RequestContext(request))
 
 def promocionDisponibles_view(request):      
     promos = Promocion.objects.all()
-    ctx = { 'promos':promos}   
+    ped = request.session["pedido"] 
+    ctx = { 'promos':promos, 'pedido':ped}   
     return render_to_response('PedidoRegistrado/promosDisponibles.html',ctx, context_instance=RequestContext(request))
 
 def productosPopulares_view(request):       
     productos = Producto.objects.all()
-    form = ProductoPedidoForm()    
-    ctx = { 'productos':productos, 'form': form}  
+    form = ProductoPedidoForm() 
+    ped = request.session["pedido"]    
+    ctx = { 'productos':productos, 'form': form, 'pedido':ped}  
     return render_to_response('PedidoRegistrado/productosSolicitados.html',ctx, context_instance=RequestContext(request))
 
 def agregarPedido_view(request,cantidad,id_pro):  
@@ -101,31 +105,37 @@ def detallePedido_view(request):
 
 @login_required(login_url='/login')
 def detallePago_view(request):
+    horaPedido = datetime.datetime.now().time()  
     ped = request.session["pedido"]
     total = ped.precio_envio
     vuelto=0
     for d in ped.getDetallePedido():
         total += float(d.precio) * float(d.cantidad)    
     if request.method == "POST":
-        form = PagoForm(request.POST,request.FILES, precioTotal = total)        
+        form = PagoForm(request.POST,request.FILES, precioTotal = total)
+        form2 = HoraPedidoForm(request.POST,request.FILES)         
         if form.is_valid():
             importe= form.cleaned_data['importePagar']           
-            vuelto = float(0 if importe is None else importe) - total        
+            vuelto = float(0 if importe is None else importe) - total                   
             request.session["importe"] = (importe,vuelto)
+        elif form2.is_valid():
+            horaPedido = form2.cleaned_data['horaPedir']
+            request.session["horaPedir"] = horaPedido  
     else:
-        form = PagoForm(precioTotal = total)            
-    
-    ped = request.session["pedido"]      
-    ctx = { 'pedido':ped, 'form':form, 'vuelto':vuelto}  
+        form = PagoForm(precioTotal = total)
+        form2 = HoraPedidoForm()          
+    ped = request.session["pedido"]
+    horaActual = datetime.datetime.now().time()       
+    ctx = { 'pedido':ped, 'form':form,'form2':form2, 'vuelto':vuelto, 'horaActual':horaActual}  
     return render_to_response('PedidoRegistrado/detallePago.html',ctx, context_instance=RequestContext(request))
 
-def pedidoFinalizado_view(request):
-    ped = request.session["pedido"]
-    horaActual = datetime.datetime.now().time()  
+def pedidoFinalizado_view(request):           
+    ped = request.session["pedido"]     
     tupla = request.session["importe"]
     importe = tupla[0]
     vuelto = tupla[1]
-    ctx = { 'pedido':ped, 'horaActual':horaActual,'importe':importe, 'vuelto': vuelto}  
+    horaPedir =  request.session["horaPedir"]
+    ctx = { 'pedido':ped, 'importe':importe, 'vuelto': vuelto, 'horaPedir':horaPedir}  
     return render_to_response('PedidoRegistrado/pedidoFinalizado.html',ctx, context_instance=RequestContext(request))
 
 def cerrarPedido_view(request):

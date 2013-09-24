@@ -33,6 +33,7 @@
     </div>
     {% endblock %}
 {% block content %}
+<div class="encabezado">detalle de pedido</div>
      {% if pedido %}
         <table "table table-striped " cellspacing="5" cellpadding="5">
            
@@ -47,17 +48,23 @@
            
        
         </table>
-                    <h3>Detalle de Pago</h3>
+                  <div class="encabezado">detalle de pago</div>
 <p>Importe Total:${{pedido.precioTotal}}</p>
 
   <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
             {% csrf_token %}
-          {{form.as_p}}<p>Vuelto:</p><p>{{vuelto}}</p>
-   <button type="submit"  class="btn btn-primary">
-                confirmar
-            </button>            </form>
+          {{form.importePagar.label}}{{form.importePagar}}  <button type="submit"  class="btn btn-primary">confirmar</button><p>Vuelto:</p><p>{{vuelto}}</p>
+            </form>
                    
         {% endif %}
+    <div class="encabezado">Detalle de entrega</div>
+<p>Hora actual:</p><p>{{horaActual}}</p>
+<p>Solicitud de pedido para:</p>
+<form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+          {{form2.as_p}}
+          <button type="submit"  class="btn btn-primary">confirmar</button>
+          </form>
       
         <a class="btn btn-primary pull-right"  href="{% url "vista_pedidoFinalizado" %}">Confirmar</a>
 {% endblock %}

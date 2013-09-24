@@ -40,8 +40,8 @@ class PagoForm(forms.Form):
             raise forms.ValidationError('Su importe es menor al total')
         return importePagar
         
-class horaPedidoForm(forms.Form):
-    horaPedir = forms.DateTimeField()
+class HoraPedidoForm(forms.Form):
+    horaPedir = forms.TimeField(label='Solicitud de pedido(Hora)')
 
 
 
