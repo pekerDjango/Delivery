@@ -35,7 +35,7 @@
 {% block content %}
 <div class="encabezado">detalle de pedido</div>
      {% if pedido %}
-        <table "table table-striped " cellspacing="5" cellpadding="5">
+        <table class="table table-hover" cellspacing="5" cellpadding="5">
            
                 <tr>
                    <th>Productos Solicitados</th><th>{{pedido.cantidadTotalProductos}}</th><th>${{pedido.subTotal}}</th>
@@ -49,24 +49,36 @@
        
         </table>
                   <div class="encabezado">detalle de pago</div>
-<p>Importe Total:${{pedido.precioTotal}}</p>
+
 
   <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
             {% csrf_token %}
-          {{form.importePagar.label}}{{form.importePagar}}  <button type="submit"  class="btn btn-primary">confirmar</button><p>Vuelto:</p><p style="color:#FF0000">{{vuelto}}</p>
+                {{ form.non_field_errors }}
+            <table class="table" border="0" cellspacing="5" cellpadding="5">
+                <tr><th>Importe Total:</th><th>${{pedido.precioTotal}}</th><th></th></tr>
+                <tr><th> Importe a pagar:</th><th>${{form.importePagar}} <button type="submit"  class="btn btn-primary">confirmar</button></th><th>{{ form.importePagar.errors}}</th></tr>
+                <tr><th>Vuelto:</th><th style="color:#FF0000">${{vuelto}}</th></tr>
+            </table>
+          
             </form>
                    
         {% endif %}
     <div class="encabezado">Detalle de entrega</div>
-<p>Hora actual:</p><p>{{horaActual}}</p>
-<p>Solicitud de pedido para:</p>
 <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
             {% csrf_token %}
-          {{form2.as_p}}
-          <button type="submit"  class="btn btn-primary">confirmar</button>
+            <table class="table" border="0" cellspacing="5" cellpadding="5">
+                <tr><th>Hora actual:</th><th></th><th>{{horaActual}}</th></tr>
+                <tr><th>Solicito pedido para<th>
+                	<th>{{form2.horaPedir}} </th>
+                	<th>  {{form2.horaPedir.errors}}</th>
+               </tr>
+                
+            </table>
+        
+          <button type="submit"  class="btn btn-large btn-primary pull-right">confirmar</button>
           </form>
       
-        <a class="btn btn-primary pull-right"  href="{% url "vista_pedidoFinalizado" %}">Confirmar</a>
+
 {% endblock %}
 {% block panelAux %}
 <div class="well sidebar-nav">

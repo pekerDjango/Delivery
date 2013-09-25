@@ -25,7 +25,7 @@ class ProductoPedidoForm(forms.Form):
     cantidad = forms.CharField(widget=forms.Select(choices=cantidad_choice, attrs={'width':'50px'}))
     
 class PagoForm(forms.Form):
-    importePagar =  forms.FloatField(label='Importe a pagar:$')  
+    importePagar =  forms.FloatField(label='', required=True)  
     def __init__(self,*args,**kwargs):
         self.precioTotal=kwargs.get('precioTotal',None)
         if kwargs['precioTotal'] is not None:
@@ -41,7 +41,7 @@ class PagoForm(forms.Form):
         return importePagar
         
 class HoraPedidoForm(forms.Form):
-    horaPedir = forms.TimeField(label='Solicitud de pedido(Hora)')
+    horaPedir = forms.TimeField(label='',help_text ="Hora : hh:mm")
 
 
 

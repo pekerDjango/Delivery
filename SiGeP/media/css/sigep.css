@@ -29,7 +29,8 @@ font-size: 18px;
 .cabecera {background-color:#eeeeee;margin: 0;}
 .cabecera .nav {margin: 0;}
 .encabezado{
-	width:300px;
+	width:408px;
+	height: 29px;
 	font-family: DominosFont,Arial,Helvetica,sans-serif;
 	background-color: #0078ae;color: #fff;
 	text-transform: uppercase;font-size: 17px;

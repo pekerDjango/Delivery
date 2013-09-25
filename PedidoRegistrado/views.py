@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from PedidoRegistrado.models import DomicilioSearch, Pedido, DetallePedido, Cliente, Servicio, TipologiaVivienda, EstadoPedido
 from ComponentesDePedido.models import Producto, DetalleVersiones, TipoProducto, Menu, Promocion
 from RecursosDeEmpresa.models import Sucursal
-import datetime
+from datetime import date, datetime, time, timedelta
 from decimal import Decimal
 from django.contrib.auth.decorators import login_required
 
@@ -60,7 +60,7 @@ def productosPopulares_view(request):
     return render_to_response('PedidoRegistrado/productosSolicitados.html',ctx, context_instance=RequestContext(request))
 
 def agregarPedido_view(request,cantidad,id_pro):  
-    fechaPed = datetime.datetime.now()
+    fechaPed = datetime.now()
     cli=Cliente.objects.get(pk=1)
     est=EstadoPedido.objects.get(pk=1)
     ser=Servicio.objects.get(pk=1)
@@ -105,7 +105,7 @@ def detallePedido_view(request):
 
 @login_required(login_url='/login')
 def detallePago_view(request):
-    horaPedido = datetime.datetime.now().time()  
+    horaPedido = datetime.now().time()  
     ped = request.session["pedido"]
     total = ped.precio_envio
     vuelto=0
@@ -120,22 +120,30 @@ def detallePago_view(request):
             request.session["importe"] = (importe,vuelto)
         elif form2.is_valid():
             horaPedido = form2.cleaned_data['horaPedir']
-            request.session["horaPedir"] = horaPedido  
+            request.session["horaPedir"] = horaPedido
+            return HttpResponseRedirect('/pedido/armaTuPedido/detallePedido/detallePago/pedidoFinalizado/')  
     else:
         form = PagoForm(precioTotal = total)
         form2 = HoraPedidoForm()          
     ped = request.session["pedido"]
-    horaActual = datetime.datetime.now().time()       
+    horaActual = datetime.now().time()       
     ctx = { 'pedido':ped, 'form':form,'form2':form2, 'vuelto':vuelto, 'horaActual':horaActual}  
     return render_to_response('PedidoRegistrado/detallePago.html',ctx, context_instance=RequestContext(request))
 
-def pedidoFinalizado_view(request):           
-    ped = request.session["pedido"]     
+def pedidoFinalizado_view(request):
+    ped = request.session["pedido"]
+    total = 0    
+    for d in ped.getDetallePedido():
+        total += int(d.producto.producto.tiempoPreparacion) * d.cantidad         
+         
     tupla = request.session["importe"]
     importe = tupla[0]
     vuelto = tupla[1]
-    horaPedir =  request.session["horaPedir"]
-    ctx = { 'pedido':ped, 'importe':importe, 'vuelto': vuelto, 'horaPedir':horaPedir}  
+    horaPedir =  request.session["horaPedir"]  
+    dt = datetime.combine(date.today(), horaPedir) + timedelta(minutes=total)
+    ped.hora_entrega = dt.time()
+    ped.save()
+    ctx = { 'pedido':ped, 'importe':importe, 'vuelto': vuelto, 'horaPedir':horaPedir,'total':total}  
     return render_to_response('PedidoRegistrado/pedidoFinalizado.html',ctx, context_instance=RequestContext(request))
 
 def cerrarPedido_view(request):
