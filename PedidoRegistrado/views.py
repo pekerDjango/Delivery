@@ -87,6 +87,13 @@ def agregarPedido_view(request,cantidad,id_pro,id_tip):
         d.save()
         productos = Menu.objects.all()
         htp= 'PedidoRegistrado/menuDisponibles.html'
+    elif int(id_tip) == 3:
+        pro= Promocion.objects.get(pk=id_pro)
+        precion = pro.precio
+        d = DetallePedido(pedido=ped,cantidad=cantidad,promocion=pro,precio=precion)
+        d.save()
+        productos = Promocion.objects.all()
+        htp= 'PedidoRegistrado/promosDisponibles.html'
     ctx = {'productos':productos, 'pedido':ped}
     return render_to_response(htp,ctx,context_instance=RequestContext(request))   
 #        ctx = {'menus':menus, 'pedido':ped}
@@ -181,6 +188,8 @@ def pedidoFinalizado_view(request):
         if not d.producto is None:
             total += int(d.producto.producto.tiempoPreparacion) * d.cantidad
         elif not d.menu is None:
+            total +=0
+        elif not d.promocion is None:
             total +=0       
     tupla = request.session["importe"]
     importe = tupla[0]

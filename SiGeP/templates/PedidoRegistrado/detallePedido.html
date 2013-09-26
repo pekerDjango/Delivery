@@ -55,6 +55,9 @@
                     {% if d.menu  %}
                     <th><img src="/media/{{d.menu.imagen}}" alt="" width="50px" heigth="50px" /></th>
                     {% endif %}
+                    {% if d.promocion %}
+                    <th><img src="/media/{{d.promocion.imagen}}" alt="" width="50px" heigth="50px" /></th>
+                    {% endif %}
                     <th>{{d.menu.nombre}} {{d.producto.producto.nombre}} {{d.producto.clasificacion}} </th>                   
                     <th>
                     <select name="cantidad" id="cantidad"  style="width:50px">

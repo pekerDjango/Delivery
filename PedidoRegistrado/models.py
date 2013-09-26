@@ -2,7 +2,7 @@
 from django.db import models
 from RecursosDeEmpresa.models import Localidad, Barrio
 from django.contrib.auth.models import User
-from ComponentesDePedido.models import DetalleVersiones, Menu
+from ComponentesDePedido.models import DetalleVersiones, Menu, Promocion
 
 class Servicio(models.Model):
     """Clase Servicio
@@ -108,6 +108,7 @@ class DetallePedido(models.Model):
     cantidad = models.IntegerField()
     producto = models.ForeignKey(DetalleVersiones,blank=True, null=True)
     menu = models.ForeignKey(Menu, blank=True, null=True)
+    promocion = models.ForeignKey(Promocion, blank=True, null=True)
     precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)" )    
     def __unicode__(self):
         return u'%s, %s'%(self.pedido.nombre)   
