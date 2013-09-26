@@ -11,7 +11,7 @@
 .login > a:hover{border-bottom: 3px solid black;}
 .item{border:1px solid #d9d9d9;margin:0 0 10px 0;background-color:#e6e6e6}
 .header {position: relative;background-color: #fff;}
-.header .column { float: right;width: 452px;padding: 10px 0;}
+.header .column { float: right;width: 500px;padding: 10px 0;}
 .header img {float: left;width:140px; height:72px;}
 .header a{color:#0078ae; font-weight: bold; display: block; overflow:hidden; cursor: pointer; }
 .header a:hover,
@@ -67,4 +67,10 @@ img.img-rounded{height: 213px;width:290px}
 #ProductosNuevos p{
 	margin-top: 10px
 }
-
+.well a {
+color: #0088cc;
+text-decoration: underline;
+}
+.well hr{
+	margin:8px; 
+}

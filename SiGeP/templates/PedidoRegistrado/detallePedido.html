@@ -49,8 +49,13 @@
             <tbody>
                   {% for d in pedido.getDetallePedido %}
                 <tr>
+                    {% if d.producto  %}
                     <th><img src="/media/{{d.producto.imagenProducto}}" alt="" width="50px" heigth="50px" /></th>
-                    <th> {{d.producto.producto.nombre}} {{d.producto.clasificacion}} </th>                   
+                    {% endif %}
+                    {% if d.menu  %}
+                    <th><img src="/media/{{d.menu.imagen}}" alt="" width="50px" heigth="50px" /></th>
+                    {% endif %}
+                    <th>{{d.menu.nombre}} {{d.producto.producto.nombre}} {{d.producto.clasificacion}} </th>                   
                     <th>
                     <select name="cantidad" id="cantidad"  style="width:50px">
                         <option {% if d.cantidad == 0 %} selected="selected" {% endif %} value="1">0</option>
@@ -129,18 +134,18 @@
             {% if domicilio  %}
         <p>
             <strong>Mi ubicación:</strong>{{domicilio.direccion}},{{domicilio.numero_direccion}},{{domicilio.barrio}},{{domicilio.localidad}},{{domicilio.codigo_postal}}
-             {% endif %}
+             {% endif %}<a href="" >Cambiar</a>
         </p>
        
         <p>
             {% if sucursal  %}
             <strong>Mi Sucursal:</strong>{{sucursal.nombre}},{{sucursal.direccion}}, {{sucursal.numero_direccion}},{{sucursal.barrio}}
-             {% endif %}
+             {% endif %}<a href="" >Cambiar</a>
         </p>
          <p>
           
             <strong>Servicio Elegido:</strong>No ha seleccionado
-         
+         <a href="" >Cambiar</a>
         </p>
          <p>
      

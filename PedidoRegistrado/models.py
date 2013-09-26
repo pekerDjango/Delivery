@@ -2,7 +2,7 @@
 from django.db import models
 from RecursosDeEmpresa.models import Localidad, Barrio
 from django.contrib.auth.models import User
-from ComponentesDePedido.models import DetalleVersiones
+from ComponentesDePedido.models import DetalleVersiones, Menu
 
 class Servicio(models.Model):
     """Clase Servicio
@@ -103,17 +103,18 @@ class Pedido(models.Model):
     
 class DetallePedido(models.Model):
     """Clase Detalle de Pedido
-    Atributos: pedido, cantidad, producto, estado, precio"""
+    Atributos: pedido, cantidad, producto,menu, estado, precio"""
     pedido = models.ForeignKey(Pedido)
     cantidad = models.IntegerField()
-    producto = models.ForeignKey(DetalleVersiones)
-    precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)" )
+    producto = models.ForeignKey(DetalleVersiones,blank=True, null=True)
+    menu = models.ForeignKey(Menu, blank=True, null=True)
+    precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)" )    
     def __unicode__(self):
-        return u'%s, %s'%(self.pedido.nombre, self.producto.nombre)   
+        return u'%s, %s'%(self.pedido.nombre)   
     def precioTotalUnidad(self):
         total = (self.precio * self.cantidad)
         return total
-    
+  
     
     
     
