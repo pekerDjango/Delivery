@@ -50,30 +50,30 @@
                   {% for d in pedido.getDetallePedido %}
                 <tr>
                     {% if d.producto  %}
-                    <th><img src="/media/{{d.producto.imagenProducto}}" alt="" width="50px" heigth="50px" /></th>
+                    <td><img src="/media/{{d.producto.imagenProducto}}" alt="" width="50px" heigth="50px" /></td>
                     {% endif %}
                     {% if d.menu  %}
-                    <th><img src="/media/{{d.menu.imagen}}" alt="" width="50px" heigth="50px" /></th>
+                    <td><img src="/media/{{d.menu.imagen}}" alt="" width="50px" heigth="50px" /></td>
                     {% endif %}
                     {% if d.promocion %}
-                    <th><img src="/media/{{d.promocion.imagen}}" alt="" width="50px" heigth="50px" /></th>
+                    <td><img src="/media/{{d.promocion.imagen}}" alt="" width="50px" heigth="50px" /></td>
                     {% endif %}
-                    <th>{{d.promocion.nombre}}{{d.menu.nombre}} {{d.producto.producto.nombre}} {{d.producto.clasificacion}} </th>                   
-                    <th>
+                    <td>{{d.promocion.nombre}}{{d.menu.nombre}} {{d.producto.producto.nombre}} {{d.producto.clasificacion}} </td>                   
+                    <td>
                     <select name="cantidad" id="cantidad"  style="width:50px">
                         <option {% if d.cantidad == 0 %} selected="selected" {% endif %} value="1">0</option>
                         <option {% if d.cantidad == 1 %} selected="selected" {% endif %}  value="1">1</option>
                         <option {% if d.cantidad == 2 %} selected="selected" {% endif %}  value="2">2</option>
                         <option  {% if d.cantidad == 3 %} selected="selected" {% endif %} value="3">3</option>
                         <option {% if d.cantidad == 4 %} selected="selected" {% endif %} value="4">4</option>
-                    </select></th>
-                       <th>${{d.precio}}</th>
-                     <th> ${{d.precioTotalUnidad}} </th>
+                    </select></td>
+                       <td>${{d.precio}}</td>
+                     <td> ${{d.precioTotalUnidad}} </td>
                 </tr>
                  
             {% endfor %}
-                 <tr><th></th><th>Envio</th><th></th><th></th><th>${{pedido.precio_envio}}</th></tr>              
-                 <tr><th></th><th>TOTAL</th><th></th><th></th><th>${{pedido.precioTotal}}</th></tr>
+                 <tr><td></td><td>Envio</td><td></td><td></td><td>${{pedido.precio_envio}}</td></tr>              
+                 <tr><td></td><td>TOTAL</td><td></td><td></td><td>${{pedido.precioTotal}}</td></tr>
             </tbody>
          
         </table>
@@ -137,7 +137,7 @@
             {% if domicilio  %}
         <p>
             <strong>Mi ubicación:</strong>{{domicilio.direccion}},{{domicilio.numero_direccion}},{{domicilio.barrio}},{{domicilio.localidad}},{{domicilio.codigo_postal}}
-             {% endif %}<a href="" >Cambiar</a>
+             {% endif %}<a href="/pedido/actualizar/{{domicilio.id}}/">Cambiar</a>
         </p>
        
         <p>

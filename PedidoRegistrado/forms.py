@@ -9,22 +9,11 @@ class DomicilioSearchForm(forms.ModelForm):
         widgets = {
                   "numero_direccion":TextInput(attrs={'class':'cajaschicas'}),
                   "piso":TextInput(attrs={'class':'cajaschicas'}),
-                  "depto":TextInput(attrs={'class':'cajaschicas'})
-                  }
-        
-#        piso = forms.CharField(widget=forms.TextInput(attrs={'size':'60','maxlength':'70'})) 
+                  "depto":TextInput(attrs={'class':'cajaschicas'}),
+                  "codigo_postal":TextInput(attrs={'class':'cajaschicas'})
+                  }      
 
-class ProductoPedidoForm(forms.Form):
-    cantidad_choice=(
-                     (1,1),
-                     (2,2),
-                     (3,3),
-                     (4,4),
-                     )                    
-#    imagen = forms.ImageField()
-#    producto = forms.CharField( label='',  widget=forms.HiddenInput, required=False)
-#    precio = forms.CharField()
-    cantidad = forms.CharField(widget=forms.Select(choices=cantidad_choice, attrs={'width':'50px'}))
+
     
 class PagoForm(forms.Form):
     importePagar =  forms.FloatField(label='', required=True, widget=forms.TextInput(attrs={'class':'cajaschicas'}))  

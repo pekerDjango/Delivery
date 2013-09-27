@@ -36,16 +36,16 @@
 <div class="encabezado">detalle de pedido</div>
      {% if pedido %}
         <table class="table table-hover" cellspacing="5" cellpadding="5">
-           
+           <tbody>
                 <tr>
-                   <th>Productos Solicitados</th><th>{{pedido.cantidadTotalProductos}}</th><th>${{pedido.subTotal}}</th>
+                   <td>Productos Solicitados</td><td>{{pedido.cantidadTotalProductos}}</td><td>${{pedido.subTotal}}</td>
                   
                 </tr>
                
-                 <tr><th>Envio</th><th></th><th>${{pedido.precio_envio}}</th></tr>
+                 <tr><td>Envio</td><td></td><td>${{pedido.precio_envio}}</td></tr>
                 
-                 <tr><th>TOTAL</th><th></th><th>${{pedido.precioTotal}}</th></tr>
-           
+                 <tr><td>TOTAL</td><td></td><td>${{pedido.precioTotal}}</td></tr>
+           </tbody>
        
         </table>
                   <div class="encabezado">detalle de pago</div>
@@ -55,9 +55,9 @@
             {% csrf_token %}
                 {{ form.non_field_errors }}
             <table class="table" border="0" cellspacing="5" cellpadding="5">
-                <tr><th>Importe Total:</th><th>${{pedido.precioTotal}}</th><th></th></tr>
-                <tr><th> Importe a pagar:</th><th>${{form.importePagar}} <button type="submit"  class="btn btn-primary">confirmar</button></th><th>{{ form.importePagar.errors}}</th></tr>
-                <tr><th>Vuelto:</th><th style="color:#FF0000">${{vuelto}}</th></tr>
+                <tr><td>Importe Total:</td><td>${{pedido.precioTotal}}</td><td></td></tr>
+                <tr><td> Importe a pagar:</td><td>${{form.importePagar}} <button type="submit"  class="btn btn-primary">confirmar</button></td><td>{{ form.importePagar.errors}}</td></tr>
+                <tr><td>Vuelto:</td><td style="color:#FF0000">${{vuelto}}</td></tr>
             </table>
           
             </form>
@@ -67,10 +67,10 @@
 <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
             {% csrf_token %}
             <table class="table" border="0" cellspacing="5" cellpadding="5">
-                <tr><th>Hora actual:</th><th></th><th>{{horaActual}}</th></tr>
-                <tr><th>Solicito pedido para<th>
-                	<th>{{form2.horaPedir}} </th>
-                	<th style="font-weight:none; font-size: 15px;">  {{form2.horaPedir.errors}}</th>
+                <tr><td>Hora actual:</td><td></td><td>{{horaActual}}</td></tr>
+                <tr><td>Solicito pedido para<td>
+                	<td>{{form2.horaPedir}} </td>
+                	<td style="font-weight:none; font-size: 15px;">  {{form2.horaPedir.errors}}</td>
                </tr>
                 
             </table>
@@ -101,7 +101,7 @@
             {% if domicilio  %}
         <p>
             <strong>Mi ubicación:</strong>{{domicilio.direccion}},{{domicilio.numero_direccion}},{{domicilio.barrio}},{{domicilio.localidad}},{{domicilio.codigo_postal}}
-             {% endif %}<a href="" >Cambiar</a>
+             {% endif %}<a href="/pedido/actualizar/{{domicilio.id}}/">Cambiar</a>
         </p>
        
         <p>

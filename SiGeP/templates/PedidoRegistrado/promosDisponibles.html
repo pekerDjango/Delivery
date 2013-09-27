@@ -140,7 +140,7 @@
             {% if domicilio  %}
         <p>
             <strong>Mi ubicación:</strong>{{domicilio.direccion}},{{domicilio.numero_direccion}},{{domicilio.barrio}},{{domicilio.localidad}},{{domicilio.codigo_postal}}
-             {% endif %}<a href="" >Cambiar</a>
+             {% endif %}<a href="/pedido/actualizar/{{domicilio.id}}/">Cambiar</a>
         </p>
        
         <p>

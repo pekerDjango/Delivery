@@ -51,17 +51,17 @@
                
             <tbody>
                 <tr>
-                    <th> {{d.promocion.nombre}}{{d.menu.nombre}}{{d.producto.producto.nombre}} {{d.producto.clasificacion}} </th>                   
-                    <th>{{d.cantidad}}                       </th>
-                       <th>${{d.precio}}</th>
-                     <th> ${{d.precioTotalUnidad}} </th>
+                    <td> {{d.promocion.nombre}}{{d.menu.nombre}}{{d.producto.producto.nombre}} {{d.producto.clasificacion}} </td>                   
+                    <td>{{d.cantidad}}                       </td>
+                       <td>${{d.precio}}</td>
+                     <td> ${{d.precioTotalUnidad}} </td>
                 </tr>
                  
             {% endfor %}
-                 <tr><th>Envio</th><th></th><th></th><th>${{pedido.precio_envio}}</th></tr>              
-                 <tr><th>TOTAL</th><th></th><th></th><th>${{pedido.precioTotal}}</th></tr>
-                 <tr><th>Se abona con</th><th></th><th></th><th>${{importe}}</th></tr>              
-                 <tr><th>Vuelto</th><th></th><th></th><th>${{vuelto}}</th></tr>
+                 <tr><td>Envio</td><td></td><td></td><td>${{pedido.precio_envio}}</td></tr>              
+                 <tr><td>TOTAL</td><td></td><td></td><td>${{pedido.precioTotal}}</td></tr>
+                 <tr><td>Se abona con</td><td></td><td></td><td>${{importe}}</td></tr>              
+                 <tr><td>Vuelto</td><td></td><td></td><td>${{vuelto}}</td></tr>
             </tbody>         
         </table>
 <br />

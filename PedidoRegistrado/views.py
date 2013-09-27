@@ -1,7 +1,7 @@
 # Create your views here.
-from django.shortcuts import render_to_response 
+from django.shortcuts import render_to_response, get_object_or_404  
 from django.template import RequestContext
-from PedidoRegistrado.forms import DomicilioSearchForm, ProductoPedidoForm, PagoForm, HoraPedidoForm
+from PedidoRegistrado.forms import DomicilioSearchForm, PagoForm, HoraPedidoForm
 from django.http import HttpResponseRedirect
 from PedidoRegistrado.models import DomicilioSearch, Pedido, DetallePedido, Cliente, Servicio, TipologiaVivienda, EstadoPedido
 from ComponentesDePedido.models import Producto, DetalleVersiones, TipoProducto, Menu, Promocion
@@ -23,6 +23,20 @@ def pedidoInformacion_view(request):
             return HttpResponseRedirect('/pedido/armaTuPedido/')
     else:
         form = DomicilioSearchForm() 
+    servicio = Servicio.objects.all()
+    tipologia = TipologiaVivienda.objects.all()   
+    ctx = {'form': form, 'servicios':servicio, 'tipologias' : tipologia}
+    return render_to_response('PedidoRegistrado/pedidoInformacion.html',ctx, context_instance=RequestContext(request))
+
+def actualizarPedidoInformacion_view(request, id_dom): 
+    instance = get_object_or_404(DomicilioSearch, id=id_dom)
+    form = DomicilioSearchForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        add = form.save(commit=False)
+        add.status = True
+        add.save() # Guardamos la informacion           
+        request.session ["domicilio"] = add
+        return HttpResponseRedirect('/pedido/armaTuPedido/')        
     servicio = Servicio.objects.all()
     tipologia = TipologiaVivienda.objects.all()   
     ctx = {'form': form, 'servicios':servicio, 'tipologias' : tipologia}
@@ -54,9 +68,8 @@ def promocionDisponibles_view(request):
 
 def productosPopulares_view(request):       
     productos = Producto.objects.all()
-    form = ProductoPedidoForm() 
     ped = request.session["pedido"]    
-    ctx = { 'productos':productos, 'form': form, 'pedido':ped}  
+    ctx = { 'productos':productos, 'pedido':ped}  
     return render_to_response('PedidoRegistrado/productosSolicitados.html',ctx, context_instance=RequestContext(request))
 
 def agregarPedido_view(request,cantidad,id_pro,id_tip):  
