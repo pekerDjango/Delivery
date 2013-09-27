@@ -49,7 +49,7 @@ def menuDisponibles_view(request):
 def promocionDisponibles_view(request):      
     promos = Promocion.objects.all()
     ped = request.session["pedido"] 
-    ctx = { 'promos':promos, 'pedido':ped}   
+    ctx = { 'productos':promos, 'pedido':ped}   
     return render_to_response('PedidoRegistrado/promosDisponibles.html',ctx, context_instance=RequestContext(request))
 
 def productosPopulares_view(request):       
@@ -187,10 +187,10 @@ def pedidoFinalizado_view(request):
     for d in ped.getDetallePedido():
         if not d.producto is None:
             total += int(d.producto.producto.tiempoPreparacion) * d.cantidad
-        elif not d.menu is None:
-            total +=0
+        elif not d.menu is None:            
+            total += d.menu.tiempoPreparacionTotal() * d.cantidad 
         elif not d.promocion is None:
-            total +=0       
+            total += d.promocion.tiempoPreparacionTotal() * d.cantidad      
     tupla = request.session["importe"]
     importe = tupla[0]
     vuelto = tupla[1]

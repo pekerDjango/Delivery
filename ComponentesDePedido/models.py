@@ -124,6 +124,13 @@ class Menu (models.Model):
     imagen = models.ImageField(upload_to='imagenes', verbose_name='Vista Previa')
     def __unicode__(self):
         return self.nombre
+    def tiempoPreparacionTotal(self):
+        total = 0
+        for d in self.getDetalleMenu():        
+            total += int(d.tiempoPreparacion())
+        return total           
+    def getDetalleMenu(self):
+        return DetalleMenu.objects.filter(menu=self)
     class Meta:
         verbose_name='Menú'
         verbose_name_plural = "Menús"
@@ -138,10 +145,14 @@ class DetalleMenu (models.Model):
     
     def __unicode__(self):
         return u'%s, %s'%(self.menu.nombre, self.producto.nombre)
-    
+    def tiempoPreparacion(self):
+        total = 0
+        total += int(self.producto.tiempoPreparacion) * int(self.cantidad)
+        return total
     class Meta:
         verbose_name="Detalle de Menú"
         verbose_name_plural = "Detalles de Menú"
+    
     
 class Frecuencia (models.Model):
     descripcion = models.CharField(max_length = 200)
@@ -165,6 +176,17 @@ class Promocion (models.Model):
     
     def __unicode__(self):
         return self.nombre
+    def tiempoPreparacionTotal(self):
+        total = 0
+        for d in self.getDetallePromocionMenu():        
+            total += int(d.tiempoPreparacion())
+        for d in self.getDetallePromocionProducto():        
+            total += int(d.tiempoPreparacion())
+        return total           
+    def getDetallePromocionProducto(self):
+        return DetallePromocionProducto.objects.filter(promocion=self)
+    def getDetallePromocionMenu(self):
+        return DetallePromocionMenu.objects.filter(promocion=self)
     class Meta:
         verbose_name = "Promoción"
         verbose_name_plural = "Promociones"
@@ -201,6 +223,10 @@ class DetallePromocionProducto(models.Model):
     producto = models.ForeignKey(Producto)
     versionProducto = models.ForeignKey(Clasificacion, verbose_name = "Versiones de Producto")
     cantidad = models.IntegerField ()
+    def tiempoPreparacion(self):
+        total = 0
+        total += int(self.producto.tiempoPreparacion) * int(self.cantidad)
+        return total
     
     class Meta:
         verbose_name = "Producto"
@@ -210,6 +236,10 @@ class DetallePromocionMenu(models.Model):
     promocion = models.ForeignKey(Promocion)
     menu = models.ForeignKey(Menu)
     cantidad = models.IntegerField ()
+    def tiempoPreparacion(self):
+        total = 0
+        total += int(self.menu.tiempoPreparacionTotal()) * int(self.cantidad)
+        return total
     
     class Meta:
         verbose_name = "Menú"
