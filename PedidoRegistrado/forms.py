@@ -7,9 +7,11 @@ class DomicilioSearchForm(forms.ModelForm):
         model = DomicilioSearch
         fields = ['localidad', 'barrio', 'direccion', 'numero_direccion', 'piso', 'depto', 'codigo_postal']
         widgets = {
-                  "piso": TextInput(attrs={'width':'40px'}),
-                  "depto":TextInput(attrs={'size':'50'})
+                  "numero_direccion":TextInput(attrs={'class':'cajaschicas'}),
+                  "piso":TextInput(attrs={'class':'cajaschicas'}),
+                  "depto":TextInput(attrs={'class':'cajaschicas'})
                   }
+        
 #        piso = forms.CharField(widget=forms.TextInput(attrs={'size':'60','maxlength':'70'})) 
 
 class ProductoPedidoForm(forms.Form):
@@ -25,7 +27,7 @@ class ProductoPedidoForm(forms.Form):
     cantidad = forms.CharField(widget=forms.Select(choices=cantidad_choice, attrs={'width':'50px'}))
     
 class PagoForm(forms.Form):
-    importePagar =  forms.FloatField(label='', required=True)  
+    importePagar =  forms.FloatField(label='', required=True, widget=forms.TextInput(attrs={'class':'cajaschicas'}))  
     def __init__(self,*args,**kwargs):
         self.precioTotal=kwargs.get('precioTotal',None)
         if kwargs['precioTotal'] is not None:
@@ -41,7 +43,7 @@ class PagoForm(forms.Form):
         return importePagar
         
 class HoraPedidoForm(forms.Form):
-    horaPedir = forms.TimeField(label='',help_text ="Hora : hh:mm")
+    horaPedir = forms.TimeField(label='',help_text ="Hora : hh:mm", widget=forms.TextInput(attrs={'class':'cajaschicas'}))
 
 
 

@@ -112,38 +112,14 @@ def agregarPedido_view(request,cantidad,id_pro,id_tip):
 #    request.session['detalles'] = dic
 #    deta = request.session['detalles']            
 
-#
-#def agregarMenuPedido_view(request,cantidad,id_men):  
-#    fechaPed = datetime.now()
-#    cli=Cliente.objects.get(pk=1)
-#    est=EstadoPedido.objects.get(pk=1)
-#    ser=Servicio.objects.get(pk=1)
-#    tip=TipologiaVivienda.objects.get(pk=1) 
-#    pedi = request.session["pedido"] 
-#    if  pedi is None: 
-#        p = Pedido(cliente=cli,fechaPedido=fechaPed,estado=est,servicio=ser,tipologia_vivienda=tip,precio_envio=34)
-#        p.save()
-#        request.session["pedido"]=p
-#    ped = request.session["pedido"]      
-#    pro= Menu.objects.get(pk=id_men)  
-#    cant=cantidad
-#    precion = pro.precioVenta
-#    d = DetallePedido(pedido=ped,cantidad=cant,menu=pro,precio=precion)
-#    d.save()
-#    dic = request.session["detalles"]
-#    keys = dic.keys()
-#    
-#    if not pro.codigo in keys:       
-#        dic[pro.codigo] = [cantidad,pro]
-#    else:
-#        valor = int (dic[pro.codigo][0]) + int(cantidad)
-#        dic[pro.codigo] = [valor,pro ]
-#    print dic    
-#    request.session['detalles'] = dic
-#    deta = request.session['detalles']            
-#    menus = Menu.objects.all()   
-#    ctx = {'menus':menus, 'pedido':ped,'detalles':deta}
-#    return render_to_response('PedidoRegistrado/menuDisponibles.html',ctx,context_instance=RequestContext(request))
+def eliminarDetalle_view(request,id_det):
+    ped = request.session["pedido"]
+    d = DetallePedido.objects.get(pk=id_det)
+    if d.pedido == ped:
+        d.delete()
+    productos = Producto.objects.all()
+    ctx = {'productos':productos, 'pedido':ped}   
+    return render_to_response('PedidoRegistrado/productosSolicitados.html',ctx, context_instance=RequestContext(request))
 
 def detallePedido_view(request):       
     ped = request.session["pedido"]

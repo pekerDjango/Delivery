@@ -116,7 +116,7 @@
                         <option {% if d.cantidad == 4 %} selected="selected" {% endif %} value="4">4</option>
                     </select> <input type="hidden" name="s"  {% if d.menu %} value="2" {% elif d.producto %} value="1" {% elif d.promocion %} value="3"  {% endif %}  id="{{d.promocion.codigo}} {{d.menu.codigo}}{{d.producto.id}}"/> </td>
              </tr>
-               <tr><td>Precio: {{d.precioTotalUnidad}}</td><td><a href="" >quitar</a> </td></tr>
+               <tr><td>Precio: {{d.precioTotalUnidad}}</td><td><a href="/pedido/armaTuPedido/del/productos/{{d.id}}" >quitar</a> </td></tr>
                
         
                 <hr />
