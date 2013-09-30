@@ -104,7 +104,7 @@ class DetalleIngredientes(models.Model):
 class DetalleVersiones(models.Model):
     """Clase DetalleVersiones
     Atributos: Clasificacion, Imagen de producto, Precio """
-    clasificacion = models.ForeignKey(Clasificacion)
+    clasificacion = models.ForeignKey(Clasificacion, related_name="%(app_label)s_%(class)s_related")
     imagenProducto = models.ImageField(upload_to='imagenes', verbose_name='Imágen Producto')
     precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)")
     producto = models.ForeignKey(Producto)

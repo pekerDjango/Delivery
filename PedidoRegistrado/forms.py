@@ -11,9 +11,7 @@ class DomicilioSearchForm(forms.ModelForm):
                   "piso":TextInput(attrs={'class':'cajaschicas'}),
                   "depto":TextInput(attrs={'class':'cajaschicas'}),
                   "codigo_postal":TextInput(attrs={'class':'cajaschicas'})
-                  }      
-
-
+                  }     
     
 class PagoForm(forms.Form):
     importePagar =  forms.FloatField(label='', required=True, widget=forms.TextInput(attrs={'class':'cajaschicas'}))  

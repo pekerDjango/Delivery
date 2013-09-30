@@ -2,7 +2,7 @@
 from django.db import models
 from RecursosDeEmpresa.models import Localidad, Barrio
 from django.contrib.auth.models import User
-from ComponentesDePedido.models import DetalleVersiones, Menu, Promocion
+from ComponentesDePedido.models import DetalleVersiones, Menu, Promocion, TipoProducto, Version, Clasificacion, TipoIngrediente, Ingrediente
 
 class Servicio(models.Model):
     """Clase Servicio
@@ -115,6 +115,58 @@ class DetallePedido(models.Model):
     def precioTotalUnidad(self):
         total = (self.precio * self.cantidad)
         return total
+    
+class ProductoParaArmar(models.Model):
+    """Clase Producto para Armar""
+    Atributos: tipo producto, slogan y version"""
+    tipo_producto = models.ForeignKey(TipoProducto, verbose_name = "Tipo de Producto")
+    slogan = models.CharField(max_length=50, verbose_name="Slogan Producto")
+    version = models.ForeignKey(Version)
+    def __unicode__(self):
+        return self.slogan
+    class Meta:
+        verbose_name_plural = "Productos para armar"
+    
+class DetalleVersiones(models.Model):
+    """Clase DetalleVersiones
+    Atributos: Clasificacion, Imagen de producto, Precio """
+    clasificacion = models.ForeignKey(Clasificacion, related_name="%(app_label)s_%(class)s_related")
+#    imagenProducto = models.ImageField(upload_to='imagenes', verbose_name='Imágen Producto')
+    precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio por clasificación($)")
+    producto = models.ForeignKey(ProductoParaArmar)
+    def __unicode__(self):
+        return u'%s- %s'%(self.producto.slogan, self.clasificacion.nombre)
+    class Meta:
+        verbose_name_plural = "Detalle de versiones"
+        
+class SeccionProducto(models.Model):
+    """ Clase Seccion por producto
+    Atributos: producto, nombre, orden, tipo ingrediente, descripcion, 
+    obligatoria, excluyente, cantidad de exclusiones"""
+    producto = models.ForeignKey(ProductoParaArmar)
+    nombre = models.CharField(max_length=100, verbose_name="Sección Producto")
+    orden = models.IntegerField(verbose_name="Orden Presentación")
+    tipoIngrediente = models.ForeignKey(TipoIngrediente, verbose_name = "Tipo de Ingrediente")
+    descripcion = models.CharField(max_length = 50)
+    obligatoria = models.BooleanField(verbose_name = "Sección Obligatoria")
+    excluyente = models.BooleanField(verbose_name = "Clasifiaciones Excluyentes")
+    cantidad_exclusiones = models.IntegerField(verbose_name = "Cantidad Exclusiones")
+    def __unicode__(self):
+        return self.nombre
+    class Meta:
+        verbose_name_plural = "Secciones del Producto"
+        
+class IngredientesSeccion(models.Model):
+    """ Clase Ingredientes por seccion
+    Atributos: producto, ingredientes, clasificacion, cantidad"""
+    producto = models.ForeignKey(ProductoParaArmar)
+    ingrediente = models.ForeignKey(Ingrediente)
+    clasificacion = models.ForeignKey(Clasificacion)
+    cantidad = models.IntegerField()
+    def __unicode__(self):
+        return self.seccion.nombre + self.ingrediente.nombre
+    class Meta:
+        verbose_name_plural = "Ingredientes por Seccion"
   
     
     
