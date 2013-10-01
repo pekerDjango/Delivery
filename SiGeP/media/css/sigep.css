@@ -38,16 +38,9 @@ font-size: 18px;
 	border-radius: 5px 5px 5px 5px;
 	font-weight: bold;
 	}
-
-
 img.img-rounded{height: 213px;width:290px}
-
-body{
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
 .sidebar-nav {
-        padding: 90px ;
+        padding: 9px 0;
       }
 #panelPrincipal img {height: 50%; width:50%;}
 html, body, #map-canvas {
