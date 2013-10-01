@@ -39,8 +39,22 @@ font-size: 18px;
 	font-weight: bold;
 	}
 
+
 img.img-rounded{height: 213px;width:290px}
 
+body{
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+.sidebar-nav {
+        padding: 90px ;
+      }
+#panelPrincipal img {height: 50%; width:50%;}
+html, body, #map-canvas {
+        margin: 0;
+        padding: 0;
+        height: 50%;
+      }
 .well .nav .nav-header{
 	color: #FFFFFF;
 	font-size: 17px;
