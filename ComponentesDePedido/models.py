@@ -1,5 +1,6 @@
 #encoding:utf-8
 from django.db import models
+from django.core.exceptions import ValidationError
 # Create your models here.
 
 class TipoIngrediente(models.Model):
@@ -61,20 +62,25 @@ class TipoProducto(models.Model):
     Vista_Previa.allow_tags = True
     class Meta:
         verbose_name_plural = "Tipos de Productos" 
-    
+
+def validar_stock(value):
+        if self <10:
+            raise ValidationError("No se puede ingresar un stock menor a 10")
+  
 class Ingrediente(models.Model):        
     codigo = models.AutoField(primary_key=True, verbose_name = "Código")
     nombre = models.CharField(max_length = 50)
     tipoIngrediente = models.ForeignKey (TipoIngrediente, verbose_name = "Tipo de ingrediente")
     unidadDeMedida = models.ForeignKey(UnidadDeMedida, verbose_name = "Unidad de Medida")
     imagen = models.ImageField(upload_to='imagenes', verbose_name='Vista Previa')
-    stockActual = models.IntegerField(verbose_name = "Stock Actual")
+    stockActual = models.IntegerField(verbose_name = "Stock Actual", validators = [validar_stock])
     stockMinimo = models.IntegerField(verbose_name = "Stock Mínimo")
     stockCorte = models.IntegerField(verbose_name = "Stock Corte")
     precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)" )
         
     def __unicode__(self):
         return self.nombre
+        
 
 class Producto (models.Model):    
     codigo = models.AutoField(primary_key=True, verbose_name = "Código")

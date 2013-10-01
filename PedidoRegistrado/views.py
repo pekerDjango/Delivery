@@ -109,6 +109,17 @@ def agregarPedido_view(request,cantidad,id_pro,id_tip):
         htp= 'PedidoRegistrado/promosDisponibles.html'
     ctx = {'productos':productos, 'pedido':ped}
     return render_to_response(htp,ctx,context_instance=RequestContext(request))   
+        
+
+def actualizar_detalle_pedido_view(request,nueva_cantidad,id_det):
+    pedi = request.session["pedido"] 
+    if pedi is not None:
+        DetallePedido.objects.filter(pk = id_det).update(cantidad = nueva_cantidad)
+    #productos= Producto.objects.all()
+    
+    ctx = {'pedido':pedi}   
+    return render_to_response('PedidoRegistrado/detallesDePedido.html',ctx, context_instance=RequestContext(request))
+    
 #        ctx = {'menus':menus, 'pedido':ped}
 #        return render_to_response('PedidoRegistrado/menuDisponibles.html',ctx,context_instance=RequestContext(request))    
 #    lista = request.session["detalles"]

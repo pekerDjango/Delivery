@@ -2,6 +2,7 @@ eclipse.preferences.version=1
 encoding//ComponentesDePedido/admin.py=utf-8
 encoding//ComponentesDePedido/models.py=utf-8
 encoding//PedidoRegistrado/models.py=utf-8
+encoding//RecursosDeEmpresa/admin.py=utf-8
 encoding//RecursosDeEmpresa/models.py=utf-8
 encoding//RecursosDeEmpresa/views.py=utf-8
 encoding//SiGeP/settings.py=utf-8

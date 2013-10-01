@@ -74,6 +74,15 @@ text-decoration: underline;
 .well hr{
 	margin:8px; 
 }
+
+body{
+	background-image: url(../imagenes/backgroundImage2.jpg);
+}
+
+
+.hero-unit{
+background: rgba(100, 100, 100, 0.6);
+}
 .cajaschicas{
 		width: 50px; 
 }

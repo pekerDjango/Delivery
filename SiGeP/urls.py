@@ -19,4 +19,5 @@ urlpatterns = patterns('',
      url(r'^',include('RecursosDeEmpresa.urls')),
      url(r'^',include('ConfiguracionDeComponentes.urls')),
      url(r'^',include('PedidoRegistrado.urls')),
+     url(r'^',include('ComponentesDePedido.urls')),
 )

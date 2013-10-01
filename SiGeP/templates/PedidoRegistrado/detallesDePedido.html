@@ -1,0 +1,28 @@
+{% if pedido %}      
+           
+           <table border="0" cellspacing="5" cellpadding="5">
+                 {% for d in pedido.getDetallePedido %}
+               <tr><td>   {{d.promocion.nombre}} {{d.menu.nombre}}{{d.producto.producto.nombre}} {{d.producto.clasificacion}}</td>
+                   <td> <select name="cantidad" id="{{d.id}}"  style="width:50px" onchange = "actualizarCantidad(this)">
+                        <option {% if d.cantidad == 0 %} selected="selected" {% endif %} value="1">0</option>
+                        <option {% if d.cantidad == 1 %} selected="selected" {% endif %}  value="1">1</option>
+                        <option {% if d.cantidad == 2 %} selected="selected" {% endif %}  value="2">2</option>
+                        <option  {% if d.cantidad == 3 %} selected="selected" {% endif %} value="3">3</option>
+                        <option {% if d.cantidad == 4 %} selected="selected" {% endif %} value="4">4</option>
+                    </select> </td>
+             </tr>
+               <tr><td>Precio: {{d.precioTotalUnidad}}</td><td><a href="" >quitar</a> </td></tr>
+               
+               
+                <hr />
+           {% endfor %}
+          
+           </table>
+            </div>
+        <p>Envio:{{pedido.precio_envio}}</p>
+        <hr />
+        <p>Total:{{pedido.precioTotal}}</p>
+        {% else %}
+        <p>Aun no ha cargado nigún elemento en el pedido</p>
+        {% endif %}
+        

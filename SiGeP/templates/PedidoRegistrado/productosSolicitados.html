@@ -39,8 +39,7 @@
 			//var str
 			console.log(valor);
 			$("#lblCantidad").text(valor);
-		});
-		
+		});	
 		$( "a" ).click(function() {
         var clase  = $(this).attr('class');
         if(clase == 'btn')
@@ -57,6 +56,15 @@
 	
 	
 });
+
+function actualizarCantidad(combo)
+	{
+		var id_det = $(combo).attr('id');
+		var cantidad = $(combo).find("option:selected").val();
+		$.get("/pedido/armaTuPedido/productosActualizar/"+cantidad+"/"+id_det+"/",function(data){
+		$('#Pedido').html(data);
+		});
+	}
 </script>
 <div class="encabezado">Productos</div>
 <br />
@@ -152,13 +160,13 @@
            <table border="0" cellspacing="5" cellpadding="5">
                  {% for d in pedido.getDetallePedido %}
                <tr><td>   {{d.promocion.nombre}} {{d.menu.nombre}}{{d.producto.producto.nombre}} {{d.producto.clasificacion}}</td>
-                   <td> <select name="cantidad" id="cantidad"  style="width:50px">
+                   <td> <select name="cantidad" id="{{d.id}}"  style="width:50px" onchange = "actualizarCantidad(this)">
                         <option {% if d.cantidad == 0 %} selected="selected" {% endif %} value="1">0</option>
                         <option {% if d.cantidad == 1 %} selected="selected" {% endif %}  value="1">1</option>
                         <option {% if d.cantidad == 2 %} selected="selected" {% endif %}  value="2">2</option>
                         <option  {% if d.cantidad == 3 %} selected="selected" {% endif %} value="3">3</option>
                         <option {% if d.cantidad == 4 %} selected="selected" {% endif %} value="4">4</option>
-                    </select> <input type="hidden" name="s" {% if d.menu %} value="2" {% elif d.producto %} value="1" {% elif d.promocion %} value="3"  {% endif %}  id="{{d.promocion.codigo}}{{d.memu.id}}{{d.producto.id}}"/> </td>
+                    </select> </td>
              </tr>
                <tr><td>Precio: {{d.precioTotalUnidad}}</td><td><a href="/pedido/armaTuPedido/del/productos/{{d.id}}" >quitar</a> </td></tr>
                
