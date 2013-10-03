@@ -33,11 +33,28 @@
 <!--<label id = "lblCantidad"></label>-->
 <script type="text/javascript">
 	$(document).ready(function() {
+	$("#tablaProductosDisponibles").find("select").each(function(){
+		if($(this).val()==0)
+		{
+			var fila = $(this).closest("tr");
+			console.log(fila);
+			var boton = $(fila).find(".btn");
+			console.log(boton);
+			$(boton).attr("disabled", "disabled");
+		}
+	});
+	
+	
 		$("select").change(function() {
 			var valor = $(this).find("option:selected").val();
-			//alert(valor);
-			//var str
-			console.log(valor);
+			if($(this).val()==0)
+		{
+			var fila = $(this).closest("tr");
+			console.log(fila.id);
+			var boton = $(fila).find(".btn");
+			console.log(boton.id);
+			$(boton).attr("disabled", "disabled");
+		}
 			$("#lblCantidad").text(valor);
 		});	
 		$( "a" ).click(function() {
@@ -52,9 +69,7 @@
             $(this).attr("href", "/pedido/armaTuPedido/productos/ "+numeroCombo+"/"+idProducto+"/1/");
         }
         console.log(clase);
-	}); 
-	
-	
+	});
 });
 
 function actualizarCantidad(combo)
@@ -65,11 +80,12 @@ function actualizarCantidad(combo)
 		$('#Pedido').html(data);
 		});
 	}
+	
 </script>
 <div class="encabezado">Productos</div>
 <br />
         {% if productos %}
-        <table class="table table-hover   " cellspacing="5" cellpadding="5">
+        <table  id = "tablaProductosDisponibles" class="table table-hover   " cellspacing="5" cellpadding="5" >
             <thead>
                 <tr>
                     <th>Imagen</th>
@@ -85,11 +101,12 @@ function actualizarCantidad(combo)
             {% csrf_token %}
             <tbody>
                 <tr>
-                    <th><img src="/media/{{d.imagenProducto}}" alt="" width="50px" heigth="50px" /></th>
+                    <th><img src="/media/{{d.imagenProducto}}" alt="sin imagen" width="50px" heigth="50px" /></th>
                     <th> {{p.nombre}} {{d.clasificacion}}</th>
                     <th> ${{d.precio}} </th>
                    <th><!--{{form.producto}}{{form.cantidad}}<input id="id_pro{{d.id}}" name="pro" value={{d.id}} type="hidden"></th>-->
-                <select id="{{d.id}}" name="cantidad" id="cantidad" style="width:50px" {% if not p.estado %}disabled="true" {% endif %}>
+                <select id="{{d.id}}" name="cantidad" id="cantidad" style="width:50px" {% if not p.estado %} disabled="true" {% endif %}>
+                        <option value="0" selected="selected">0</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -168,10 +185,9 @@ function actualizarCantidad(combo)
                         <option {% if d.cantidad == 4 %} selected="selected" {% endif %} value="4">4</option>
                     </select> </td>
              </tr>
-               <tr><td>Precio: {{d.precioTotalUnidad}}</td><td><a href="/pedido/armaTuPedido/del/productos/{{d.id}}" >quitar</a> </td></tr>
-               
-               
-                <hr />
+               <tr class="fila-con-borde">
+               		<td>Precio: {{d.precioTotalUnidad}}</td><td><a href="/pedido/armaTuPedido/del/productos/{{d.id}}" >quitar</a> </td>
+               </tr>
            {% endfor %}
           
            </table>
