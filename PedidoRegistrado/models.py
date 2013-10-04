@@ -111,7 +111,7 @@ class DetallePedido(models.Model):
     promocion = models.ForeignKey(Promocion, blank=True, null=True)
     precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)" )    
     def __unicode__(self):
-        return u'%s, %s'%(self.pedido.nombre)   
+        return u'%s, %s'%(self.producto.producto.nombre, self.cantidad)   
     def precioTotalUnidad(self):
         total = (self.precio * self.cantidad)
         return total
@@ -126,6 +126,10 @@ class ProductoParaArmar(models.Model):
         return self.slogan
     class Meta:
         verbose_name_plural = "Productos para armar"
+    def getDetalleVersiones(self):
+        return DetalleVersiones.objects.filter(producto=self)
+    def getSecciones(self):
+        return SeccionProducto.objects.filter(producto=self)
     
 class DetalleVersiones(models.Model):
     """Clase DetalleVersiones
@@ -147,7 +151,7 @@ class SeccionProducto(models.Model):
     nombre = models.CharField(max_length=100, verbose_name="Sección Producto")
     orden = models.IntegerField(verbose_name="Orden Presentación")
     tipoIngrediente = models.ForeignKey(TipoIngrediente, verbose_name = "Tipo de Ingrediente")
-    descripcion = models.CharField(max_length = 50)
+    descripcion = models.TextField(verbose_name='Descripción')
     obligatoria = models.BooleanField(verbose_name = "Sección Obligatoria")
     excluyente = models.BooleanField(verbose_name = "Clasifiaciones Excluyentes")
     cantidad_exclusiones = models.IntegerField(verbose_name = "Cantidad Exclusiones")
@@ -155,11 +159,14 @@ class SeccionProducto(models.Model):
         return self.nombre
     class Meta:
         verbose_name_plural = "Secciones del Producto"
+    def getIngredienteSeccion(self):
+        return IngredientesSeccion.objects.filter(seccion=self)
         
 class IngredientesSeccion(models.Model):
     """ Clase Ingredientes por seccion
     Atributos: producto, ingredientes, clasificacion, cantidad"""
-    producto = models.ForeignKey(ProductoParaArmar)
+#    producto = models.ForeignKey(ProductoParaArmar)
+    seccion = models.ForeignKey(SeccionProducto)
     ingrediente = models.ForeignKey(Ingrediente)
     clasificacion = models.ForeignKey(Clasificacion)
     cantidad = models.IntegerField()
@@ -167,7 +174,24 @@ class IngredientesSeccion(models.Model):
         return self.seccion.nombre + self.ingrediente.nombre
     class Meta:
         verbose_name_plural = "Ingredientes por Seccion"
-  
+        
+class ProductoArmado(models.Model):
+    """ Producto Armado
+    Atributos: producto, versiones"""
+    producto = models.ForeignKey(ProductoParaArmar)
+    version = models.ForeignKey(DetalleVersiones)
+    def __unicode__(self):
+        return self.version
+    
+class DetalleProductoArmado(models.Model):
+    """Detalle Producto Armado
+    Atributos: producto, ingredientes"""
+    producto = models.ForeignKey(ProductoArmado)
+    ingrediente = models.ForeignKey(IngredientesSeccion)
+    def __unicode__(self):
+        return u'%s- %s'%(self.producto, self.ingrediente)
+    
+    
     
     
     
