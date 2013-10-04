@@ -28,7 +28,8 @@
 		          <div class="accordion-group">
 		               <div class="accordion-heading">
 		                   <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{sucursal.numero_direccion}}">
-		                     <h4> {{sucursal.nombre}}</h4>
+		                     <h4> {{sucursal.nombre}}&nbsp&nbsp<small><strong>{{sucursal.direccion}} {{sucursal.numero_direccion}}</strong></small></h4>
+
 		                   </a>
 		               </div>
 		               {% if forloop.first %}
@@ -54,7 +55,7 @@
 										</tr>
 									</table>
 		                             <br>
-		                            <a href="https://maps.google.com.ar" class="btn btn-primary btn-block"> Ver Ubicación en mapa</a>
+		                            <a href="/sucursales/Mapa_Sucursal/{{sucursal.codigo}}/" class="btn btn-primary btn-block" target="_blank" id="id_map"> Ver Ubicación en mapa</a>
 		                         </div>
 		                   </div>
 		          </div>

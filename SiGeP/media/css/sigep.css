@@ -39,8 +39,8 @@ font-size: 18px;
 	font-weight: bold;
 	}
 img.img-rounded{height: 213px;width:290px}
-.sidebar-nav {
-        padding: 9px 0;
+      .sidebar-nav {
+        padding: 90px ;
       }
 #panelPrincipal img {height: 50%; width:50%;}
 html, body, #map-canvas {

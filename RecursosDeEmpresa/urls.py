@@ -9,4 +9,6 @@ urlpatterns = patterns('RecursosDeEmpresa.views',
      url(r'^empleado/(?P<id_emp>.*)/$','singleEmpleado_view',name='vista_single_empleado'),
      url(r'^delete/empleado/(?P<id_emp>.*)/$','delete_empleado_view', name= "vista_editar_empleado"),
      url(r'^sucursales/$','sucursal_view',name='vista_sucursal'),
+     url(r'^sucursales/Mapa_Sucursal/(?P<id_suc>.*)/$','sucursal_map',name='mapa_sucursal'),
+     url(r'^contacto/$','contact_view',name='vista_contacto'),
 )   

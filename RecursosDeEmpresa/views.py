@@ -92,4 +92,17 @@ def sucursal_view(request):
     lista_sucursal=Sucursal.objects.all()
     return render_to_response('RecursosDeEmpresa/sucursales.html',{'lista_sucursal':lista_sucursal},context_instance=RequestContext(request))
 
+def contact_view(request):
+    return render_to_response('contacto.html',context_instance=RequestContext(request))
+
+def sucursal_map(request,id_suc):
+    suc=Sucursal.objects.get(pk=id_suc)
+    print suc
+    localizacion= suc.localizacion
+    print localizacion
+    nombre = suc.nombre
+    print nombre
+    ctx = {'localizacion':localizacion, 'nombre': nombre}
+    return render_to_response('RecursosDeEmpresa/mapas/Mapa_Sucursal.html',ctx,context_instance=RequestContext(request))
+    
 

@@ -110,6 +110,7 @@ class Sucursal(models.Model):
     localidad = models.ForeignKey(Localidad)
     calificacion_servicio = models.ForeignKey(CalificacionServicio)
     imagen = models.ImageField(upload_to='imagenes/Sucursales', verbose_name='Imágen')
+    localizacion=models.CharField(max_length=250, verbose_name='Localización')
     
     def __unicode__(self):
         return self.nombre

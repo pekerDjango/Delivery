@@ -9,6 +9,13 @@
 {% block content %}
 
 <div id="myCarousel" class="carousel slide"  >
+
+<ol class="carousel-indicators" style="right: 50%;top: auto;bottom: 15px;margin-right: -19px;">
+              <li data-target="#myCarousel" data-slide-to="0"  ></li>
+              <li data-target="#myCarousel" data-slide-to="1" ></li>
+              <li data-target="#myCarousel" data-slide-to="2" class="active" ></li>
+       </ol>
+
     <div class="carousel-inner">
       <div class="item">
         <img src="/media/imagenes/carousel/menu.jpg"    alt="">
@@ -16,7 +23,6 @@
           
           <h4>Menú</h4>
           <p>Menús para toda la familia</p>
-
         </div>
       </div>
       <div class="item">
@@ -39,10 +45,30 @@
   </div>
 {% endblock %}
 {% block panelAux %}
-<div  id = "panelPrincipal"class="well well-large" >
-<a href="http://www.quilmes.com.ar"  ><img src="/media/imagenes/publicidades/quilmes.jpg" alt="quilmes" /> </a> 
-<a href="http://www.coca-cola.com.ar"  ><img src="/media/imagenes/publicidades/cocacola.jpg" alt="cocacola" /></a>  
-<a href="http://www.mccain.com.ar" ><img src="/media/imagenes/publicidades/mccain.jpg" alt="mccain" /></a>   
+<div  id = "panelPrincipal"class="well well-large" height="100%">
+<table align="center">
+<tr><td >
+<a href="http://www.quilmes.com.ar"  ><img src="/media/imagenes/publicidades/quilmes.jpg" alt="quilmes" style="height:65px; width:200px;" /> </a>
+</td></tr>
+<tr> <td>
+<a href="http://www.coca-cola.com.ar"  ><img src="/media/imagenes/publicidades/cocacola.jpg" alt="cocacola" style="height:60px; width:200px;" /></a> 
+</td></tr> 
+<tr> <td>
+<a href="http://www.mccain.com.ar" ><img src="/media/imagenes/publicidades/mccain.jpg" alt="mccain" style="height:65px; width:200px;" /></a> 
+</td></tr> 
+<tr> <td>
+<a href="http://www.pepsi.com.ar"  ><img src="/media/imagenes/publicidades/pepsi.jpg" alt="pepsi" style="height:65px; width:200px;" /></a> 
+</td></tr> 
+<tr> <td>
+<a href="http://www.budweiser.com.ar"  ><img src="/media/imagenes/publicidades/budweiser.jpg" alt="budweiser" style="height:65px; width:200px;" /></a> 
+</td></tr> 
+<tr> <td>
+<a href="http://www.sevenup.com.ar"  ><img src="/media/imagenes/publicidades/sevenup.jpg" alt="sevenup" style="height:55px; width:200px;" /></a> 
+</td></tr> 
+<tr> <td>
+<a href="http://www.sprite.com.ar"  ><img src="/media/imagenes/publicidades/sprite.jpg" alt="sprite" style="height:55px; width:200px;" /></a> 
+</td></tr> 
+</table>  
 </div>
 {% endblock %}
 
@@ -63,7 +89,7 @@
                </div>
                <div id="collapseOne" class="accordion-body collapse">
               <div class="accordion-inner">
-               <a href="/sucursales/"><img class="img-rounded" src="/media/imagenes/sucursal_centro.png" ></a>
+               <a href="/sucursales/"><img class="img-rounded" src="/media/imagenes/sucursal_centro.png"  ></a>
                <br>
                <a href="/sucursales/" class="btn btn-primary btn-block"> Conoce nuestras sucursales</a>
               </div>

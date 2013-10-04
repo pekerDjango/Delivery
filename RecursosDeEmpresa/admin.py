@@ -16,11 +16,11 @@ class SucursalAdmin(admin.ModelAdmin):
     list_display=('codigo', 'nombre', 'direccion', 'barrio', 'Vista_Previa')
     list_filter=('codigo', 'nombre', 'direccion', 'barrio')
     ordering=('nombre',)
-    search_fields=('codigo','nombre','barrio__nombre','localidad__nombre')
+    search_fields=('codigo','nombre','barrio__nombre','localidad__nombre','localizacion')
 #    fields =('codigo','nombre',('direccion','numero_direccion','piso','depto'),('codigo_postal','barrio','localidad'), 'calificacion_servicio','imagen')
     fieldsets = (
         (None, {
-            'fields': ('codigo', 'nombre', 'calificacion_servicio','imagen')
+            'fields': ('codigo', 'nombre', 'calificacion_servicio','imagen', 'localizacion')
         }),
         ('Dirección', {
             'classes': ('wide','extrapretty'),
