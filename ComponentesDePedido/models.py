@@ -52,7 +52,7 @@ class TipoProducto(models.Model):
     Atributos: CódigoTipoProducto, Nombre,Imagen """
     codigo = models.AutoField(primary_key=True, verbose_name = "Código")
     nombre = models.CharField(max_length = 50)
-    imagen = models.ImageField(upload_to='imagenes', verbose_name='Vista Previa')
+    imagen = models.ImageField(upload_to='imagenes/ComponentesDePedido/TipoProductos', verbose_name='Vista Previa')
     
     def __unicode__(self):
         return self.nombre
@@ -72,7 +72,7 @@ class Ingrediente(models.Model):
     nombre = models.CharField(max_length = 50)
     tipoIngrediente = models.ForeignKey (TipoIngrediente, verbose_name = "Tipo de ingrediente")
     unidadDeMedida = models.ForeignKey(UnidadDeMedida, verbose_name = "Unidad de Medida")
-    imagen = models.ImageField(upload_to='imagenes', verbose_name='Vista Previa')
+    imagen = models.ImageField(upload_to='imagenes/ComponentesDePedido/Ingredientes', verbose_name='Vista Previa')
     stockActual = models.IntegerField(verbose_name = "Stock Actual", validators = [validar_stock])
     stockMinimo = models.IntegerField(verbose_name = "Stock Mínimo")
     stockCorte = models.IntegerField(verbose_name = "Stock Corte")
@@ -111,7 +111,7 @@ class DetalleVersiones(models.Model):
     """Clase DetalleVersiones
     Atributos: Clasificacion, Imagen de producto, Precio """
     clasificacion = models.ForeignKey(Clasificacion, related_name="%(app_label)s_%(class)s_related")
-    imagenProducto = models.ImageField(upload_to='imagenes', verbose_name='Imágen Producto')
+    imagenProducto = models.ImageField(upload_to='imagenes/ComponentesDePedido/Productos', verbose_name='Imágen Producto')
     precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)")
     producto = models.ForeignKey(Producto)
     def __unicode__(self):
@@ -127,7 +127,7 @@ class Menu (models.Model):
     codigo = models.AutoField(primary_key=True, verbose_name = "Código")
     nombre = models.CharField (max_length = 50, verbose_name = "Nombre Menú")
     precioVenta = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)")
-    imagen = models.ImageField(upload_to='imagenes', verbose_name='Vista Previa')
+    imagen = models.ImageField(upload_to='imagenes/ComponentesDePedido/Menus', verbose_name='Vista Previa')
     def __unicode__(self):
         return self.nombre
     def tiempoPreparacionTotal(self):
@@ -174,7 +174,7 @@ class Promocion (models.Model):
     codigo = models.AutoField(primary_key=True, verbose_name = "Código")
     nombre = models.CharField (max_length = 50)
     descripcion = models.TextField(verbose_name='Descripción')
-    imagen = models.ImageField(upload_to="imagenes", verbose_name="Imágen Promocion")
+    imagen = models.ImageField(upload_to="imagenes/ComponentesDePedido/Promociones", verbose_name="Imágen Promocion")
     precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name ="Precio($)")
     stock = models.IntegerField (blank=True, null=True)
     tiempoPreparacion = models.IntegerField(verbose_name = "Tiempo estimado de preparación(Minutos)")
