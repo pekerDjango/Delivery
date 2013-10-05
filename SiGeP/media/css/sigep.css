@@ -40,7 +40,7 @@ font-size: 18px;
 	}
 img.img-rounded{height: 213px;width:290px}
       .sidebar-nav {
-        padding: 90px ;
+        padding: 9px 0;
       }
 #panelPrincipal img {height: 50%; width:50%;}
 html, body, #map-canvas {
