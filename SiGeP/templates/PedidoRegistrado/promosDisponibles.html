@@ -6,13 +6,7 @@
         <a href="/">Home</a><span class="divider">></span>
     </li>
     <li>
-        <a href="{% url "vista_pedidoInformacion" %}"> Pedido</a><span class="divider">></span>
-    </li>
-    <li>
-        <a href="{% url "vista_armaTuPedido" %}"> Arma Tu Pedido</a><span class="divider">></span>
-    </li>
-    <li>
-        <a href="#"> Promociones </a>
+        Pedido
     </li>
 </ul>
 {% endblock %}
@@ -81,7 +75,7 @@
         {% endif %}
       <a class="btn btn-danger"  href="#">Cancelar </a>
         <a class="btn "  href="{% url "vista_armaTuPedido" %}">Volver </a>
-        <a class="btn btn-primary pull-right"  href="{% url "vista_detallePedido" %}">Continuar</a>
+        <a class="btn btn-large btn-primary pull-right"  href="{% url "vista_detallePedido" %}">Continuar</a>
 {% endblock %}
 {% block panelAux %}
 <div class="well sidebar-nav">

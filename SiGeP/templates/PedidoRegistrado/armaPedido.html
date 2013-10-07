@@ -6,10 +6,7 @@
         <a href="/">Home</a><span class="divider">></span>
     </li>
     <li>
-        <a href="{% url "vista_pedidoInformacion" %}"> Pedido</a><span class="divider">></span>
-    </li>
-    <li>
-        Arma Tu Pedido
+        Pedido
     </li>
 </ul>
 {% endblock %}
@@ -48,7 +45,19 @@
             </div>
         </div>
         {% endfor %}
-       {% endif %}  
+       {% endif %}
+       {% if productoParaArmar %}        
+        {% for p in productoParaArmar %}
+        <div class="item">
+            <div class="header">
+                <a href="/pedido/armaTuPedido/productoParaArmar/{{p.id}}" ><img src="/media/{{p.tipo_producto.imagen}}" alt="{{p.slogan}}" />
+                <div class="column">
+                  {{p.slogan}}
+                </div> </a>
+            </div>
+        </div>
+        {% endfor %}
+       {% endif %}   
        <div class="item">
             <div class="header">
                 <a href="{% url "vista_menuDisponibles" %}" ><img src="/media/imagenes/armaTuPedido/menu.jpg" alt="Menu" />
@@ -83,7 +92,7 @@
         <li class="nav-header">
            Promociones Imperdibles
         </li>
-        <img src="/media/imagenes/armaTuPedido/promocion.jpg" alt="Promocion" />        
+        <a href="/pedido/armaTuPedido/promosDisponibles/"> <img src="/media/imagenes/armaTuPedido/promocion.jpg" alt="Promocion" /></a>       
     </ul>
 </div><!--/.well -->
 <div class="well sidebar-nav">

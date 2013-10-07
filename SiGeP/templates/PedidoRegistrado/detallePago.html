@@ -6,16 +6,7 @@
         <a href="/">Home</a><span class="divider">></span>
     </li>
     <li>
-        <a href="{% url "vista_pedidoInformacion" %}"> Pedido</a><span class="divider">></span>
-    </li>
-    <li>
-        <a href="{% url "vista_armaTuPedido" %}"> Arma Tu Pedido</a><span class="divider">></span>
-    </li>
-    <li>
-       <a href="{% url "vista_detallePedido" %}"> Detalle de Pedido</a><span class="divider">></span>
-    </li>
-    <li>
-        Detalle de Pago y Entrega
+        Pedido
     </li>
 </ul>
 {% endblock %}
@@ -38,7 +29,7 @@
         <table class="table table-hover" cellspacing="5" cellpadding="5">
            <tbody>
                 <tr>
-                   <td>Productos Solicitados</td><td>{{pedido.cantidadTotalProductos}}</td><td>${{pedido.subTotal}}</td>
+                   <td>Productos Solicitados</td><td Style="text-align: left" >{{pedido.cantidadTotalProductos}}</td><td>${{pedido.subTotal}}</td>
                   
                 </tr>
                
@@ -56,7 +47,7 @@
                 {{ form.non_field_errors }}
             <table class="table" border="0" cellspacing="5" cellpadding="5">
                 <tr><td>Importe Total:</td><td>${{pedido.precioTotal}}</td><td></td></tr>
-                <tr><td> Importe a pagar:</td><td>${{form.importePagar}} <button type="submit"  class="btn btn-primary">confirmar</button></td><td>{{ form.importePagar.errors}}</td></tr>
+                <tr><td> Importe a pagar:</td><td><div class="input-prepend"><span class="add-on">$</span>{{form.importePagar}}</div> <button type="submit"  class="btn btn-primary">confirmar</button></td><td>{{ form.importePagar.errors}}</td></tr>
                 <tr><td>Vuelto:</td><td style="color:#FF0000">${{vuelto}}</td></tr>
             </table>
           
