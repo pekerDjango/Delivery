@@ -114,9 +114,10 @@
              {% endif %}<a href="" >Cambiar</a>
         </p>
          <p>
-          
-            <strong>Servicio Elegido:</strong>Delivery
-         <a href="" >Cambiar</a>
+             {% if domicilio  %}
+            <strong>Servicio Elegido:</strong>{{domicilio.servicio.nombre}}
+        <a href="/pedido/actualizar/{{domicilio.id}}/">Cambiar</a>
+         {% endif %}
         </p>
          <p>
      

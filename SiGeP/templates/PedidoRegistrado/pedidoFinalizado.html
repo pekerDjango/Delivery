@@ -98,9 +98,9 @@
              {% endif %}
         </p>
          <p>
-          
-            <strong>Servicio Elegido:</strong>No ha seleccionado
-         
+         {% if domicilio  %}
+            <strong>Servicio Elegido:</strong>{{domicilio.servicio.nombre}}            
+         {% endif %}
         </p>
          <p>
      
