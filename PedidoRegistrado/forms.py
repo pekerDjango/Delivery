@@ -5,12 +5,12 @@ from PedidoRegistrado.models import DomicilioSearch, Pedido
 class DomicilioSearchForm(forms.ModelForm):
     class Meta:
         model = DomicilioSearch
-        fields = ['localidad', 'barrio', 'direccion', 'numero_direccion', 'piso', 'depto', 'codigo_postal']
+        fields = ['localidad', 'barrio', 'direccion', 'numero_direccion', 'piso', 'depto', 'codigo_postal', 'servicio']
         widgets = {
                   "numero_direccion":TextInput(attrs={'class':'cajaschicas'}),
                   "piso":TextInput(attrs={'class':'cajaschicas'}),
                   "depto":TextInput(attrs={'class':'cajaschicas'}),
-                  "codigo_postal":TextInput(attrs={'class':'cajaschicas'})
+                  "codigo_postal":TextInput(attrs={'class':'cajaschicas'}),
                   }     
     
 class PagoForm(forms.Form):

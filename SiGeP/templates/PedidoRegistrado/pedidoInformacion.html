@@ -47,7 +47,7 @@ $(document).ready(function() {
         <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            <h5>¿Este pedido es para Entregar o para Llevar?</h5>
+         <!--   <h5>¿Este pedido es para Entregar o para Llevar?</h5>
             {% if servicios %}
             <div class="btn-group" data-toggle="buttons-radio">
                 {% for s in servicios %}
@@ -56,7 +56,7 @@ $(document).ready(function() {
                 </button>
                 {% endfor %}
             </div>
-                        {% endif %}
+                        {% endif %} -->
             <br />
             <button type="submit"  class="btn btn-large btn-success pull-right">
                 Iniciar Pedido
@@ -68,16 +68,16 @@ $(document).ready(function() {
         <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            <h5>¿Este pedido es para Entregar o para Llevar?</h5>
+          <!--  <h5>¿Este pedido es para Entregar o para Llevar?</h5>
             {% if servicios %}
             <div class="btn-group" data-toggle="buttons-radio">
                 {% for s in servicios %}
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" background-image = "/media/{{s.imagen}}">
                     {{s.nombre}}
                 </button>
                 {% endfor %}
             </div>
-                        {% endif %}
+                        {% endif %} -->
             <br />
             <button type="submit"  class="btn  btn-large btn-success pull-right">
                 Iniciar Pedido
@@ -89,7 +89,7 @@ $(document).ready(function() {
         <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            <h5>¿Este pedido es para Entregar o para Llevar?</h5>
+       <!--     <h5>¿Este pedido es para Entregar o para Llevar?</h5>
             {% if servicios %}
             <div class="btn-group" data-toggle="buttons-radio">
                 {% for s in servicios %}
@@ -98,7 +98,7 @@ $(document).ready(function() {
                 </button>
                 {% endfor %}
             </div>
-            {% endif %}
+            {% endif %} -->
             <br />
             <button type="submit"  class="btn btn-large btn-success pull-right">
                 Iniciar Pedido

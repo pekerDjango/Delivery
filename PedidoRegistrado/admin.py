@@ -11,7 +11,7 @@ class ServicioAdmin(admin.ModelAdmin):
         list_display = ('nombre', 'descripcion')
         list_filter = ('nombre', )
         ordering=('nombre',)
-        fields =('nombre','descripcion')   
+        fields =('nombre','descripcion', 'imagen')   
         formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'100'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},

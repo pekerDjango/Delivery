@@ -88,8 +88,12 @@ body{
 
 
 .hero-unit{
-background: rgba(100, 100, 100, 0.6);
+background: rgba(142, 132, 132, 1);
 }
 .cajaschicas{
 		width: 50px; 
+}
+
+.fila-con-borde{
+	border-bottom:1pt solid black;
 }

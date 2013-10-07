@@ -42,7 +42,8 @@ class DomicilioSearch(models.Model):
     depto = models.CharField(max_length=50, blank=True, null=True)
     codigo_postal = models.CharField(max_length=100, verbose_name="Código Postal")   
     localidad = models.ForeignKey(Localidad)
-    barrio = models.ForeignKey(Barrio)    
+    barrio = models.ForeignKey(Barrio)
+    servicio = models.ForeignKey(Servicio)
     def __unicode__(self):
         return self.direccion + str(self.numero_direccion)
     class Meta:
