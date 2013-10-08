@@ -136,18 +136,24 @@ $(document).ready(function() {
             {% if domicilio  %}
         <p>
             <strong>Mi ubicación:</strong>{{domicilio.direccion}},{{domicilio.numero_direccion}},{{domicilio.barrio}},{{domicilio.localidad}},{{domicilio.codigo_postal}}
+            {% else %}
+            <strong>Mi ubicación:</strong>No se ha ingresado aún
              {% endif %}
         </p>
        
         <p>
             {% if sucursal  %}
             <strong>Mi Sucursal:</strong>{{sucursal.nombre}},{{sucursal.direccion}}, {{sucursal.numero_direccion}},{{sucursal.barrio}}
+            {% else %}
+            <strong>Mi Sucursal:</strong> No se ha seleccionado
              {% endif %}
         </p>
          <p>
          {% if domicilio  %}
             <strong>Servicio Elegido:</strong>{{domicilio.servicio.nombre}}
             <a href="/pedido/actualizar/{{domicilio.id}}/">Cambiar</a>
+           {% else %}
+            <strong>Servicio Elegido:</strong>No se ha seleccionado
          {% endif %}
         </p>
          <p>

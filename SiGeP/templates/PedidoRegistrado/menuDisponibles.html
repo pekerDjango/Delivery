@@ -94,35 +94,65 @@
         <li class="nav-header">
            Tu Pedido
         </li>
-            <p align="justify">
-    
+            <div align="justify">
+        <!--        {% if detalles %}             
+                 {% for key,value in detalles.items %}
+                      
+                      <p>{{value.1.producto.nombre}} {{value.1.clasificacion}}</p>
+                       <select name="cantidad" id="cantidad"  style="width:50px">                         
+                        <option {% if value.0  == '1'  %} selected="selected" {% endif %}  value="1">1</option>
+                        <option {% if value.0  == '2' %} selected="selected" {% endif %}  value="2">2</option>
+                        <option  {% if value.0 == 3 %} selected="selected" {% endif %} value="3">3</option>
+                        <option {% if value.0 == '4' %} selected="selected" {% endif %} value="4">4</option>
+                    </select>
+                     {{value.0}}
+                        <hr />
+                       
+                 {% endfor %}
+                 {% endif %}-->
+            
         
     {% if pedido %}      
            
            <table border="0" cellspacing="5" cellpadding="5">
                  {% for d in pedido.getDetallePedido %}
-               <tr><td> {{d.promocion.nombre}}  {{d.menu.nombre}}{{d.producto.producto.nombre}} {{d.producto.clasificacion}}</td>
-                   <td> <select name="cantidad" id="cantidad"  style="width:50px">
+               <tr><td>   {{d.promocion.nombre}} {{d.menu.nombre}}{{d.producto.producto.nombre}} {{d.producto.clasificacion}}</td>
+                   <td> <select name="cantidad" id="{{d.id}}"  style="width:50px" onchange = "actualizarCantidad(this)">
                         <option {% if d.cantidad == 0 %} selected="selected" {% endif %} value="1">0</option>
                         <option {% if d.cantidad == 1 %} selected="selected" {% endif %}  value="1">1</option>
                         <option {% if d.cantidad == 2 %} selected="selected" {% endif %}  value="2">2</option>
                         <option  {% if d.cantidad == 3 %} selected="selected" {% endif %} value="3">3</option>
                         <option {% if d.cantidad == 4 %} selected="selected" {% endif %} value="4">4</option>
-                    </select> <input type="hidden" name="s"  {% if d.menu %} value="2" {% elif d.producto %} value="1" {% elif d.promocion %} value="3"  {% endif %}  id="{{d.promocion.codigo}} {{d.menu.codigo}}{{d.producto.id}}"/> </td>
+                    </select> </td>
              </tr>
-               <tr><td>Precio: {{d.precioTotalUnidad}}</td><td><a href="/pedido/armaTuPedido/del/productos/{{d.id}}" >quitar</a> </td></tr>
-               
-        
-                <hr />
+               <tr class="fila-con-borde">
+                    <td>Precio: {{d.precioTotalUnidad}}</td><td><a href="/pedido/armaTuPedido/del/productos/{{d.id}}" >quitar</a> </td>
+               </tr>
            {% endfor %}
           
            </table>
             </div>
+           
+          
+               
+            
+       
+                      
+    
+                    
+         
+            
+  
+       
+        
        
         <p>Envio:{{pedido.precio_envio}}</p>
         <hr />
         <p>Total:{{pedido.precioTotal}}</p>
+        {% else %}
+        <p>Aun no ha cargado nigún elemento en el pedido</p>
         {% endif %}
+        
     </ul>
 </div><!--/.well -->
 <div class="well sidebar-nav">

@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from PedidoRegistrado.forms import DomicilioSearchForm, PagoForm, HoraPedidoForm
 from django.http import HttpResponseRedirect
-from PedidoRegistrado.models import DomicilioSearch, Pedido, DetallePedido, Cliente, Servicio, TipologiaVivienda, EstadoPedido
+from PedidoRegistrado.models import DomicilioSearch, Pedido, DetallePedido, Cliente, Servicio, TipologiaVivienda, EstadoPedido, ProductoParaArmar, SeccionProducto
 from ComponentesDePedido.models import Producto, DetalleVersiones, TipoProducto, Menu, Promocion
 from RecursosDeEmpresa.models import Sucursal
 from datetime import date, datetime, time, timedelta
@@ -18,8 +18,10 @@ def pedidoInformacion_view(request):
             add.status = True
             add.save() # Guardamos la informacion           
             request.session ["domicilio"] = add
-            request.session["pedido"] = None
+            request.session["pedido"] = None            
+            request.session["sucursal"] = Sucursal.objects.get(pk=1)
             request.session["detalles"]={}   
+            request.session.set_expiry(300)
             return HttpResponseRedirect('/pedido/armaTuPedido/')
     else:
         form = DomicilioSearchForm() 
@@ -43,8 +45,9 @@ def actualizarPedidoInformacion_view(request, id_dom):
     return render_to_response('PedidoRegistrado/pedidoInformacion.html',ctx, context_instance=RequestContext(request))
 
 def armaTuPedido_view(request): 
-    tipoProducto = TipoProducto.objects.all()    
-    ctx = { 'tipoProducto': tipoProducto}   
+    tipoProducto = TipoProducto.objects.all()
+    producto = ProductoParaArmar.objects.all()    
+    ctx = { 'tipoProducto': tipoProducto, 'productoParaArmar': producto}   
     return render_to_response('PedidoRegistrado/armaPedido.html',ctx, context_instance=RequestContext(request))
 
 def productosSolicitados_view(request, codigo):    
@@ -80,7 +83,7 @@ def agregarPedido_view(request,cantidad,id_pro,id_tip):
     tip=TipologiaVivienda.objects.get(pk=1) 
     pedi = request.session["pedido"] 
     if  pedi is None: 
-        p = Pedido(cliente=cli,fechaPedido=fechaPed,estado=est,servicio=ser,tipologia_vivienda=tip,precio_envio=34)
+        p = Pedido(cliente=cli,fechaPedido=fechaPed,estado=est,servicio=ser,tipologia_vivienda=tip,precio_envio=8)
         p.save()
         request.session["pedido"]=p
     ped = request.session["pedido"]      
@@ -93,6 +96,8 @@ def agregarPedido_view(request,cantidad,id_pro,id_tip):
         d.save()
         productos= Producto.objects.all()
         htp= 'PedidoRegistrado/productosSolicitados.html'
+        tipo = pro.producto.tipoProducto.codigo
+        return HttpResponseRedirect('/pedido/armaTuPedido/productosSolicitados/'+str(tipo))
     elif int(id_tip) == 2:
         pro= Menu.objects.get(pk=id_pro)
         precion = pro.precioVenta
@@ -204,7 +209,16 @@ def pedidoFinalizado_view(request):
 def cerrarPedido_view(request):
     request.session ["domicilio"] = None
     request.session["pedido"] = None 
+    request.session["sucursal"] = None
     return render_to_response('index.html', context_instance=RequestContext(request))
+
+def productoParaArmar_view(request,id_pro):
+    ped = request.session["pedido"]
+    pro = ProductoParaArmar.objects.get(pk=id_pro)
+    detalleVersiones = pro.getDetalleVersiones()
+    secciones = SeccionProducto.objects.filter(producto=pro).order_by('orden')         
+    ctx = { 'pedido':ped, 'detalleVersiones': detalleVersiones, 'secciones': secciones}  
+    return render_to_response('PedidoRegistrado/productoParaArmar.html',ctx ,context_instance=RequestContext(request))
 
 
      

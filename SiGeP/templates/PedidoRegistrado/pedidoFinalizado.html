@@ -103,8 +103,9 @@
          {% endif %}
         </p>
          <p>
-     
-            <strong>Horario del pedido:</strong>No ha seleccionado
+      {% if pedido %}
+            <strong>Horario del pedido:</strong>{{pedido.hora_entrega}}hs
+            {% endif %}
         </p>
 
        
