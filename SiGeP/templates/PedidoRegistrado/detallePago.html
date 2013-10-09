@@ -78,7 +78,11 @@
            Historicos de Pedidos
         </li>
         <p align="justify">
+              {% if user.is_authenticated %}
+              No tiene registrado ningún pedido
+              {% else %}
            No ha ingresado aún
+            {% endif %}
         <p>
     </ul>
 </div><!--/.well -->

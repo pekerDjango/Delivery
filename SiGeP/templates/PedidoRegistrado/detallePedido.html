@@ -24,6 +24,18 @@
     </div>
     {% endblock %}
 {% block content %}
+<script  type="text/javascript">
+
+function actualizarCantidad(combo)
+    {
+        var id_det = $(combo).attr('id');
+        var cantidad = $(combo).find("option:selected").val();
+        $.get("/pedido/armaTuPedido/productosActualizar/"+cantidad+"/"+id_det+"/",function(data){
+         location.reload();
+        });
+    }
+</script>
+
 <div class="encabezado">Detalle de Pedido</div> 
 <br />
     {% if pedido %}
@@ -54,7 +66,7 @@
                     {% endif %}
                     <td>{{d.promocion.nombre}}{{d.menu.nombre}} {{d.producto.producto.nombre}} {{d.producto.clasificacion}} </td>                   
                     <td>
-                    <select name="cantidad" id="cantidad"  style="width:50px">
+                   <select name="cantidad" id="{{d.id}}"  style="width:50px" onchange = "actualizarCantidad(this)">
                         <option {% if d.cantidad == 0 %} selected="selected" {% endif %} value="1">0</option>
                         <option {% if d.cantidad == 1 %} selected="selected" {% endif %}  value="1">1</option>
                         <option {% if d.cantidad == 2 %} selected="selected" {% endif %}  value="2">2</option>

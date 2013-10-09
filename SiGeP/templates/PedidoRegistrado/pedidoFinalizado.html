@@ -72,7 +72,11 @@
 <div class="well sidebar-nav">
     <ul class="nav nav-list" id="ProductosNuevos">
         <li class="nav-header">
-           Historicos de Pedidos
+           {% if user.is_authenticated %}
+              No tiene registrado ningún pedido
+              {% else %}
+           No ha ingresado aún
+            {% endif %}
         </li>
         <p align="justify">
            No ha ingresado aún

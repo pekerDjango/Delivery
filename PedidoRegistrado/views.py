@@ -21,7 +21,7 @@ def pedidoInformacion_view(request):
             request.session["pedido"] = None            
             request.session["sucursal"] = Sucursal.objects.get(pk=1)
             request.session["detalles"]={}   
-            request.session.set_expiry(300)
+            request.session.set_expiry(900)
             return HttpResponseRedirect('/pedido/armaTuPedido/')
     else:
         form = DomicilioSearchForm() 
