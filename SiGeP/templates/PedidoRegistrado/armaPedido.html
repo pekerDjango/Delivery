@@ -74,7 +74,21 @@
                 </div> </a>
             </div>
         </div>-->   
- 
+ <a href="#myModal" class="btn btn-danger" data-toggle="modal">Cancelar</a>
+            <div class="modal hide fade " id="myModal" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3>Atención</h3>
+            </div>
+            <div class="modal-body">
+            <p>Está seguro que desea cancelar pedido</p>
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal" aria-hidden="true">NO</button>
+            <a href="{% url "vista_cerrarPedido" %}" class="btn btn-primary">SI</a>
+            </div>
+            </div>
+        <a class="btn "  href="{% url "vista_pedidoInformacion" %}">Volver</a>
 {% endblock %}
 {% block panelAux %}
 <div class="well sidebar-nav">

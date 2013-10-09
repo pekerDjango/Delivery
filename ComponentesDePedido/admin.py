@@ -29,15 +29,21 @@ class DetalleVersionInline(admin.StackedInline, SortableInline):
     model = DetalleVersiones
     extra = 1
     formfield_overrides = {
-        models.CharField: {'widget': TextInput(attrs={'size':'20'})},
+        models.CharField: {'widget': TextInput(attrs={'size':'100'})},
+        models.IntegerField: {'widget': TextInput(attrs={'class':'input-mini'})},
+        models.DecimalField: {'widget': TextInput(attrs={'class':'input-mini'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
-        models.ImageField: {'widget': ImageWidget}          
+        models.ImageField: {'widget': ImageWidget},     
     }  
     
 class DetalleIngredientesInline(admin.StackedInline, SortableInline):
     model = DetalleIngredientes
     verbose_name_plural = "Detalle de Ingredientes"
-    extra = 1    
+    extra = 1
+    formfield_overrides = {        
+        models.IntegerField: {'widget': TextInput(attrs={'class':'input-mini'})},
+        }
+     
 
 class ProductoAdmin(admin.ModelAdmin):
     inlines = [DetalleVersionInline, DetalleIngredientesInline]
@@ -90,6 +96,8 @@ class IngredienteAdmin(admin.ModelAdmin):
     readonly_fields =('codigo',)
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'100'})},
+        models.IntegerField: {'widget': TextInput(attrs={'class':'input-mini'})},
+        models.DecimalField: {'widget': TextInput(attrs={'class':'input-mini'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
         models.ImageField: {'widget': ImageWidget},     
     } 
@@ -147,9 +155,11 @@ class PromocionAdmin(admin.ModelAdmin):
     inlines = [ProgramacionInline, DetallePromocionProductoInline, DetallePromocionMenuInline]
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'100'})},
+        models.IntegerField: {'widget': TextInput(attrs={'class':'input-mini'})},
+        models.DecimalField: {'widget': TextInput(attrs={'class':'input-mini'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
         models.ImageField: {'widget': ImageWidget},     
-    } 
+    }
     
 class ProgramacionAdmin(admin.ModelAdmin):
     fields =( 'diaSemana','fechaDesde','fechaHasta','horaDesde','horaHasta')

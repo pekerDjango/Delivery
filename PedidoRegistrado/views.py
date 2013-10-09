@@ -9,6 +9,7 @@ from RecursosDeEmpresa.models import Sucursal
 from datetime import date, datetime, time, timedelta
 from decimal import Decimal
 from django.contrib.auth.decorators import login_required
+from SiGeP.settings import URL_LOGIN
 
 def pedidoInformacion_view(request):
     if request.method == "POST":
@@ -86,16 +87,12 @@ def agregarPedido_view(request,cantidad,id_pro,id_tip):
         p = Pedido(cliente=cli,fechaPedido=fechaPed,estado=est,servicio=ser,tipologia_vivienda=tip,precio_envio=8)
         p.save()
         request.session["pedido"]=p
-    ped = request.session["pedido"]      
-    productos = []
-    htp='index.html'
+    ped = request.session["pedido"]  
     if int(id_tip) == 1:
         pro = DetalleVersiones.objects.get(pk=id_pro)   
         precion = pro.precio 
         d = DetallePedido(pedido=ped,cantidad=cantidad,producto=pro,precio=precion)
-        d.save()
-        productos= Producto.objects.all()
-        htp= 'PedidoRegistrado/productosSolicitados.html'
+        d.save()        
         tipo = pro.producto.tipoProducto.codigo
         return HttpResponseRedirect('/pedido/armaTuPedido/productosSolicitados/'+str(tipo))
     elif int(id_tip) == 2:
@@ -103,18 +100,13 @@ def agregarPedido_view(request,cantidad,id_pro,id_tip):
         precion = pro.precioVenta
         d = DetallePedido(pedido=ped,cantidad=cantidad,menu=pro,precio=precion)
         d.save()
-        productos = Menu.objects.all()
-        htp= 'PedidoRegistrado/menuDisponibles.html'
+        return HttpResponseRedirect('PedidoRegistrado/menuDisponibles.html')
     elif int(id_tip) == 3:
         pro= Promocion.objects.get(pk=id_pro)
         precion = pro.precio
         d = DetallePedido(pedido=ped,cantidad=cantidad,promocion=pro,precio=precion)
         d.save()
-        productos = Promocion.objects.all()
-        htp= 'PedidoRegistrado/promosDisponibles.html'
-    ctx = {'productos':productos, 'pedido':ped}
-    return render_to_response(htp,ctx,context_instance=RequestContext(request))   
-        
+        return HttpResponseRedirect('PedidoRegistrado/promosDisponibles.html')           
 
 def actualizar_detalle_pedido_view(request,nueva_cantidad,id_det):
     pedi = request.session["pedido"] 
@@ -159,7 +151,7 @@ def detallePedido_view(request):
     ctx = { 'pedido':ped}  
     return render_to_response('PedidoRegistrado/detallePedido.html',ctx, context_instance=RequestContext(request))
 
-@login_required(login_url='/login')
+@login_required(login_url=URL_LOGIN)
 def detallePago_view(request):
     horaPedido = datetime.now().time()  
     ped = request.session["pedido"]

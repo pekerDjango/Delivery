@@ -99,7 +99,20 @@ function actualizarCantidad(combo)
         <a href="/pedido/armaTuPedido/productosSolicitados/4" ><img src="/media/imagenes/armaTuPedido/guarnicion.jpg" alt="guarnicion" /></a><p>Guarniciones</p>
     </div>
 </div>
-        <a class="btn btn-danger"  href="#">Cancelar </a>
+     <a href="#myModalCan" class="btn btn-danger" data-toggle="modal">Cancelar</a>
+            <div class="modal hide fade " id="myModalCan" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3>Atención</h3>
+            </div>
+            <div class="modal-body">
+            <p>Está seguro que desea cancelar pedido</p>
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal" aria-hidden="true">NO</button>
+            <a href="{% url "vista_cerrarPedido" %}" class="btn btn-primary">SI</a>
+            </div>
+            </div>
      <!--  <a class="btn "  href="javascript:window.history.go(-1);">Volver </a>-->
       {% if user.is_authenticated %}
         <a class="btn btn-large btn-primary pull-right"  href="{% url "vista_detallePago" %}">Confirmar Comprar</a>
@@ -115,7 +128,7 @@ function actualizarCantidad(combo)
             </div>
             <div class="modal-footer">
               <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-            <a href="{% url "vista_login" %}" class="btn btn-primary">Loguearse</a>
+            <a href="{% url "vista_detallePago" %}" class="btn btn-primary">Loguearse</a>
             </div>
                 </div>
             {% endif %}

@@ -5,6 +5,7 @@ from django_admin_bootstrapped.admin.models import SortableInline
 from django.forms import TextInput, Textarea
 from django.db import models
 from form_utils.widgets import ImageWidget
+from RecursosDeEmpresa.forms import SucursalForm, EmpleadoForm
 
 class TelefonoSucursalInLine(admin.StackedInline, SortableInline):
     model = TelefonoSucursal
@@ -16,11 +17,11 @@ class SucursalAdmin(admin.ModelAdmin):
     list_display=('codigo', 'nombre', 'direccion', 'barrio', 'Vista_Previa')
     list_filter=('codigo', 'nombre', 'direccion', 'barrio')
     ordering=('nombre',)
-    search_fields=('codigo','nombre','barrio__nombre','localidad__nombre','localizacion')
+    search_fields=('codigo','nombre','barrio__nombre','localidad__nombre')
 #    fields =('codigo','nombre',('direccion','numero_direccion','piso','depto'),('codigo_postal','barrio','localidad'), 'calificacion_servicio','imagen')
     fieldsets = (
         (None, {
-            'fields': ('codigo', 'nombre', 'calificacion_servicio','imagen', 'localizacion')
+            'fields': ('codigo', 'nombre', 'calificacion_servicio','imagen')
         }),
         ('Dirección', {
             'classes': ('wide','extrapretty'),
@@ -34,6 +35,7 @@ class SucursalAdmin(admin.ModelAdmin):
         models.ImageField: {'widget': ImageWidget}
       
     }
+    form = SucursalForm  
     
 class EmpleadoAdmin(admin.ModelAdmin):
     list_display=('legajo','nombre','apellido','numero_documento')
@@ -54,6 +56,7 @@ class EmpleadoAdmin(admin.ModelAdmin):
         models.CharField: {'widget': TextInput(attrs={'size':'100'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},      
     }
+    form = EmpleadoForm
     
 class BarrioAdmin(admin.ModelAdmin): 
     ordering=('nombre',)
