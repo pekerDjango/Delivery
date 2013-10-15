@@ -21,8 +21,7 @@ def pedidoInformacion_view(request):
             request.session ["domicilio"] = add
             request.session["pedido"] = None            
             request.session["sucursal"] = Sucursal.objects.get(pk=1)
-            request.session["detalles"]={}   
-            request.session.set_expiry(900)
+            request.session["detalles"]={}            
             return HttpResponseRedirect('/pedido/armaTuPedido/')
     else:
         form = DomicilioSearchForm() 
@@ -139,8 +138,9 @@ def eliminarDetalle_view(request,id_det):
     if d.pedido == ped:
         d.delete()
     productos = Producto.objects.all()
-    ctx = {'productos':productos, 'pedido':ped}   
-    return render_to_response('PedidoRegistrado/productosSolicitados.html',ctx, context_instance=RequestContext(request))
+    ctx = { 'pedido':ped}   
+#    return render_to_response('PedidoRegistrado/productosSolicitados.html',ctx, context_instance=RequestContext(request))
+    return render_to_response('PedidoRegistrado/detallesDePedido.html',ctx, context_instance=RequestContext(request))
 
 def detallePedido_view(request):       
     ped = request.session["pedido"]
@@ -153,6 +153,7 @@ def detallePedido_view(request):
 
 @login_required(login_url=URL_LOGIN)
 def detallePago_view(request):
+    request.session.set_expiry(900)
     horaPedido = datetime.now().time()  
     ped = request.session["pedido"]
     total = ped.precio_envio

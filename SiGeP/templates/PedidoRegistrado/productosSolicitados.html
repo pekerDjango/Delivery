@@ -74,6 +74,14 @@ function actualizarCantidad(combo)
 		$('#Pedido').html(data);
 		});
 	}
+
+function quitarDetalle(aquitar)
+    {
+        var id_det = $(aquitar).attr('id');       
+        $.get("/pedido/armaTuPedido/del/productos/"+id_det,function(data){
+        $('#Pedido').html(data);
+        });
+    }
 	
 </script>
 <div class="encabezado">Productos</div>
@@ -193,7 +201,7 @@ function actualizarCantidad(combo)
                     </select> </td>
              </tr>
                <tr class="fila-con-borde">
-               		<td>Precio: {{d.precioTotalUnidad}}</td><td><a href="/pedido/armaTuPedido/del/productos/{{d.id}}" >quitar</a> </td>
+               		<td>Precio: {{d.precioTotalUnidad}}</td><td><a href="#" onclick="quitarDetalle(this)" id="{{d.id}}" >quitar</a> </td>
                </tr>
            {% endfor %}
           

@@ -32,16 +32,68 @@ $(document).ready(function() {
 <h5>Indicanos en donde estas, para buscar la sucursal más cercana:</h5>
 <ul class="nav nav-pills">
     <li class="active">
-        <a href="#casa" data-toggle="tab"><img src="/media/imagenes/armaTuPedido/casa.jpg" alt="" width="60px" height="60px"/>Casa</a>
+        <a href="#casa" data-toggle="tab"><img src="/media/imagenes/armaTuPedido/casa.png" alt="" width="60px" height="60px"/>Casa</a>
     </li>
     <li>
         <a href="#depto" data-toggle="tab"><img src="/media/imagenes/armaTuPedido/depto.jpg" alt="" width="60px" height="60px"/>Departamento</a>
     </li>
     <li>
+        <a href="#residencia" data-toggle="tab"><img src="/media/imagenes/armaTuPedido/residencia.jpg" alt="" width="60px" height="60px"/>Residencia</a>
+    </li>
+    <li>
+        <a href="#facultad" data-toggle="tab"><img src="/media/imagenes/armaTuPedido/facultad.jpg" alt="" width="60px" height="60px"/>Facultad</a>
+    </li>
+    <li>
         <a href="#otro" data-toggle="tab"><img src="/media/imagenes/armaTuPedido/otro.jpg" alt="" width="60px" height="60px"/>Otro</a>
     </li>
 </ul>
-<div class="tab-content">
+<br />
+  <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+               {{ form.non_field_errors }}
+            <table cellspacing="5" cellpadding="5">
+               <tr>
+                   <td colspan="2">{{form.localidad.errors}}</td><td colspan="2">{{form.barrio.errors}} </td>                           
+               </tr>               
+               <tr>
+                   <td>{{form.localidad.label}} </td><td>{{form.localidad}}</td><td>{{form.barrio.label}} </td><td>{{form.barrio}}</td> 
+               </tr>
+               <tr>
+                   <td colspan="2">{{form.direccion.errors}}</td><td colspan="2">{{form.numero_direccion.errors}} </td>                           
+               </tr> 
+               <tr>
+                     <td>{{form.direccion.label}} </td><td>{{form.direccion}}</td><td>{{form.numero_direccion.label}} </td><td>{{form.numero_direccion}}</td>
+               </tr>
+               <tr>
+                   <td colspan="2">{{form.piso.errors}}</td><td colspan="2">{{form.depto.errors}} </td>                           
+               </tr> 
+               <tr>
+                     <td>{{form.piso.label}} </td><td>{{form.piso}}</td><td>{{form.depto.label}} </td><td>{{form.depto}}</td>
+               </tr>
+               <tr>
+                   <td colspan="2">{{form.codigo_postal.errors}}</td><td colspan="2">{{form.servicio.errors}} </td>                           
+               </tr> 
+               <tr>
+                     <td>{{form.codigo_postal.label}} </td><td>{{form.codigo_postal}}</td><td>{{form.servicio.label}} </td><td>{{form.servicio}}</td>
+               </tr>
+            </table>
+         <!--   <h5>¿Este pedido es para Entregar o para Llevar?</h5>
+            {% if servicios %}
+            <div class="btn-group" data-toggle="buttons-radio">
+                {% for s in servicios %}
+                <button type="button" class="btn btn-primary">
+                    {{s.nombre}}
+                </button>
+                {% endfor %}
+            </div>
+                        {% endif %} -->
+          <br />
+            <button type="submit"  class="btn btn-large btn-primary  pull-right">
+                Iniciar Pedido
+            </button>
+        </form>
+
+<!-- <div class="tab-content">
     <div class="tab-pane active" id="casa">
         <br />
         <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
@@ -57,7 +109,7 @@ $(document).ready(function() {
                 {% endfor %}
             </div>
                         {% endif %} -->
-            <br />
+  <!--          <br />
             <button type="submit"  class="btn btn-large btn-primary  pull-right">
                 Iniciar Pedido
             </button>
@@ -78,7 +130,7 @@ $(document).ready(function() {
                 {% endfor %}
             </div>
                         {% endif %} -->
-            <br />
+  <!--          <br />
             <button type="submit"  class="btn btn-large btn-primary  pull-right">
                 Iniciar Pedido
             </button>
@@ -99,13 +151,13 @@ $(document).ready(function() {
                 {% endfor %}
             </div>
             {% endif %} -->
-            <br />
+  <!--          <br />
             <button type="submit"  class="btn btn-large btn-primary pull-right">
                 Iniciar Pedido
             </button>
         </form>
     </div>
-</div>
+</div>-->
 {% endblock %}
 {% block panelAux %}
 <div class="well sidebar-nav">
