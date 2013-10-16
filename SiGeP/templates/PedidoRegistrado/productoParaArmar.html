@@ -57,7 +57,15 @@ function actualizarCantidad(combo)
         $.get("/pedido/armaTuPedido/productosActualizar/"+cantidad+"/"+id_det+"/",function(data){
         $('#Pedido').html(data);
         });
-    }   
+    }
+
+function quitarDetalle(aquitar)
+    {
+        var id_det = $(aquitar).attr('id');       
+        $.get("/pedido/armaTuPedido/del/productos/"+id_det,function(data){
+        $('#Pedido').html(data);
+        });
+    }    
 
 </script>
 
@@ -189,7 +197,9 @@ function actualizarCantidad(combo)
                         <option {% if d.cantidad == 4 %} selected="selected" {% endif %} value="4">4</option>
                     </select> </td>
              </tr>
-               <tr><td>Precio: {{d.precioTotalUnidad}}</td><td><a href="/pedido/armaTuPedido/del/productos/{{d.id}}" >quitar</a> </td></tr>
+              <tr class="fila-con-borde">
+                    <td>Precio: {{d.precioTotalUnidad}}</td><td><a href="#" onclick="quitarDetalle(this)" id="{{d.id}}" >quitar</a> </td>
+               </tr>
                
                
                 <hr />
@@ -236,7 +246,7 @@ function actualizarCantidad(combo)
         <p>
             {% if sucursal  %}
             <strong>Mi Sucursal:</strong>{{sucursal.nombre}},{{sucursal.direccion}}, {{sucursal.numero_direccion}},{{sucursal.barrio}}
-             {% endif %}<a href="" >Cambiar</a>
+             {% endif %}<a href="/pedido/sucursales/" >Cambiar</a>
         </p>
          <p>
          {% if domicilio  %}

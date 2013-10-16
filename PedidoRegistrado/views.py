@@ -109,13 +109,13 @@ def agregarPedido_view(request,cantidad,id_pro,id_tip):
         precion = pro.precioVenta
         d = DetallePedido(pedido=ped,cantidad=cantidad,menu=pro,precio=precion)
         d.save()
-        return HttpResponseRedirect('PedidoRegistrado/menuDisponibles.html')
+        return HttpResponseRedirect('/pedido/armaTuPedido/menusDisponibles/')
     elif int(id_tip) == 3:
         pro= Promocion.objects.get(pk=id_pro)
         precion = pro.precio
         d = DetallePedido(pedido=ped,cantidad=cantidad,promocion=pro,precio=precion)
         d.save()
-        return HttpResponseRedirect('PedidoRegistrado/promosDisponibles.html')           
+        return HttpResponseRedirect('/pedido/armaTuPedido/promosDisponibles/')           
 
 def actualizar_detalle_pedido_view(request,nueva_cantidad,id_det):
     pedi = request.session["pedido"] 
