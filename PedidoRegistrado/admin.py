@@ -111,8 +111,20 @@ class IngredientesSeccionProductoInline(admin.StackedInline, SortableInline):
         models.ImageField: {'widget': ImageWidget}          
     }
 
+class SeccionProductoAdmin(admin.ModelAdmin):
+    inlines = [IngredientesSeccionProductoInline]
+    search_fields = ('nombre','orden','tipoIngrediente.nombre')
+    list_display = ('producto','orden','nombre','tipoIngrediente')
+    list_filter = ('nombre','orden')
+    ordering=('orden','nombre','tipoIngrediente')
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size':'20'})},
+        models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},      
+    }
+
 class ProductoParaArmarAdmin(admin.ModelAdmin):
-    inlines = [DetalleVersionInline, SeccionProductoInline, IngredientesSeccionProductoInline]
+#    inlines = [DetalleVersionInline, SeccionProductoInline, IngredientesSeccionProductoInline]
+    inlines = [DetalleVersionInline, SeccionProductoInline]
     search_fields = ('tipo_producto__nombre','slogan')
     list_display = ('tipo_producto','slogan')
     list_filter = ('tipo_producto','slogan')
@@ -131,3 +143,4 @@ admin.site.register(Cliente, ClienteAdmin)
 admin.site.register(EstadoPedido, EstadoPedidoAdmin)
 admin.site.register(Pedido, PedidoAdmin)
 admin.site.register(ProductoParaArmar, ProductoParaArmarAdmin)
+admin.site.register(SeccionProducto, SeccionProductoAdmin)

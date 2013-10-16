@@ -15,7 +15,10 @@ urlpatterns = patterns('PedidoRegistrado.views',
      url(r'^pedido/armaTuPedido/detallePedido/$','detallePedido_view',name='vista_detallePedido'),
      url(r'^pedido/armaTuPedido/detallePedido/detallePago/$','detallePago_view',name='vista_detallePago'),
      url(r'^pedido/armaTuPedido/detallePedido/detallePago/pedidoFinalizado/$','pedidoFinalizado_view',name='vista_pedidoFinalizado'),
-     url(r'^$','cerrarPedido_view',name='vista_cerrarPedido'),  
+     url(r'^$','cerrarPedido_view',name='vista_cerrarPedido'),
+     url(r'^pedido/armaTuPedido/productoParaArmar/(?P<id_pro>.*)/$','productoParaArmar_view',name='vista_productoParaArmar'),
+     url(r'^pedido/sucursales/$','sucursales_view',name='vista_sucursales'),
+     url(r'^pedido/sucursales/elegir/(?P<id_suc>.*)/$','sucursalElegir_view',name='vista_sucursalElegida'),  
 
 
 )   

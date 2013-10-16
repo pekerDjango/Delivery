@@ -1,0 +1,260 @@
+{% extends "base.html" %}
+{% block title %} Login {% endblock %}
+{% block breadcrumbs %}
+<ul class="breadcrumb">
+    <li>
+        <a href="/">Home</a><span class="divider">></span>
+    </li>
+    <li>
+        Pedido
+    </li>
+</ul>
+{% endblock %}
+{% block estadoPedido %}
+<div class="cabecera" >
+ <ul class="nav nav-pills " >
+    <li >
+    <a >INFORMACIÓN DIRECCIÓN</a>
+    </li>
+    <li class="active"><a href="#" data-toggle="tab" >ARMA TU PEDIDO</a></li>
+    <li><a >DETALLE DE PEDIDO</a></li>
+    <li><a >DETALLE DE PAGO Y ENTREGA</a></li>
+    <li><a >PEDIDO FINALIZADO</a></li>
+    </ul>
+    </div>
+    {% endblock %}
+{% block content %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("select").change(function() {
+            var valor = $(this).find("option:selected").val();
+            //alert(valor);
+            //var str
+            console.log(valor);
+            $("#lblCantidad").text(valor);
+        }); 
+        $( "a" ).click(function() {
+        var clase  = $(this).attr('class');
+        if(clase == 'btn')
+        {
+            var fila = $(this).closest("tr");
+            var numeroCombo = $(fila).find("select").find("option:selected").val();
+            var idProducto = $(this).attr('id');
+            console.log(idProducto);
+            console.log(numeroCombo);
+            $(this).attr("href", "/pedido/armaTuPedido/productos/ "+numeroCombo+"/"+idProducto+"/1/");
+        }
+        console.log(clase);
+    }); 
+    
+    
+});
+
+function actualizarCantidad(combo)
+    {
+        var id_det = $(combo).attr('id');
+        var cantidad = $(combo).find("option:selected").val();
+        $.get("/pedido/armaTuPedido/productosActualizar/"+cantidad+"/"+id_det+"/",function(data){
+        $('#Pedido').html(data);
+        });
+    }   
+
+</script>
+
+
+<div class="encabezado">Productos Para Armar</div>
+<br />
+  <div id="rootwizard">
+                    <ul>
+                        <li><a href="#tab0" data-toggle="tab">Tamaño</a></li>
+                        {% for s in secciones %}
+                        <li><a href="#tab{{s.orden}}" data-toggle="tab">{{s.nombre}}</a></li> 
+                        {% endfor %}                                        
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane" id="tab0">
+                            {% if detalleVersiones %}
+                          <h5>Elegí el tamaño de tu lomo</h5>
+                          <table class="table table-hover" cellspacing="5" cellpadding="5">
+                            <tbody>
+                            {% for d in detalleVersiones %}
+                                <tr>
+                                    <td><img src="/media/imagenes/armaTuPedido/productosSolicitados.png" alt="" width="50px" heigth="50px" /></td>
+                                    <td >{{d.clasificacion.nombre}}</td>
+                                    <td><a  href="#" class="btn" type="submit"><i class="icon-shopping-cart"></i></a></td>                  
+                                </tr>
+                            {% endfor %}               
+                            </tbody>       
+                        </table>
+                    {% endif %}
+                        </div>
+                        {% for s in secciones %}
+                        <div class="tab-pane" id="tab{{s.orden}}">
+                         <h5>ELEGIR {{s.nombre}}</h5>
+                         <table class="table table-hover" cellspacing="5" cellpadding="5">
+                            <tbody>
+                            {% for i in s.getIngredienteSeccion %}
+                                <tr>
+                                    <td><img src="/media/{{i.ingrediente.imagen}}" alt="" width="50px" heigth="50px" /></td>
+                                    <td >{{i.ingrediente}}</td>
+                                    <td><a  href="#" class="btn" type="submit"><i class="icon-shopping-cart"></i></a></td>                  
+                                </tr>
+                            {% endfor %}               
+                            </tbody>       
+                        </table>
+                        </div>
+                          {% endfor %}                                
+                        <ul class="pager wizard">
+                            <li class="previous first" style="display:none;"><a href="#">First</a></li>
+                            <li class="previous"><a href="#">Volver</a></li>
+                            <li class="next last" style="display:none;"><a href="#">Last</a></li>
+                            <li class="next"><a href="#">Continuar</a></li>
+                        </ul>
+                    </div>  
+                </div>
+                <br />
+        <br />
+        <a href="#myModal" class="btn btn-danger" data-toggle="modal">Cancelar</a>
+            <div class="modal hide fade " id="myModal" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3>Atención</h3>
+            </div>
+            <div class="modal-body">
+            <p>Está seguro que desea cancelar pedido</p>
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal" aria-hidden="true">NO</button>
+            <a href="{% url "vista_cerrarPedido" %}" class="btn btn-primary">SI</a>
+            </div>
+            </div>
+        <a class="btn "  href="{% url "vista_armaTuPedido" %}">Volver a Productos </a>                 
+    <script src="/media/js/jquery.bootstrap.wizard.js"></script>
+    <script src="/media/js/prettify.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#rootwizard').bootstrapWizard({'tabClass': 'nav nav-pills'});    
+        window.prettyPrint && prettyPrint()
+    }); 
+    </script>
+{% endblock %}
+{% block panelAux %}
+<div class="well sidebar-nav">
+    <ul class="nav nav-list" id="ProductosNuevos">
+        <li class="nav-header">
+           Historicos de Pedidos
+        </li>
+        <p align="justify">
+            {% if user.is_authenticated %}
+            No tiene pedidos en el historial
+            {% else %}
+           No ha ingresado aún
+           {% endif %}
+        <p>
+    </ul>
+</div><!--/.well -->
+<div class="well sidebar-nav">
+    <ul class="nav nav-list" id="Pedido">
+        <li class="nav-header">
+           Tu Pedido
+        </li>
+            <div align="justify">
+        <!--        {% if detalles %}             
+                 {% for key,value in detalles.items %}
+                      
+                      <p>{{value.1.producto.nombre}} {{value.1.clasificacion}}</p>
+                       <select name="cantidad" id="cantidad"  style="width:50px">                         
+                        <option {% if value.0  == '1'  %} selected="selected" {% endif %}  value="1">1</option>
+                        <option {% if value.0  == '2' %} selected="selected" {% endif %}  value="2">2</option>
+                        <option  {% if value.0 == 3 %} selected="selected" {% endif %} value="3">3</option>
+                        <option {% if value.0 == '4' %} selected="selected" {% endif %} value="4">4</option>
+                    </select>
+                     {{value.0}}
+                        <hr />
+                       
+                 {% endfor %}
+                 {% endif %}-->
+            
+        
+    {% if pedido %}      
+           
+           <table border="0" cellspacing="5" cellpadding="5">
+                 {% for d in pedido.getDetallePedido %}
+               <tr><td>   {{d.promocion.nombre}} {{d.menu.nombre}}{{d.producto.producto.nombre}} {{d.producto.clasificacion}}</td>
+                   <td> <select name="cantidad" id="{{d.id}}"  style="width:50px" onchange = "actualizarCantidad(this)">
+                        <option {% if d.cantidad == 0 %} selected="selected" {% endif %} value="1">0</option>
+                        <option {% if d.cantidad == 1 %} selected="selected" {% endif %}  value="1">1</option>
+                        <option {% if d.cantidad == 2 %} selected="selected" {% endif %}  value="2">2</option>
+                        <option  {% if d.cantidad == 3 %} selected="selected" {% endif %} value="3">3</option>
+                        <option {% if d.cantidad == 4 %} selected="selected" {% endif %} value="4">4</option>
+                    </select> </td>
+             </tr>
+               <tr><td>Precio: {{d.precioTotalUnidad}}</td><td><a href="/pedido/armaTuPedido/del/productos/{{d.id}}" >quitar</a> </td></tr>
+               
+               
+                <hr />
+           {% endfor %}
+          
+           </table>
+            </div>
+           
+          
+               
+            
+       
+                      
+    
+                    
+         
+            
+  
+       
+        
+       
+        <p>Envio:{{pedido.precio_envio}}</p>
+        <hr />
+        <p>Total:{{pedido.precioTotal}}</p>
+        {% else %}
+        <p>Aun no ha cargado nigún elemento en el pedido</p>
+        {% endif %}
+        
+    </ul>
+</div><!--/.well -->
+<div class="well sidebar-nav">
+    <ul class="nav nav-list" id="Configuracion">
+        <li class="nav-header">
+           Configuración del Pedido
+        </li>
+        <br>
+        <p align="justify">
+            {% if domicilio  %}
+        <p>
+            <strong>Mi ubicación:</strong>{{domicilio.direccion}},{{domicilio.numero_direccion}},{{domicilio.barrio}},{{domicilio.localidad}},{{domicilio.codigo_postal}}
+             {% endif %}<a href="/pedido/actualizar/{{domicilio.id}}/">Cambiar</a>
+        </p>
+       
+        <p>
+            {% if sucursal  %}
+            <strong>Mi Sucursal:</strong>{{sucursal.nombre}},{{sucursal.direccion}}, {{sucursal.numero_direccion}},{{sucursal.barrio}}
+             {% endif %}<a href="" >Cambiar</a>
+        </p>
+         <p>
+         {% if domicilio  %}
+            <strong>Servicio Elegido:</strong>{{domicilio.servicio.nombre}}
+            <a href="/pedido/actualizar/{{domicilio.id}}/">Cambiar</a>
+         {% endif %}
+        </p>
+         <p>
+     
+            <strong>Horario del pedido:</strong>No ha seleccionado
+            
+        </p>
+
+       
+        </p>
+    </ul>
+</div><!--/.well -->
+{% endblock %}
+
+
+

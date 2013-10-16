@@ -16,18 +16,23 @@ def pedidoInformacion_view(request):
         form = DomicilioSearchForm(request.POST,request.FILES)
         if form.is_valid():
             add = form.save(commit=False)
-            add.status = True
+            add.status = True          
             add.save() # Guardamos la informacion           
             request.session ["domicilio"] = add
             request.session["pedido"] = None            
             request.session["sucursal"] = Sucursal.objects.get(pk=1)
-            request.session["detalles"]={}            
-            return HttpResponseRedirect('/pedido/armaTuPedido/')
+            request.session["detalles"]={}
+            Dom= request.session["domicilio"]
+            if Dom.servicio.nombre == "Sucursales":
+                return HttpResponseRedirect('/pedido/sucursales/')
+            else:          
+                return HttpResponseRedirect('/pedido/armaTuPedido/')
     else:
         form = DomicilioSearchForm() 
     servicio = Servicio.objects.all()
-    tipologia = TipologiaVivienda.objects.all()   
-    ctx = {'form': form, 'servicios':servicio, 'tipologias' : tipologia}
+    tipologia = TipologiaVivienda.objects.all()
+    boton = 'Iniciar Pedido'   
+    ctx = {'form': form, 'servicios':servicio, 'tipologias' : tipologia,'boton':boton}
     return render_to_response('PedidoRegistrado/pedidoInformacion.html',ctx, context_instance=RequestContext(request))
 
 def actualizarPedidoInformacion_view(request, id_dom): 
@@ -38,10 +43,15 @@ def actualizarPedidoInformacion_view(request, id_dom):
         add.status = True
         add.save() # Guardamos la informacion           
         request.session ["domicilio"] = add
-        return HttpResponseRedirect('/pedido/armaTuPedido/')        
+        Dom= request.session["domicilio"]
+        if Dom.servicio.nombre == "Sucursales":
+            return HttpResponseRedirect('/pedido/sucursales/')
+        else:          
+            return HttpResponseRedirect('/pedido/armaTuPedido/')        
     servicio = Servicio.objects.all()
     tipologia = TipologiaVivienda.objects.all()   
-    ctx = {'form': form, 'servicios':servicio, 'tipologias' : tipologia}
+    boton = 'Continuar'   
+    ctx = {'form': form, 'servicios':servicio, 'tipologias' : tipologia,'boton':boton}
     return render_to_response('PedidoRegistrado/pedidoInformacion.html',ctx, context_instance=RequestContext(request))
 
 def armaTuPedido_view(request): 
@@ -212,6 +222,27 @@ def productoParaArmar_view(request,id_pro):
     secciones = SeccionProducto.objects.filter(producto=pro).order_by('orden')         
     ctx = { 'pedido':ped, 'detalleVersiones': detalleVersiones, 'secciones': secciones}  
     return render_to_response('PedidoRegistrado/productoParaArmar.html',ctx ,context_instance=RequestContext(request))
+
+def sucursales_view(request):
+    lista_sucursal=Sucursal.objects.all()
+    return render_to_response('PedidoRegistrado/sucursales.html',{'lista_sucursal':lista_sucursal},context_instance=RequestContext(request))
+
+def sucursalElegir_view(request, id_suc):
+    Dom= request.session["domicilio"]
+    request.session["sucursal"] = Sucursal.objects.get(pk=id_suc) 
+    instance = get_object_or_404(DomicilioSearch, id=Dom.id)
+    form = DomicilioSearchForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        add = form.save(commit=False)
+        add.status = True
+        add.save() # Guardamos la informacion           
+        request.session ["domicilio"] = add
+        return HttpResponseRedirect('/pedido/armaTuPedido/')        
+    servicio = Servicio.objects.all()
+    tipologia = TipologiaVivienda.objects.all()   
+    boton = 'Continuar'   
+    ctx = {'form': form, 'servicios':servicio, 'tipologias' : tipologia,'boton':boton}
+    return render_to_response('PedidoRegistrado/pedidoInformacion.html',ctx, context_instance=RequestContext(request))
 
 
      
