@@ -83,12 +83,12 @@ text-decoration: underline;
 }
 
 body{
-	background-image: url(../imagenes/backgroundImage2.jpg);
+	background-image: url(../imagenes/fast-food.jpg);
 }
 
 
 .hero-unit{
-background: rgba(142, 132, 132, 1);
+background: rgba(203, 191, 245, 1);
 }
 .cajaschicas{
 		width: 50px; 

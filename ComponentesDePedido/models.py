@@ -94,6 +94,8 @@ class Producto (models.Model):
         return self.nombre
     def getDetalleVersiones(self):
         return DetalleVersiones.objects.filter(producto=self)
+    def getIngredientes(self):
+        return DetalleIngredientes.objects.filter(producto =self)
     
 class DetalleIngredientes(models.Model):
    

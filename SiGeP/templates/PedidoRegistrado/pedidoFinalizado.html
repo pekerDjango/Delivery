@@ -54,10 +54,10 @@
         </table>
 <br />
         {% if domicilio  %}
-        <p>Pedido va ser enviado: <strong>{{domicilio.direccion}}-{{domicilio.numero_direccion}}-{{domicilio.barrio}}-{{domicilio.localidad}}</strong></p>
+        <p>Pedido va ser enviado: <strong>{{domicilio.direccion}} {{domicilio.numero_direccion}} {{domicilio.barrio}} {{domicilio.localidad}}</strong></p>
              {% endif %}
              {% if sucursal  %}
-        <p>Sucursal Asignada: <strong >{{sucursal.nombre}}-{{sucursal.direccion}}</strong></p>
+        <p>Sucursal Asignada: <strong >{{sucursal.nombre}} {{sucursal.direccion}}</strong></p>
              {% endif %}
               <p>Solicitud de pedido: <strong>{{horaPedir}}</strong>hs</p>
               <p>Estado de Pedido: <strong style="color:#FF0000">{{pedido.estado}}</strong></p>
