@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from PedidoRegistrado.forms import DomicilioSearchForm, PagoForm, HoraPedidoForm
 from django.http import HttpResponseRedirect
-from PedidoRegistrado.models import DomicilioSearch, Pedido, DetallePedido, Cliente, Servicio, TipologiaVivienda, EstadoPedido, ProductoParaArmar, SeccionProducto
+from PedidoRegistrado.models import DomicilioSearch, Pedido, DetallePedido, Cliente, Servicio, TipologiaVivienda, EstadoPedido, ProductoParaArmar, SeccionProducto, VersionProducto, ProductoArmado, DetalleProductoArmado, IngredientesSeccion
 from ComponentesDePedido.models import Producto, DetalleVersiones, TipoProducto, Menu, Promocion
 from RecursosDeEmpresa.models import Sucursal
 from datetime import date, datetime, time, timedelta
@@ -19,7 +19,7 @@ def pedidoInformacion_view(request):
             add.status = True          
             add.save() # Guardamos la informacion           
             request.session ["domicilio"] = add
-            request.session["pedido"] = None            
+            request.session["pedido"] = None                       
             request.session["sucursal"] = Sucursal.objects.get(pk=1)
             request.session["detalles"]={}
             Dom= request.session["domicilio"]
@@ -216,11 +216,24 @@ def cerrarPedido_view(request):
     return render_to_response('index.html', context_instance=RequestContext(request))
 
 def productoParaArmar_view(request,id_pro):
+    fechaPed = datetime.now()
+    cli=Cliente.objects.get(pk=1)
+    est=EstadoPedido.objects.get(pk=1)
+    ser=Servicio.objects.get(pk=1)
+    tip=TipologiaVivienda.objects.get(pk=1) 
+    pedi = request.session["pedido"] 
+    if  pedi is None: 
+        p = Pedido(cliente=cli,fechaPedido=fechaPed,estado=est,servicio=ser,tipologia_vivienda=tip,precio_envio=8)
+        p.save()
+        request.session["pedido"]=p
     ped = request.session["pedido"]
-    pro = ProductoParaArmar.objects.get(pk=id_pro)
+    pro = ProductoParaArmar.objects.get(pk=id_pro)    
+    request.session["productoArmar"]= pro
+    request.session["productoArmado"]= None
     detalleVersiones = pro.getDetalleVersiones()
-    secciones = SeccionProducto.objects.filter(producto=pro).order_by('orden')         
-    ctx = { 'pedido':ped, 'detalleVersiones': detalleVersiones, 'secciones': secciones}  
+    secciones = SeccionProducto.objects.filter(producto=pro).order_by('orden')
+    productoArmado = request.session["productoArmado"]         
+    ctx = { 'pedido':ped, 'detalleVersiones': detalleVersiones, 'secciones': secciones, 'productoArmar': pro, 'productoArmado':productoArmado}  
     return render_to_response('PedidoRegistrado/productoParaArmar.html',ctx ,context_instance=RequestContext(request))
 
 def sucursales_view(request):
@@ -243,6 +256,27 @@ def sucursalElegir_view(request, id_suc):
     boton = 'Continuar'   
     ctx = {'form': form, 'servicios':servicio, 'tipologias' : tipologia,'boton':boton}
     return render_to_response('PedidoRegistrado/pedidoInformacion.html',ctx, context_instance=RequestContext(request))
+
+def productoArmado_view(request,id_ver):
+    ped = request.session["pedido"]
+    pro = request.session["productoArmado"]
+    if pro is None:
+        pro = request.session["productoArmar"]    
+        ver = VersionProducto.objects.get(pk=id_ver) 
+        productoArmado = ProductoArmado(producto=pro, version=ver)
+        productoArmado.save()
+        request.session["productoArmado"]= productoArmado        
+    ctx = { 'pedido':ped, 'productoArmado': pro}  
+    return render_to_response('PedidoRegistrado/detallesDePedido.html',ctx, context_instance=RequestContext(request))
+
+def productoArmadoIngrediente_view(request,id_ing):
+    productoArmado =  request.session["productoArmado"]
+    ing = IngredientesSeccion.objects.get(pk=id_ing)   
+    detalle = DetalleProductoArmado(producto=productoArmado, ingrediente= ing)
+    detalle.save()
+    ped = request.session["pedido"]
+    ctx = { 'pedido':ped, 'productoArmado': productoArmado}  
+    return render_to_response('PedidoRegistrado/detallesDePedido.html',ctx, context_instance=RequestContext(request))
 
 
      

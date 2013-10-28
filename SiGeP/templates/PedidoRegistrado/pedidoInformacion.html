@@ -202,8 +202,7 @@ $(document).ready(function() {
         </p>
          <p>
          {% if domicilio  %}
-            <strong>Servicio Elegido:</strong>{{domicilio.servicio.nombre}}
-            <a href="/pedido/actualizar/{{domicilio.id}}/">Cambiar</a>
+            <strong>Servicio Elegido:</strong>{{domicilio.servicio.nombre}}            
            {% else %}
             <strong>Servicio Elegido:</strong>No se ha seleccionado
          {% endif %}

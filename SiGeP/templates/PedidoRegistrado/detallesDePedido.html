@@ -21,6 +21,26 @@
            {% endfor %}
           
            </table>
+        </hr>
+            {% if productoArmar %}
+          <strong>{{productoArmar.slogan}}</strong>
+          <p>
+             Falta Configurar
+        </p>
+        {% else %}
+          {% if productoArmado %}
+          <strong>{{productoArmado.producto.slogan}}</strong>
+          <p>
+            {{productoArmado.producto.version}} {{productoArmado.version.clasificacion }}
+        </p>
+      {% for d in productoArmado.getDetalleProductoArmado  %}
+      <p>
+          entraste
+          {{d.ingrediente.ingrediente.nombre}}
+      </p>
+        {% endfor %}
+        {% endif %}
+           {% endif %}
             </div>
         <p>Envio:{{pedido.precio_envio}}</p>
         <hr />

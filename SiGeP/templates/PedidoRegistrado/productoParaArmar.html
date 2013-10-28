@@ -48,7 +48,29 @@
     }); 
     
     
+     
+    
 });
+
+
+function agregarVersion(tag){
+         
+         console.log("click")
+        var id_ver = $(tag).attr("id")         
+             $.get("/pedido/armaTuPedido/productoArmado/"+id_ver+"/",function(data){
+                 $("#Pedido").html(data)
+             });
+         } 
+
+function agregarIngrediente(tag){
+         
+         console.log("click")
+        var id_ing = $(tag).attr("id")         
+             $.get("/pedido/armaTuPedido/addIngrediente/productoArmado/"+id_ing+"/",function(data){
+                 $("#Pedido").html(data)
+             });
+         }    
+ 
 
 function actualizarCantidad(combo)
     {
@@ -73,23 +95,34 @@ function quitarDetalle(aquitar)
 <div class="encabezado">Productos Para Armar</div>
 <br />
   <div id="rootwizard">
+      <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
                     <ul>
                         <li><a href="#tab0" data-toggle="tab">Tamaño</a></li>
                         {% for s in secciones %}
                         <li><a href="#tab{{s.orden}}" data-toggle="tab">{{s.nombre}}</a></li> 
                         {% endfor %}                                        
                     </ul>
+                     </div>
+      </div>
+    </div>
+    <div id="bar" class="progress progress-striped active">
+      <div class="bar">
+          <div class="bar" style="width: 14.285714285714285%;"></div>
+      </div>
+    </div>
                     <div class="tab-content">
                         <div class="tab-pane" id="tab0">
                             {% if detalleVersiones %}
-                          <h5>Elegí el tamaño de tu lomo</h5>
+                          <h5>Elegí el tamaño </h5>
                           <table class="table table-hover" cellspacing="5" cellpadding="5">
                             <tbody>
                             {% for d in detalleVersiones %}
                                 <tr>
-                                    <td><img src="/media/imagenes/armaTuPedido/productosSolicitados.png" alt="" width="50px" heigth="50px" /></td>
+                                    <td><img src="/media/{{d.imagenProducto}}" alt="" width="50px" heigth="50px" /></td>
                                     <td >{{d.clasificacion.nombre}}</td>
-                                    <td><a  href="#" class="btn" type="submit"><i class="icon-shopping-cart"></i></a></td>                  
+                                    <td><a id={{d.id}} href="#" class="btn version" onclick="agregarVersion(this)" ><i class="icon-shopping-cart"></i></a></td>                  
                                 </tr>
                             {% endfor %}               
                             </tbody>       
@@ -104,8 +137,8 @@ function quitarDetalle(aquitar)
                             {% for i in s.getIngredienteSeccion %}
                                 <tr>
                                     <td><img src="/media/{{i.ingrediente.imagen}}" alt="" width="50px" heigth="50px" /></td>
-                                    <td >{{i.ingrediente}}</td>
-                                    <td><a  href="#" class="btn" type="submit"><i class="icon-shopping-cart"></i></a></td>                  
+                                    <td >{{i.ingrediente}} </td>
+                                    <td><a id={{i.id}} href="#" class="btn ingrediente" onclick="agregarIngrediente(this)"><i class="icon-shopping-cart"></i></a></td>                  
                                 </tr>
                             {% endfor %}               
                             </tbody>       
@@ -141,9 +174,13 @@ function quitarDetalle(aquitar)
     <script src="/media/js/prettify.js"></script>
     <script>
     $(document).ready(function() {
-        $('#rootwizard').bootstrapWizard({'tabClass': 'nav nav-pills'});    
-        window.prettyPrint && prettyPrint()
-    }); 
+    $('#rootwizard').bootstrapWizard({onTabShow: function(tab, navigation, index) {
+        var $total = navigation.find('li').length;
+        var $current = index+1;
+        var $percent = ($current/$total) * 100;
+        $('#rootwizard').find('.bar').css({width:$percent+'%'});
+    }});
+});
     </script>
 {% endblock %}
 {% block panelAux %}
@@ -206,6 +243,26 @@ function quitarDetalle(aquitar)
            {% endfor %}
           
            </table>
+           </hr>
+            {% if productoArmar %}
+          <strong>{{productoArmar.slogan}}</strong>
+          <p>
+             Falta Configurar
+        </p>
+        {% else %}
+          {% if productoArmado %}
+          <strong>{{productoArmado.producto.slogan}}</strong>
+          <p>
+            {{productoArmado.producto.version}} {{productoArmado.version.clasificacion }}
+        </p>
+      {% for d in productoArmado.getDetalleProductoArmado  %}
+      <p>
+          {{d.ingrediente.ingrediente}}
+          
+      </p>
+        {% endfor %}
+        {% endif %}
+           {% endif %}
             </div>
            
           
@@ -219,7 +276,7 @@ function quitarDetalle(aquitar)
             
   
        
-        
+        <hr />
        
         <p>Envio:{{pedido.precio_envio}}</p>
         <hr />

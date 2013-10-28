@@ -18,7 +18,9 @@ urlpatterns = patterns('PedidoRegistrado.views',
      url(r'^$','cerrarPedido_view',name='vista_cerrarPedido'),
      url(r'^pedido/armaTuPedido/productoParaArmar/(?P<id_pro>.*)/$','productoParaArmar_view',name='vista_productoParaArmar'),
      url(r'^pedido/sucursales/$','sucursales_view',name='vista_sucursales'),
-     url(r'^pedido/sucursales/elegir/(?P<id_suc>.*)/$','sucursalElegir_view',name='vista_sucursalElegida'),  
+     url(r'^pedido/sucursales/elegir/(?P<id_suc>.*)/$','sucursalElegir_view',name='vista_sucursalElegida'),
+     url(r'^pedido/armaTuPedido/productoArmado/(?P<id_ver>.*)/$','productoArmado_view',name='vista_productoArmado'),
+     url(r'^pedido/armaTuPedido/addIngrediente/productoArmado/(?P<id_ing>.*)/$','productoArmadoIngrediente_view',name='vista_productoArmadoIngrediente'),
 
 
 )   

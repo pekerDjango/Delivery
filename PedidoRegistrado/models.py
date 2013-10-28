@@ -100,22 +100,7 @@ class Pedido(models.Model):
             total +=  d.cantidad
         return total
     def getDetallePedido(self):
-        return DetallePedido.objects.filter(pedido=self)                   
-    
-class DetallePedido(models.Model):
-    """Clase Detalle de Pedido
-    Atributos: pedido, cantidad, producto,menu, estado, precio"""
-    pedido = models.ForeignKey(Pedido)
-    cantidad = models.IntegerField()
-    producto = models.ForeignKey(DetalleVersiones,blank=True, null=True)
-    menu = models.ForeignKey(Menu, blank=True, null=True)
-    promocion = models.ForeignKey(Promocion, blank=True, null=True)
-    precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)" )    
-    def __unicode__(self):
-        return u'%s, %s'%(self.producto.producto.nombre, self.cantidad)   
-    def precioTotalUnidad(self):
-        total = (self.precio * self.cantidad)
-        return total
+        return DetallePedido.objects.filter(pedido=self)              
     
 class ProductoParaArmar(models.Model):
     """Clase Producto para Armar""
@@ -128,16 +113,21 @@ class ProductoParaArmar(models.Model):
     class Meta:
         verbose_name_plural = "Productos para armar"
     def getDetalleVersiones(self):
-        return DetalleVersiones.objects.filter(producto=self)
+        return VersionProducto.objects.filter(producto=self)
     def getSecciones(self):
         return SeccionProducto.objects.filter(producto=self)
     
-class DetalleVersiones(models.Model):
+class VersionProducto(models.Model):
     """Clase DetalleVersiones
     Atributos: Clasificacion, Imagen de producto, Precio """
+    def Vista_Previa(self):
+        return '<a href="/media/%s"><img src="/media/%s" width=50px heigth=50px/></a>'%(self.imagen,self.imagen)
+    
+    Vista_Previa.allow_tags = True
     clasificacion = models.ForeignKey(Clasificacion, related_name="%(app_label)s_%(class)s_related")
-#    imagenProducto = models.ImageField(upload_to='imagenes', verbose_name='Imágen Producto')
+    imagenProducto = models.ImageField(upload_to='imagenes/DetalleVersiones', verbose_name='Imágen')
     precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio por clasificación($)")
+    tiempoPreparacion = models.IntegerField (max_length = 10, verbose_name = "Tiempo Preparacion estimado(minutos)")
     producto = models.ForeignKey(ProductoParaArmar)
     def __unicode__(self):
         return u'%s- %s'%(self.producto.slogan, self.clasificacion.nombre)
@@ -165,24 +155,35 @@ class SeccionProducto(models.Model):
         
 class IngredientesSeccion(models.Model):
     """ Clase Ingredientes por seccion
-    Atributos: producto, ingredientes, clasificacion, cantidad"""
+    Atributos: producto, ingredientes"""
 #    producto = models.ForeignKey(ProductoParaArmar)
     seccion = models.ForeignKey(SeccionProducto)
-    ingrediente = models.ForeignKey(Ingrediente)
-    clasificacion = models.ForeignKey(Clasificacion)
-    cantidad = models.IntegerField()
+    ingrediente = models.ForeignKey(Ingrediente)    
     def __unicode__(self):
         return self.seccion.nombre + self.ingrediente.nombre
     class Meta:
         verbose_name_plural = "Ingredientes por Seccion"
+    def getIngredienteClasificacion(self):
+        return IngredienteClasificacion.objects.filter(ingrediente=self)
         
+class IngredienteClasificacion(models.Model):
+    """ Clase Ingrediente por clasificacion
+    atributos: ingrediente, clasificacion, cantidad"""
+    ingrediente = models.ForeignKey(IngredientesSeccion)
+    clasificacion = models.ForeignKey(Clasificacion)
+    cantidad = models.IntegerField()
+    def __unicode__(self):
+        return self.ingrediente.ingrediente.nombre + self.ingrediente.seccion.nombre
+            
 class ProductoArmado(models.Model):
     """ Producto Armado
     Atributos: producto, versiones"""
     producto = models.ForeignKey(ProductoParaArmar)
-    version = models.ForeignKey(DetalleVersiones)
+    version = models.ForeignKey(VersionProducto)
     def __unicode__(self):
         return self.version
+    def getDetalleProductoArmado(self):
+        return DetalleProductoArmado.objects.filter(producto=self)
     
 class DetalleProductoArmado(models.Model):
     """Detalle Producto Armado
@@ -191,6 +192,23 @@ class DetalleProductoArmado(models.Model):
     ingrediente = models.ForeignKey(IngredientesSeccion)
     def __unicode__(self):
         return u'%s- %s'%(self.producto, self.ingrediente)
+
+class DetallePedido(models.Model):
+    """Clase Detalle de Pedido
+    Atributos: pedido, cantidad, producto,menu, estado, precio"""
+    pedido = models.ForeignKey(Pedido)
+    cantidad = models.IntegerField()
+    producto = models.ForeignKey(DetalleVersiones,blank=True, null=True)
+    producto_armado = models.ForeignKey(ProductoArmado, blank=True, null=True)
+    menu = models.ForeignKey(Menu, blank=True, null=True)
+    promocion = models.ForeignKey(Promocion, blank=True, null=True)
+    precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)" )    
+    def __unicode__(self):
+        return u'%s, %s'%(self.producto.producto.nombre, self.cantidad)   
+    def precioTotalUnidad(self):
+        total = (self.precio * self.cantidad)
+        return total
+
     
     
     

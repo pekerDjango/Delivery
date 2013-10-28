@@ -1,5 +1,5 @@
 from django.contrib import admin
-from PedidoRegistrado.models import Servicio, TipologiaVivienda, DomicilioSearch, Cliente, EstadoPedido, Pedido, DetallePedido, DetalleVersiones, ProductoParaArmar, SeccionProducto, IngredientesSeccion
+from PedidoRegistrado.models import Servicio, TipologiaVivienda, DomicilioSearch, Cliente, EstadoPedido, Pedido, DetallePedido, VersionProducto, ProductoParaArmar, SeccionProducto, IngredientesSeccion, IngredienteClasificacion
 from form_utils.widgets import ImageWidget
 from django.db import models
 from django.forms import TextInput, Textarea
@@ -84,8 +84,8 @@ class PedidoAdmin(admin.ModelAdmin):
         models.ImageField: {'widget': ImageWidget},     
     }  
  
-class DetalleVersionInline(admin.StackedInline, SortableInline):
-    model = DetalleVersiones
+class VersionProductoInline(admin.StackedInline, SortableInline):
+    model = VersionProducto
     extra = 1
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'20'})},
@@ -124,7 +124,7 @@ class SeccionProductoAdmin(admin.ModelAdmin):
 
 class ProductoParaArmarAdmin(admin.ModelAdmin):
 #    inlines = [DetalleVersionInline, SeccionProductoInline, IngredientesSeccionProductoInline]
-    inlines = [DetalleVersionInline, SeccionProductoInline]
+    inlines = [VersionProductoInline, SeccionProductoInline]
     search_fields = ('tipo_producto__nombre','slogan')
     list_display = ('tipo_producto','slogan')
     list_filter = ('tipo_producto','slogan')
@@ -134,7 +134,16 @@ class ProductoParaArmarAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'20'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},      
-    } 
+    }
+
+class IngredienteClasificacionAdmin(admin.ModelAdmin):
+    search_fields = ('ingrediente__ingrediente__nombre',)
+    list_display = ('ingrediente','clasificacion','cantidad')
+    list_filter = ('ingrediente','clasificacion','cantidad')
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size':'20'})},
+        models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},      
+    }
 
 admin.site.register(Servicio, ServicioAdmin)
 admin.site.register(TipologiaVivienda, TipologiaViviendaAdmin)
@@ -144,3 +153,4 @@ admin.site.register(EstadoPedido, EstadoPedidoAdmin)
 admin.site.register(Pedido, PedidoAdmin)
 admin.site.register(ProductoParaArmar, ProductoParaArmarAdmin)
 admin.site.register(SeccionProducto, SeccionProductoAdmin)
+admin.site.register(IngredienteClasificacion, IngredienteClasificacionAdmin)
