@@ -143,7 +143,7 @@ INSTALLED_APPS = (
      'ConfiguracionDeComponentes',
      'sorl.thumbnail',
      'form_utils', 
-     'registration',
+#     'registration',
      'django.contrib.humanize',
      'smart_selects'
      
