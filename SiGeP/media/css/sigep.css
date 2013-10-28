@@ -83,12 +83,15 @@ text-decoration: underline;
 }
 
 body{
-	background-image: url(../imagenes/fast-food.jpg);
+	background-color:  rgb(151, 14, 14);
+}
+#contentendor-navegador{
+background-color: #F55E2C;
 }
 
 
-.hero-unit{
-background: rgba(203, 191, 245, 1);
+.hero-unit {
+background: rgba(241, 144, 53, 1);
 }
 .cajaschicas{
 		width: 50px; 
@@ -96,4 +99,9 @@ background: rgba(203, 191, 245, 1);
 
 .fila-con-borde{
 	border-bottom:1pt solid black;
+}
+
+.navbar .nav > li > a {
+font-weight: bold;
+color: #000000;
 }
