@@ -1,5 +1,6 @@
 #encoding:utf-8
 from django.db import models
+from smart_selects.db_fields import ChainedForeignKey
 from RecursosDeEmpresa.models import Localidad, Barrio
 from django.contrib.auth.models import User
 from ComponentesDePedido.models import DetalleVersiones, Menu, Promocion, TipoProducto, Version, Clasificacion, TipoIngrediente, Ingrediente
@@ -42,7 +43,7 @@ class DomicilioSearch(models.Model):
     depto = models.CharField(max_length=50, blank=True, null=True)
     codigo_postal = models.CharField(max_length=100, verbose_name="Código Postal")   
     localidad = models.ForeignKey(Localidad)
-    barrio = models.ForeignKey(Barrio)
+    barrio = ChainedForeignKey(Barrio, chained_field = "localidad", chained_model_field = "localidad", auto_choose = True)
     servicio = models.ForeignKey(Servicio)
     def __unicode__(self):
         return self.direccion + str(self.numero_direccion)

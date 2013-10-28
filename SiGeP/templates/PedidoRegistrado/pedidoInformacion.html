@@ -93,71 +93,7 @@ $(document).ready(function() {
             </button>
         </form>
 
-<!-- <div class="tab-content">
-    <div class="tab-pane active" id="casa">
-        <br />
-        <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-         <!--   <h5>¿Este pedido es para Entregar o para Llevar?</h5>
-            {% if servicios %}
-            <div class="btn-group" data-toggle="buttons-radio">
-                {% for s in servicios %}
-                <button type="button" class="btn btn-primary">
-                    {{s.nombre}}
-                </button>
-                {% endfor %}
-            </div>
-                        {% endif %} -->
-  <!--          <br />
-            <button type="submit"  class="btn btn-large btn-primary  pull-right">
-                Iniciar Pedido
-            </button>
-        </form>
-    </div>
-    <div class="tab-pane" id="depto">
-        <br />
-        <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-          <!--  <h5>¿Este pedido es para Entregar o para Llevar?</h5>
-            {% if servicios %}
-            <div class="btn-group" data-toggle="buttons-radio">
-                {% for s in servicios %}
-                <button type="button" class="btn btn-primary" background-image = "/media/{{s.imagen}}">
-                    {{s.nombre}}
-                </button>
-                {% endfor %}
-            </div>
-                        {% endif %} -->
-  <!--          <br />
-            <button type="submit"  class="btn btn-large btn-primary  pull-right">
-                Iniciar Pedido
-            </button>
-        </form>
-    </div>
-    <div class="tab-pane" id="otro">
-        <br />
-        <form class='form-horizontal' action='.' method='POST' enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-       <!--     <h5>¿Este pedido es para Entregar o para Llevar?</h5>
-            {% if servicios %}
-            <div class="btn-group" data-toggle="buttons-radio">
-                {% for s in servicios %}
-                <button type="button" class="btn btn-primary">
-                    {{s.nombre}}
-                </button>
-                {% endfor %}
-            </div>
-            {% endif %} -->
-  <!--          <br />
-            <button type="submit"  class="btn btn-large btn-primary pull-right">
-                Iniciar Pedido
-            </button>
-        </form>
-    </div>
-</div>-->
+
 {% endblock %}
 {% block panelAux %}
 <div class="well sidebar-nav">

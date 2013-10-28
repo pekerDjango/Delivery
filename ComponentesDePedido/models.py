@@ -1,5 +1,6 @@
 #encoding:utf-8
 from django.db import models
+from smart_selects.db_fields import ChainedForeignKey
 from django.core.exceptions import ValidationError
 # Create your models here.
 
@@ -100,7 +101,12 @@ class Producto (models.Model):
 class DetalleIngredientes(models.Model):
    
     tipoIngrediente = models.ForeignKey(TipoIngrediente, verbose_name = "Tipo de Ingrediente")
-    ingrediente = models.ForeignKey(Ingrediente)
+    ingrediente = ChainedForeignKey(
+                                    Ingrediente,
+                                    chained_field = "tipoIngrediente",
+                                    chained_model_field = "tipoIngrediente",
+                                     show_all = False,
+                                     auto_choose = True)
     producto = models.ForeignKey(Producto)
     cantidad = models.IntegerField()
     def __unicode__(self):
@@ -146,7 +152,13 @@ class Menu (models.Model):
 class DetalleMenu (models.Model):
     menu = models.ForeignKey(Menu)
     tipoProducto = models.ForeignKey(TipoProducto)
-    producto = models.ForeignKey (Producto)
+    producto = ChainedForeignKey(
+                                 Producto,
+                                 chained_field = "tipoProducto",
+                                 chained_model_field = "tipoProducto",
+                                 show_all = False,
+                                 auto_choose = True
+                                 )
     versionProducto = models.ForeignKey(Clasificacion, verbose_name = "Versiones de Producto ")
     
     cantidad = models.IntegerField ()
@@ -228,7 +240,13 @@ class Programacion (models.Model):
 class DetallePromocionProducto(models.Model):
     promocion = models.ForeignKey(Promocion)
     tipoProducto = models.ForeignKey(TipoProducto, verbose_name = 'Tipo de Producto')    
-    producto = models.ForeignKey(Producto)
+    producto = ChainedForeignKey(
+                                 Producto,
+                                 chained_field = "tipoProducto",
+                                 chained_model_field = "tipoProducto",
+                                 show_all = False,
+                                 auto_choose = True
+                                 )
     versionProducto = models.ForeignKey(Clasificacion, verbose_name = "Versiones de Producto")
     cantidad = models.IntegerField ()
     def tiempoPreparacion(self):
