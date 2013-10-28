@@ -154,7 +154,7 @@ ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, us
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'tato.altamirano@gmail.com'
-EMAIL_HOST_PASSWORD = '321456210'
+EMAIL_HOST_PASSWORD = '********'
 EMAIL_PORT = 587
 
 # A sample logging configuration. The only tangible logging
