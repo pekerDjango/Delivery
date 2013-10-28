@@ -24,12 +24,12 @@
 <!--    <div class="container">-->
 	<div class="navbar ">
 		<div class="navbar-inner">
-			<div class="container-fluid">
+			<div id="contentendor-navegador" class="container-fluid">
         <div class="span9">
 			    <a class="brand" href="{% url "vista_index" %}">Home</a>
 				  <ul class="nav nav-pills">
 					   <li><a href="{% url "vista_pedidoInformacion" %}">Pedido</a></li>
-					   <li><a href="">Productos</a></li>			
+					   <li><a href="{% url "vista_producto_listado"  %}">Productos</a></li>			
 					   <li><a href="">Promociones</a></li>
 					   <li><a href="{% url "vista_sucursal" %}">Sucursales</a></li>
 					   <li><a href="/contacto/">Contacto</a></li>
@@ -50,7 +50,7 @@
           <a href="{% url "vista_logout" %}"> Cerrar Sesion </a>
           {% else %}
         
-          <a href="{% url "vista_login" %}"> Ingresar </a>
+          <a href="/accounts/login"> Ingresar </a>
           <!-- comienzo del model-->
       <!--   <a href="#myModal" class="" data-toggle="modal"> <i class="icon-user"></i> Login here</a>
             <div class="modal hide fade " id="myModal" aria-labelledby="modalLabel" aria-hidden="true">

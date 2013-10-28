@@ -21,6 +21,6 @@ urlpatterns = patterns('',
      url(r'^',include('PedidoRegistrado.urls')),
      url(r'^',include('ComponentesDePedido.urls')),
      #Registration URLS
-     (r'^accounts/', include('registration.urls')),
+     #(r'^accounts/', include('registration.urls')),
      url(r'^chaining/', include('smart_selects.urls')),
 )
