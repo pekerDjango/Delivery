@@ -105,3 +105,34 @@ background: rgba(241, 144, 53, 1);
 font-weight: bold;
 color: #000000;
 }
+#rootwizard .navbar{
+	margin-bottom: 20px;
+}
+#rootwizard .navbar-inner{
+	min-height: 40px;
+	padding-right: 20px;
+	padding-left: 20px;
+	background-color: #fafafa;
+	background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+	border: 1px solid #d4d4d4;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);	
+}
+#rootwizard .navbar .nav{
+	margin: 0 10px 0 0;
+}
+#rootwizard .navbar .nav > li > a {
+font-weight: normal;
+}
+#rootwizard .navbar .nav > li > a:focus,
+#rootwizard .navbar .nav > li > a:hover {
+	border-bottom: none;
+	padding-bottom: 8px;
+}
+#rootwizard .navbar .nav > .active > a,
+#rootwizard .navbar .nav > .active > a:hover,
+#rootwizard .navbar .nav > .active > a:focus {
+	background-color: #e5e5e5;
+	border-bottom: none;
+	box-shadow: none;
+	padding-bottom: 8px;
+}

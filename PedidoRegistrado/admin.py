@@ -116,7 +116,7 @@ class SeccionProductoAdmin(admin.ModelAdmin):
     search_fields = ('nombre','orden','tipoIngrediente.nombre')
     list_display = ('producto','orden','nombre','tipoIngrediente')
     list_filter = ('nombre','orden')
-    ordering=('orden','nombre','tipoIngrediente')
+    ordering=('producto','orden')
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'20'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},      

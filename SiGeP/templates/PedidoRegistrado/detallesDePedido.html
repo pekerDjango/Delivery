@@ -34,8 +34,7 @@
             {{productoArmado.producto.version}} {{productoArmado.version.clasificacion }}
         </p>
       {% for d in productoArmado.getDetalleProductoArmado  %}
-      <p>
-          entraste
+      <p>         
           {{d.ingrediente.ingrediente.nombre}}
       </p>
         {% endfor %}

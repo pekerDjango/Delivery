@@ -261,11 +261,18 @@ def productoArmado_view(request,id_ver):
     ped = request.session["pedido"]
     pro = request.session["productoArmado"]
     if pro is None:
-        pro = request.session["productoArmar"]    
+        proArm = request.session["productoArmar"]    
         ver = VersionProducto.objects.get(pk=id_ver) 
-        productoArmado = ProductoArmado(producto=pro, version=ver)
+        productoArmado = ProductoArmado(producto=proArm, version=ver)
         productoArmado.save()
-        request.session["productoArmado"]= productoArmado        
+        request.session["productoArmado"]= productoArmado
+    else:
+        ver = VersionProducto.objects.get(pk=id_ver)
+        productoArmado = ProductoArmado.objects.get(pk=pro.id)
+        productoArmado.version = ver
+        productoArmado.save()
+        request.session["productoArmado"]= productoArmado      
+    pro = request.session["productoArmado"]
     ctx = { 'pedido':ped, 'productoArmado': pro}  
     return render_to_response('PedidoRegistrado/detallesDePedido.html',ctx, context_instance=RequestContext(request))
 

@@ -145,7 +145,7 @@ class SeccionProducto(models.Model):
     tipoIngrediente = models.ForeignKey(TipoIngrediente, verbose_name = "Tipo de Ingrediente")
     descripcion = models.TextField(verbose_name='Descripción')
     obligatoria = models.BooleanField(verbose_name = "Sección Obligatoria")
-    excluyente = models.BooleanField(verbose_name = "Clasifiaciones Excluyentes")
+    excluyente = models.BooleanField(verbose_name = "Clasificaciones Excluyentes")
     cantidad_exclusiones = models.IntegerField(verbose_name = "Cantidad Exclusiones")
     def __unicode__(self):
         return self.nombre
@@ -161,7 +161,7 @@ class IngredientesSeccion(models.Model):
     seccion = models.ForeignKey(SeccionProducto)
     ingrediente = models.ForeignKey(Ingrediente)    
     def __unicode__(self):
-        return self.seccion.nombre + self.ingrediente.nombre
+        return u'%s - %s'%(self.seccion.nombre, self.ingrediente.nombre)
     class Meta:
         verbose_name_plural = "Ingredientes por Seccion"
     def getIngredienteClasificacion(self):
@@ -175,6 +175,8 @@ class IngredienteClasificacion(models.Model):
     cantidad = models.IntegerField()
     def __unicode__(self):
         return self.ingrediente.ingrediente.nombre + self.ingrediente.seccion.nombre
+    class Meta:
+        verbose_name_plural = "Ingredientes Clasificaciones"
             
 class ProductoArmado(models.Model):
     """ Producto Armado
