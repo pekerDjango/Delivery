@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %}
+<ul class="breadcrumb">
+<li><a href="/">Registro</a>  <span class="divider">></span> </li>
+<li>Login </li>
+</ul>
+{% endblock %}
+
+{% block content %}
+
+  {% if form.errors %}
+  <p class="errors">Por favor corrija los errores mencionados a continuacion: {{ form.non_field_errors }}</p>
+  {% endif %}
+
+  <h1>Crea tu cuenta</h1>
+  
+  <form method="post" action="" class="wide">
+	{% csrf_token %}
+    <p>
+      <label for="id_username">Usuario:</label>
+      {% if form.username.errors %}
+        <p class="errors">{{ form.username.errors.as_text }}</p>
+      {% endif %}
+      {{ form.username }}
+    </p>
+   
+    <p>
+      <label for="id_email">Correo:</label>
+      {% if form.email.errors %}
+        <p class="errors">{{ form.email.errors.as_text }}</p>
+      {% endif %}
+      {{ form.email }}
+    </p>
+    <p>
+      <label for="id_password1">Password:</label>
+      {% if form.password1.errors %}
+        <p class="errors">{{ form.password1.errors.as_text }}</p>
+      {% endif %}
+      {{ form.password1 }}
+    </p>
+    <p>
+      <label for="id_password2">Password (type again to catch typos):</label>
+      {% if form.password2.errors %}
+        <p class="errors">{{ form.password2.errors.as_text }}</p>
+      {% endif %}
+      {{ form.password2 }}
+    </p>
+    <p class="submit"><input class="btn-primary" type="submit" value="Registro &rarr;"></p>
+  </form>
+  <br />
+  
+  <p>Completa el formulario de registro y tu cuenta sera creada;</p> 
+ <p> Se te enviara un correo con las instrucciones para terminar tu registro.</p>
+
+<p>Solamente usaremos tu correo para el registro y para las opciones que vos decidas
+  
+  {% endblock %}
+  
+
+
+
+
+
+

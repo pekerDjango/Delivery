@@ -1,0 +1,11 @@
+{% load humanize %}
+	Felicidades por unirte a SIGeP. Por favor tomate un minuto para activar tu cuenta. Una cuenta activada de SIGeP te va a permitir realizar pedidos, armarlos y monitorear su estado!
+Para activar tu cuenta hace click en el link que aparece abajo: 
+
+http://127.0.0.1:8000/accounts/activate/{{ activation_key }}/
+
+
+Gracias por unirte a SIGeP!
+
+Si no pediste este servicio, no tenes que hacer nada, no vas a recibir mas correos de nosotros y la cuenta va a expirar automaticamente en {{ expiration_days|apnumber }} dias. 
+

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %}
+<ul class="breadcrumb">
+<li><a href="/">Home</a>  <span class="divider">></span> </li>
+<li>Login </li>
+</ul>
+{% endblock %}
+
+{% block content %}
+
+<h1>Ingresar</h1>
+
+{% if form.errors %}
+<p class="error">Por favor corrija los errores de abajo:</p>
+{% endif %}
+
+<form method="post" action="?next={{ next|default:"/" }}">{% csrf_token %}
+<dl>
+<dt><label for="id_username">Correo:</label>{% if form.username.errors %} <span class="error">{{ form.username.errors|join:", " }}</span>{% endif %}</dt>
+<dd>{{ form.username }}</dd>
+<dt><label for="id_password">Password:</label>{% if form.password.errors %} <span class="error">{{ form.password.errors|join:", " }}</span>{% endif %}</dt>
+<dd>{{ form.password }}</dd>
+<dt><input type="submit" class="btn-primary" value="Log in" /></dt>
+</dl>
+</form>
+
+<p>Si Aun no estas registrado, podes crear tu cuenta <a href="/accounts/register/">Aqui</a>.
+
+{% endblock %}
+
+

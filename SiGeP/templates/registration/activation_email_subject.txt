@@ -1,0 +1,1 @@
+Activa your Cuenta de SIGeP - Tenes {{ expiration_days }} dias!

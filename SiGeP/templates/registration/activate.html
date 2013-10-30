@@ -1,0 +1,20 @@
+{% extends "registration/base.html" %}
+
+{% block breadcrumbs %}
+<ul class="breadcrumb">
+<li><a href="/">Home</a>  <span class="divider">></span> </li>
+<li>Cuenta Activada </li>
+</ul>
+{% endblock %}
+
+{% block content %}
+  <h1>Activacion de cuenta.</h1>
+  {% load humanize %}
+  {% if account %}
+    <p>Gracias por registrarte! Ahora podes <a href="/accounts/login/">loguearte</a>.</p>
+  {% else %}
+    <p>Lo lamentamos, el registro no ha funcionado. Tu link de activacion fue incorrecto o 
+    	ya esta vencido; Los codigos de activacion son validos por {{ expiration_days|apnumber }} dias despues
+    	de la registracion.</p>
+  {% endif %}
+{% endblock %}
