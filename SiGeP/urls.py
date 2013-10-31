@@ -3,6 +3,8 @@ import settings
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+from registration.backends.default.views import RegistrationView
+from ConfiguracionDeComponentes.forms import ExRegistrationForm
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -21,7 +23,11 @@ urlpatterns = patterns('',
      url(r'^',include('PedidoRegistrado.urls')),
      url(r'^',include('ComponentesDePedido.urls')),
      #Registration URLS
-     (r'^accounts/', include('registration.urls')),
+     url(r'accounts/register/$', 
+        RegistrationView.as_view(form_class = ExRegistrationForm), 
+        name = 'registration_register'),
+ 
+     url(r'^accounts/', include('registration.backends.default.urls')),
      
      url(r'^chaining/', include('smart_selects.urls')),
 )
