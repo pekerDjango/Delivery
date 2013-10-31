@@ -68,6 +68,9 @@ function agregarIngrediente(tag){
         var id_ing = $(tag).attr("id")         
              $.get("/pedido/armaTuPedido/addIngrediente/productoArmado/"+id_ing+"/",function(data){
                  $("#Pedido").html(data)
+                 $.get("/getTuProducto/",function(data){
+                 $("#tuProducto").html(data)
+             })
              });
          }    
  
@@ -133,6 +136,7 @@ function quitarDetalle(aquitar)
                         {% for s in secciones %}
                         <div class="tab-pane" id="tab{{s.orden}}">
                          <h5>ELEGIR {{s.nombre}}</h5>
+                         <h6>Cantidad de {{s.nombre}} permitidos en esta sección es de: {{s.cantidad_exclusiones}} </h6>
                          <table class="table table-hover" cellspacing="5" cellpadding="5">
                             <tbody>
                             {% for i in s.getIngredienteSeccion %}
@@ -147,6 +151,9 @@ function quitarDetalle(aquitar)
                         </div>
                           {% endfor %}
                           <div class="tab-pane" id="tuProducto">
+                              {{request.session.productoArmar}}
+                              {{request.session.productoArmado}}
+                              {{request.session.domicilio}}                              
                               </div>                                
                         <ul class="pager wizard">
                             <li class="previous first" style="display:none;"><a href="#">First</a></li>

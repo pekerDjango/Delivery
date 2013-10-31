@@ -28,7 +28,9 @@ def pedidoInformacion_view(request):
             else:          
                 return HttpResponseRedirect('/pedido/armaTuPedido/')
     else:
-        form = DomicilioSearchForm() 
+        form = DomicilioSearchForm()
+        request.session ["domicilio"] = None 
+        request.session["sucursal"] = None 
     servicio = Servicio.objects.all()
     tipologia = TipologiaVivienda.objects.all()
     boton = 'Iniciar Pedido'   
@@ -56,7 +58,8 @@ def actualizarPedidoInformacion_view(request, id_dom):
 
 def armaTuPedido_view(request): 
     tipoProducto = TipoProducto.objects.all()
-    producto = ProductoParaArmar.objects.all()    
+    producto = ProductoParaArmar.objects.all()
+    request.session["productoArmado"]= None    
     ctx = { 'tipoProducto': tipoProducto, 'productoParaArmar': producto}   
     return render_to_response('PedidoRegistrado/armaPedido.html',ctx, context_instance=RequestContext(request))
 
@@ -228,8 +231,8 @@ def productoParaArmar_view(request,id_pro):
         request.session["pedido"]=p
     ped = request.session["pedido"]
     pro = ProductoParaArmar.objects.get(pk=id_pro)    
-    request.session["productoArmar"]= pro
-    request.session["productoArmado"]= None
+    request.session["productoArmar"]= pro    
+    request.session["exclusion"]= {}
     detalleVersiones = pro.getDetalleVersiones()
     secciones = SeccionProducto.objects.filter(producto=pro).order_by('orden')
     productoArmado = request.session["productoArmado"]         
@@ -276,14 +279,29 @@ def productoArmado_view(request,id_ver):
     ctx = { 'pedido':ped, 'productoArmado': pro}  
     return render_to_response('PedidoRegistrado/detallesDePedido.html',ctx, context_instance=RequestContext(request))
 
-def productoArmadoIngrediente_view(request,id_ing):
+def productoArmadoIngrediente_view(request,id_ing):    
     productoArmado =  request.session["productoArmado"]
-    ing = IngredientesSeccion.objects.get(pk=id_ing)   
-    detalle = DetalleProductoArmado(producto=productoArmado, ingrediente= ing)
-    detalle.save()
+    ing = IngredientesSeccion.objects.get(pk=id_ing)
+    dic = request.session["exclusion"]
+    keys = dic.keys()
+    if not ing.seccion.orden in keys:
+        dic[ing.seccion.orden] = [1,ing.seccion]
+        detalle = DetalleProductoArmado(producto=productoArmado, ingrediente= ing)
+        detalle.save()
+    else:
+        if ing.seccion.cantidad_exclusiones  >= (dic[ing.seccion.orden][0]+1):
+            dic[ing.seccion.orden] = [dic[ing.seccion.orden][0]+1,ing.seccion]
+            detalle = DetalleProductoArmado(producto=productoArmado, ingrediente= ing)
+            detalle.save()
+    request.session["exclusion"] = dic   
     ped = request.session["pedido"]
     ctx = { 'pedido':ped, 'productoArmado': productoArmado}  
     return render_to_response('PedidoRegistrado/detallesDePedido.html',ctx, context_instance=RequestContext(request))
+
+def tuProducto_view(request):
+    productoArmado =  request.session["productoArmado"]
+    ctx = { 'productoArmado': productoArmado}  
+    return render_to_response('PedidoRegistrado/tuProducto.html',ctx, context_instance=RequestContext(request))
 
 
      
