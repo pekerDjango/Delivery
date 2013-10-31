@@ -47,7 +47,7 @@
  <div class="login">
           {% if user.is_authenticated %}
            {{ user.username }}|
-          <a href="{% url "vista_logout" %}"> Cerrar Sesion </a>
+          <a href="/accounts/logout"> Cerrar Sesion </a>
           {% else %}
         
           <a href="/accounts/login"> Ingresar </a>

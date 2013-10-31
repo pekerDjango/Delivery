@@ -100,6 +100,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
     "context_processors.my_processor",
+    'django.core.context_processors.request', #activar las variables de session alojadas en el request
     )
 
 MIDDLEWARE_CLASSES = (
@@ -186,5 +187,5 @@ LOGGING = {
     }
 }
 
-URL_LOGIN="/login/"
+URL_LOGIN="/accounts/login/"
 AUTH_PROFILE_MODULE = "ConfiguracionDeComponentes.Cliente"
