@@ -9,32 +9,7 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Deleting model 'Usuario'
-       # db.delete_table(u'ConfiguracionDeComponentes_usuario')
-
-        # Adding model 'Cliente'
-        db.create_table(u'ConfiguracionDeComponentes_cliente', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('nombre', self.gf('django.db.models.fields.CharField')(max_length='30')),
-            ('telefono_particular', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('telefono_domicilio', self.gf('django.db.models.fields.CharField')(max_length=100, null=True, blank=True)),
-            ('apellidos', self.gf('django.db.models.fields.CharField')(max_length='100')),
-            ('email', self.gf('django.db.models.fields.EmailField')(unique=True, max_length=75)),
-            ('fecha_nacimiento', self.gf('django.db.models.fields.DateField')()),
-            ('sexo', self.gf('django.db.models.fields.CharField')(max_length=1)),
-            ('direccion', self.gf('django.db.models.fields.CharField')(max_length=250)),
-            ('numero_direccion', self.gf('django.db.models.fields.IntegerField')()),
-            ('piso', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('depto', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
-            ('codigo_postal', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('localidad', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['RecursosDeEmpresa.Localidad'])),
-            ('barrio', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['RecursosDeEmpresa.Barrio'])),
-            ('ofertasYPromocionesDisponibles', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('menuDiario', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('notificacionPedidosConfirmados', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('estadoPedidosRealizados', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('usuario', self.gf('django.db.models.fields.related.OneToOneField')(related_name='Usuario Asociado', unique=True, to=orm['auth.User'])),
-        ))
-        db.send_create_signal(u'ConfiguracionDeComponentes', ['Cliente'])
+        db.delete_table(u'ConfiguracionDeComponentes_usuario')
 
         # Adding model 'ExUserProfile'
         db.create_table(u'ConfiguracionDeComponentes_exuserprofile', (
@@ -43,6 +18,32 @@ class Migration(SchemaMigration):
             ('is_human', self.gf('django.db.models.fields.BooleanField')(default=False)),
         ))
         db.send_create_signal(u'ConfiguracionDeComponentes', ['ExUserProfile'])
+
+        # Deleting field 'Cliente.is_superuser'
+        db.delete_column(u'ConfiguracionDeComponentes_cliente', 'is_superuser')
+
+        # Deleting field 'Cliente.last_login'
+        db.delete_column(u'ConfiguracionDeComponentes_cliente', 'last_login')
+
+        # Deleting field 'Cliente.is_active'
+        db.delete_column(u'ConfiguracionDeComponentes_cliente', 'is_active')
+
+        # Deleting field 'Cliente.is_admin'
+        db.delete_column(u'ConfiguracionDeComponentes_cliente', 'is_admin')
+
+        # Deleting field 'Cliente.password'
+        db.delete_column(u'ConfiguracionDeComponentes_cliente', 'password')
+
+        # Adding field 'Cliente.usuario'
+        db.add_column(u'ConfiguracionDeComponentes_cliente', 'usuario',
+                      self.gf('django.db.models.fields.related.OneToOneField')(default=2, related_name='Usuario Asociado', unique=True, to=orm['auth.User']),
+                      keep_default=False)
+
+        # Removing M2M table for field user_permissions on 'Cliente'
+        db.delete_table(db.shorten_name(u'ConfiguracionDeComponentes_cliente_user_permissions'))
+
+        # Removing M2M table for field groups on 'Cliente'
+        db.delete_table(db.shorten_name(u'ConfiguracionDeComponentes_cliente_groups'))
 
 
     def backwards(self, orm):
@@ -53,11 +54,54 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'ConfiguracionDeComponentes', ['Usuario'])
 
-        # Deleting model 'Cliente'
-        db.delete_table(u'ConfiguracionDeComponentes_cliente')
-
         # Deleting model 'ExUserProfile'
         db.delete_table(u'ConfiguracionDeComponentes_exuserprofile')
+
+        # Adding field 'Cliente.is_superuser'
+        db.add_column(u'ConfiguracionDeComponentes_cliente', 'is_superuser',
+                      self.gf('django.db.models.fields.BooleanField')(default=False),
+                      keep_default=False)
+
+        # Adding field 'Cliente.last_login'
+        db.add_column(u'ConfiguracionDeComponentes_cliente', 'last_login',
+                      self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now),
+                      keep_default=False)
+
+        # Adding field 'Cliente.is_active'
+        db.add_column(u'ConfiguracionDeComponentes_cliente', 'is_active',
+                      self.gf('django.db.models.fields.BooleanField')(default=True),
+                      keep_default=False)
+
+        # Adding field 'Cliente.is_admin'
+        db.add_column(u'ConfiguracionDeComponentes_cliente', 'is_admin',
+                      self.gf('django.db.models.fields.BooleanField')(default=False),
+                      keep_default=False)
+
+        # Adding field 'Cliente.password'
+        db.add_column(u'ConfiguracionDeComponentes_cliente', 'password',
+                      self.gf('django.db.models.fields.CharField')(default='a', max_length=128),
+                      keep_default=False)
+
+        # Deleting field 'Cliente.usuario'
+        db.delete_column(u'ConfiguracionDeComponentes_cliente', 'usuario_id')
+
+        # Adding M2M table for field user_permissions on 'Cliente'
+        m2m_table_name = db.shorten_name(u'ConfiguracionDeComponentes_cliente_user_permissions')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('cliente', models.ForeignKey(orm[u'ConfiguracionDeComponentes.cliente'], null=False)),
+            ('permission', models.ForeignKey(orm[u'auth.permission'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['cliente_id', 'permission_id'])
+
+        # Adding M2M table for field groups on 'Cliente'
+        m2m_table_name = db.shorten_name(u'ConfiguracionDeComponentes_cliente_groups')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('cliente', models.ForeignKey(orm[u'ConfiguracionDeComponentes.cliente'], null=False)),
+            ('group', models.ForeignKey(orm[u'auth.group'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['cliente_id', 'group_id'])
 
 
     models = {
