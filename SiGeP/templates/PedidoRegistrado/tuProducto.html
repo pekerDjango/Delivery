@@ -1,11 +1,46 @@
 {% if productoArmado %}
-          <strong>{{productoArmado.producto.slogan}}</strong>
-          <p>
-            {{productoArmado.producto.version}} {{productoArmado.version.clasificacion }}
-        </p>
-      {% for d in productoArmado.getDetalleProductoArmado  %}
-      <p>         
-          {{d.ingrediente.ingrediente.nombre}}
-      </p>
+ <strong>{{productoArmado.producto.slogan}}</strong>
+<div class="tuDetalleProducto">Tamaño</div>
+<img src="/media/{{productoArmado.version.imagenProducto }}    " alt="" width="50px" heigth="50px" />  {{productoArmado.version.clasificacion }} 
+<br />
+<br />
+{% for s in secciones %}
+<div class="tuDetalleProducto">{{s.nombre}}</div>
+
+  
+  
+        <table  cellspacing="5" cellpadding="5">
+                 {% for d in productoArmado.getDetalleProductoArmado  %}                
+                 {% if s.nombre == d.ingrediente.seccion.nombre %}
+           <tr>
+                                    <td><img src="/media/{{d.ingrediente.ingrediente.imagen}}" alt="" width="50px" heigth="50px" /></td>
+                                    <td >{{d.ingrediente.ingrediente.nombre}}</td>                                   
+                                </tr>
+         {% endif %}
         {% endfor %}
+        </table>
+        <br />       
+    {% endfor %}
+    <br />            
+                     
+            <a href="#myModalConfirmar" class="btn btn-large btn-primary pull-right" data-toggle="modal"> Confirmar</a>
+            <div class="modal hide fade " id="myModalConfirmar" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3>Atención</h3>
+            </div>
+            <div class="modal-body">
+            <p>Está seguro que desea confirmar este producto armado</p>
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+            <a href="{% url "vista_guardarProducto" %}" class="btn btn-primary">Confirmar</a>
+            </div>
+                </div>
+                <br /> 
         {% endif %}
+
+
+
+
+    

@@ -300,8 +300,17 @@ def productoArmadoIngrediente_view(request,id_ing):
 
 def tuProducto_view(request):
     productoArmado =  request.session["productoArmado"]
-    ctx = { 'productoArmado': productoArmado}  
+    secciones = SeccionProducto.objects.filter(producto=productoArmado.producto).order_by('orden')  
+    ctx = { 'productoArmado': productoArmado, 'secciones': secciones}  
     return render_to_response('PedidoRegistrado/tuProducto.html',ctx, context_instance=RequestContext(request))
+
+def guardarProducto_view(request):
+    productoArmado =  request.session["productoArmado"]
+    ped = request.session["pedido"]  
+    precion = productoArmado.version.precio 
+    d = DetallePedido(pedido=ped,cantidad=1,producto_armado=productoArmado,precio=precion)
+    d.save()        
+    return HttpResponseRedirect('/pedido/armaTuPedido/')
 
 
      

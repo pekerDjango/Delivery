@@ -64,7 +64,10 @@ function actualizarCantidad(combo)
                     {% if d.promocion %}
                     <td><img src="/media/{{d.promocion.imagen}}" alt="" width="50px" heigth="50px" /></td>
                     {% endif %}
-                    <td>{{d.promocion.nombre}}{{d.menu.nombre}} {{d.producto.producto.nombre}} {{d.producto.clasificacion}} </td>                   
+                    {% if d.producto_armado%}
+                    <td><img src="/media/{{d.producto_armado.producto}}" alt="" width="50px" heigth="50px" /></td>
+                    {% endif %}
+                    <td>{{d.promocion.nombre}}{{d.menu.nombre}} {{d.producto.producto.nombre}} {{d.producto.clasificacion}} {{d.producto_armado.producto.slogan}}</td>                   
                     <td>
                    <select name="cantidad" id="{{d.id}}"  style="width:50px" onchange = "actualizarCantidad(this)">
                         <option {% if d.cantidad == 0 %} selected="selected" {% endif %} value="1">0</option>

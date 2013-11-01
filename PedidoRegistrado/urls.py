@@ -22,6 +22,7 @@ urlpatterns = patterns('PedidoRegistrado.views',
      url(r'^pedido/armaTuPedido/productoArmado/(?P<id_ver>.*)/$','productoArmado_view',name='vista_productoArmado'),
      url(r'^pedido/armaTuPedido/addIngrediente/productoArmado/(?P<id_ing>.*)/$','productoArmadoIngrediente_view',name='vista_productoArmadoIngrediente'),
      url(r'^getTuProducto/$','tuProducto_view',name= "get_tuProducto"),
+     url(r'^pedido/armaTuPedido/guardarProducto$','guardarProducto_view',name='vista_guardarProducto'),
 
 
 )   

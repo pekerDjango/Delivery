@@ -191,7 +191,7 @@ function quitarDetalle(aquitar)
            
            <table border="0" cellspacing="5" cellpadding="5">
                  {% for d in pedido.getDetallePedido %}
-               <tr><td>   {{d.promocion.nombre}} {{d.menu.nombre}}{{d.producto.producto.nombre}} {{d.producto.clasificacion}}</td>
+               <tr><td>   {{d.promocion.nombre}} {{d.menu.nombre}}{{d.producto.producto.nombre}} {{d.producto.clasificacion}} {{d.producto_armado.producto.slogan}}  </td>
                    <td> <select name="cantidad" id="{{d.id}}"  style="width:50px" onchange = "actualizarCantidad(this)">
                         <option {% if d.cantidad == 0 %} selected="selected" {% endif %} value="1">0</option>
                         <option {% if d.cantidad == 1 %} selected="selected" {% endif %}  value="1">1</option>

@@ -38,6 +38,17 @@ font-size: 18px;
 	border-radius: 5px 5px 5px 5px;
 	font-weight: bold;
 	}
+
+.tuDetalleProducto{
+	width:208px;
+	height: 29px;
+	font-family: DominosFont,Arial,Helvetica,sans-serif;
+	background-color: #0078ae;color: #fff;
+	text-transform: uppercase;font-size: 17px;
+	padding: 8px 10px;
+	border-radius: 5px 5px 5px 5px;
+	font-weight: bold;
+	}
 img.img-rounded{height: 213px;width:290px}
       .sidebar-nav {
         padding: 9px 0;

@@ -151,9 +151,21 @@ function quitarDetalle(aquitar)
                         </div>
                           {% endfor %}
                           <div class="tab-pane" id="tuProducto">
-                              {{request.session.productoArmar}}
-                              {{request.session.productoArmado}}
-                              {{request.session.domicilio}}                              
+                              {% if productoArmado %}
+                        <strong>{{productoArmado.producto.slogan}}</strong>
+                            <div class="tuDetalleProducto">Tamaño</div>
+                            <img src="/media/{{productoArmado.version.imagenProducto }}    " alt="" width="50px" heigth="50px" />  {{productoArmado.version.clasificacion }}   
+  
+                        <table  cellspacing="5" cellpadding="5">
+                      {% for d in productoArmado.getDetalleProductoArmado  %}
+                        <tr>
+                                    <td><img src="/media/{{d.ingrediente.ingrediente.imagen}}" alt="" width="50px" heigth="50px" /></td>
+                                    <td >{{d.ingrediente.ingrediente.nombre}}</td>                                   
+                                </tr>
+                    {% endfor %}
+                    </table>
+           
+                         {% endif %}                             
                               </div>                                
                         <ul class="pager wizard">
                             <li class="previous first" style="display:none;"><a href="#">First</a></li>
@@ -165,8 +177,8 @@ function quitarDetalle(aquitar)
                 </div>
                 <br />
         <br />
-        <a href="#myModal" class="btn btn-danger" data-toggle="modal">Cancelar</a>
-            <div class="modal hide fade " id="myModal" aria-labelledby="modalLabel" aria-hidden="true">
+        <a href="#myModalCan" class="btn btn-danger" data-toggle="modal">Cancelar</a>
+            <div class="modal hide fade " id="myModalCan" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-header">
             <a class="close" data-dismiss="modal">×</a>
             <h3>Atención</h3>
@@ -179,8 +191,8 @@ function quitarDetalle(aquitar)
             <a href="{% url "vista_cerrarPedido" %}" class="btn btn-primary">SI</a>
             </div>
             </div>
-        <a class="btn "  href="{% url "vista_armaTuPedido" %}">Volver a Productos </a>
-        <script src="/media/bootstrap/js/bootstrap.min.js"></script>                 
+        <a class="btn "  href="{% url "vista_armaTuPedido" %}">Volver a Productos </a>        
+       <!-- <script src="/media/bootstrap/js/bootstrap.min.js"></script>-->                 
     <script src="/media/js/jquery.bootstrap.wizard.js"></script>
     <script src="/media/js/prettify.js"></script>
     <script>
@@ -236,7 +248,7 @@ function quitarDetalle(aquitar)
            
            <table border="0" cellspacing="5" cellpadding="5">
                  {% for d in pedido.getDetallePedido %}
-               <tr><td>   {{d.promocion.nombre}} {{d.menu.nombre}}{{d.producto.producto.nombre}} {{d.producto.clasificacion}}</td>
+               <tr><td>   {{d.promocion.nombre}} {{d.menu.nombre}}{{d.producto.producto.nombre}} {{d.producto.clasificacion}} {{d.producto_armado.producto.slogan}}</td>
                    <td> <select name="cantidad" id="{{d.id}}"  style="width:50px" onchange = "actualizarCantidad(this)">
                         <option {% if d.cantidad == 0 %} selected="selected" {% endif %} value="1">0</option>
                         <option {% if d.cantidad == 1 %} selected="selected" {% endif %}  value="1">1</option>
