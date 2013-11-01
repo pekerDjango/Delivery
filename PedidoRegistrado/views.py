@@ -4,10 +4,9 @@ from django.template import RequestContext
 from PedidoRegistrado.forms import DomicilioSearchForm, PagoForm, HoraPedidoForm
 from django.http import HttpResponseRedirect
 from PedidoRegistrado.models import DomicilioSearch, Pedido, DetallePedido, Cliente, Servicio, TipologiaVivienda, EstadoPedido, ProductoParaArmar, SeccionProducto, VersionProducto, ProductoArmado, DetalleProductoArmado, IngredientesSeccion
-from ComponentesDePedido.models import Producto, DetalleVersiones, TipoProducto, Menu, Promocion
+from ComponentesDePedido.models import Producto, DetalleVersiones, TipoProducto, Menu, Promocion, Ingrediente
 from RecursosDeEmpresa.models import Sucursal
-from datetime import date, datetime, time, timedelta
-from decimal import Decimal
+from datetime import date, datetime, timedelta
 from django.contrib.auth.decorators import login_required
 from SiGeP.settings import URL_LOGIN
 
@@ -123,9 +122,7 @@ def agregarPedido_view(request,cantidad,id_pro,id_tip):
 def actualizar_detalle_pedido_view(request,nueva_cantidad,id_det):
     pedi = request.session["pedido"] 
     if pedi is not None:
-        DetallePedido.objects.filter(pk = id_det).update(cantidad = nueva_cantidad)
-    #productos= Producto.objects.all()
-    
+        DetallePedido.objects.filter(pk = id_det).update(cantidad = nueva_cantidad)    
     ctx = {'pedido':pedi}   
     return render_to_response('PedidoRegistrado/detallesDePedido.html',ctx, context_instance=RequestContext(request))
     
@@ -150,17 +147,11 @@ def eliminarDetalle_view(request,id_det):
     d = DetallePedido.objects.get(pk=id_det)
     if d.pedido == ped:
         d.delete()
-    productos = Producto.objects.all()
-    ctx = { 'pedido':ped}   
-#    return render_to_response('PedidoRegistrado/productosSolicitados.html',ctx, context_instance=RequestContext(request))
+    ctx = { 'pedido':ped}
     return render_to_response('PedidoRegistrado/detallesDePedido.html',ctx, context_instance=RequestContext(request))
 
 def detallePedido_view(request):       
-    ped = request.session["pedido"]
-#    ped.save()
-#    for d in ped.getDetallePedido():
-#        d.pedido = ped.id
-#        d.save()                
+    ped = request.session["pedido"]             
     ctx = { 'pedido':ped}  
     return render_to_response('PedidoRegistrado/detallePedido.html',ctx, context_instance=RequestContext(request))
 
@@ -186,7 +177,28 @@ def detallePago_view(request):
             return HttpResponseRedirect('/pedido/armaTuPedido/detallePedido/detallePago/pedidoFinalizado/')  
     else:
         form = PagoForm(precioTotal = total)
-        form2 = HoraPedidoForm()          
+        form2 = HoraPedidoForm()
+        for d in ped.getDetallePedido():
+            if not d.producto is None:
+                for i in d.producto.producto.getIngredientes():
+                    cantidad = i.cantidad
+                    ing = Ingrediente.objects.get(pk=i.ingrediente.codigo)
+                    ing.stockActual = ing.stockActual - cantidad
+                    ing.save()
+            elif not d.menu is None:
+                for detm in d.menu.getDetalleMenu():
+                    for promenu in detm.producto.getIngredientes():
+                        cantidad = promenu.cantidad
+                        ing = Ingrediente.objects.get(pk=promenu.ingrediente.codigo)
+                        ing.stockActual = ing.stockActual - cantidad
+                        ing.save()                    
+                   
+                            
+
+#            elif not d.promocion is None:
+##                total += d.promocion.tiempoPreparacionTotal() * d.cantidad
+#            elif not d.producto_armado is None:
+##                total += d.producto_armado.version.tiempoPreparacion * d.cantidad          
     ped = request.session["pedido"]
     horaActual = datetime.now().time()       
     ctx = { 'pedido':ped, 'form':form,'form2':form2, 'vuelto':vuelto, 'horaActual':horaActual}  
@@ -201,7 +213,9 @@ def pedidoFinalizado_view(request):
         elif not d.menu is None:            
             total += d.menu.tiempoPreparacionTotal() * d.cantidad 
         elif not d.promocion is None:
-            total += d.promocion.tiempoPreparacionTotal() * d.cantidad      
+            total += d.promocion.tiempoPreparacionTotal() * d.cantidad
+        elif not d.producto_armado is None:
+            total += d.producto_armado.version.tiempoPreparacion * d.cantidad       
     tupla = request.session["importe"]
     importe = tupla[0]
     vuelto = tupla[1]
