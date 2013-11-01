@@ -154,7 +154,7 @@ ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, us
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'tato.altamirano@gmail.com'
+EMAIL_HOST_USER = ' info.sigep@gmail.com'
 EMAIL_HOST_PASSWORD = 'Sigep$23'
 EMAIL_PORT = 587
 

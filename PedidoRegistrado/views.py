@@ -180,25 +180,39 @@ def detallePago_view(request):
         form2 = HoraPedidoForm()
         for d in ped.getDetallePedido():
             if not d.producto is None:
-                for i in d.producto.producto.getIngredientes():
-                    cantidad = i.cantidad
+                for i in d.producto.producto.getIngredientes(): # recorre los ingrediente del productos
+                    cantidad = i.cantidad * d.cantidad
                     ing = Ingrediente.objects.get(pk=i.ingrediente.codigo)
                     ing.stockActual = ing.stockActual - cantidad
                     ing.save()
             elif not d.menu is None:
-                for detm in d.menu.getDetalleMenu():
-                    for promenu in detm.producto.getIngredientes():
-                        cantidad = promenu.cantidad
+                for detm in d.menu.getDetalleMenu(): # recorro los detalles de menu
+                    for promenu in detm.producto.getIngredientes(): # recorre lo ingrediente de los productos del detalle
+                        cantidad = promenu.cantidad * detm.cantidad * d.cantidad
                         ing = Ingrediente.objects.get(pk=promenu.ingrediente.codigo)
                         ing.stockActual = ing.stockActual - cantidad
                         ing.save()                    
-                   
+            elif not d.promocion is None:
+                for promoPro in d.promocion.getDetallePromocionProducto(): # recorre los productos en el detalle de promocion
+                    for promoing in promoPro.producto.getIngredientes(): # recorre los ingrediente de los productos
+                        cantidad = promoPro.cantidad * promoing.cantidad * d.cantidad
+                        ing = Ingrediente.objects.get(pk=promoing.ingrediente.codigo)
+                        ing.stockActual = ing.stockActual - cantidad
+                        ing.save()
+                for promoPro in d.promocion.getDetallePromocionMenu(): # recorre los menus de detalle de promocion
+                    for promoMenu in promoPro.menu.getDetalleMenu(): # recorre los productos del detalle de menu
+                        for promoing in promoMenu.producto.getIngredientes(): # recorre los ingredientes de los productos del detalle de menu
+                            cantidad = promoPro.cantidad * promoing.cantidad * d.cantidad * promoMenu.cantidad
+                            ing = Ingrediente.objects.get(pk=promoing.ingrediente.codigo)
+                            ing.stockActual = ing.stockActual - cantidad
+                            ing.save()
+#            elif not d.producto_armado is None:
+#                for productoArmadoSeccion in d.producto_armado.producto.getSecciones(): # recorre las secciones del producto armado
+#                    for seccionIngrediente in productoArmadoSeccion.getIngredienteSeccion(): # recorre los ingredientes seccion de las secciones
+#                        for ingredienteClasificacion in seccionIngrediente.getIngredienteClasificacion(): # recorre los ingredientes clasificados de las secciones                                                
                             
 
-#            elif not d.promocion is None:
-##                total += d.promocion.tiempoPreparacionTotal() * d.cantidad
-#            elif not d.producto_armado is None:
-##                total += d.producto_armado.version.tiempoPreparacion * d.cantidad          
+        
     ped = request.session["pedido"]
     horaActual = datetime.now().time()       
     ctx = { 'pedido':ped, 'form':form,'form2':form2, 'vuelto':vuelto, 'horaActual':horaActual}  
