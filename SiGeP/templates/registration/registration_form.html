@@ -2,68 +2,172 @@
 
 {% block breadcrumbs %}
 <ul class="breadcrumb">
-<li><a href="/">Registro</a>  <span class="divider">></span> </li>
-<li>Login </li>
+	<li>
+		<a href="/">Registro</a><span class="divider">></span>
+	</li>
+	<li>
+		Login
+	</li>
 </ul>
 {% endblock %}
 
 {% block content %}
 
-  {% if form.errors %}
-  <p class="errors">Por favor corrija los errores mencionados a continuacion: {{ form.non_field_errors }}</p>
-  {% endif %}
+{% if form.errors %}
+<p class="errors">
+	Por favor corrija los errores mencionados a continuacion: {{ form.non_field_errors }}
+</p>
+{% endif %}
 
-  <h1>Crea tu cuenta</h1>
-  
-  <form method="post" action="" class="wide">
-	{% csrf_token %}
-    <p>
-      <label for="id_username">Usuario:</label>
-      {% if form.username.errors %}
-        <p class="errors">{{ form.username.errors.as_text }}</p>
-      {% endif %}
-      {{ form.username }}
-    </p>
-   
-    <p>
-      <label for="id_email">Correo:</label>
-      {% if form.email.errors %}
-        <p class="errors">{{ form.email.errors.as_text }}</p>
-      {% endif %}
-      {{ form.email }}
-    </p>
-    <p>
-      <label for="id_password1">Password:</label>
-      {% if form.password1.errors %}
-        <p class="errors">{{ form.password1.errors.as_text }}</p>
-      {% endif %}
-      {{ form.password1 }}
-    </p>
-    <p>
-      <label for="id_password2">Password (type again to catch typos):</label>
-      {% if form.password2.errors %}
-        <p class="errors">{{ form.password2.errors.as_text }}</p>
-      {% endif %}
-      {{ form.password2 }}
-    </p>
-    <p>
-    	<label for="isHuman">Es Humano?</label>
-    	{{form.is_human}}
-    </p>
-    <p class="submit"><input class="btn-primary" type="submit" value="Registro &rarr;"></p>
-  </form>
-  <br />
-  
-  <p>Completa el formulario de registro y tu cuenta sera creada;</p> 
- <p> Se te enviara un correo con las instrucciones para terminar tu registro.</p>
+<h1>Crea tu cuenta</h1>
 
-<p>Solamente usaremos tu correo para el registro y para las opciones que vos decidas
-  
-  {% endblock %}
-  
+<form method="post" action="" class="wide">
+{% csrf_token %}
+{{ form.non_field_errors }}
+	<fieldset>
+		<legend>
+			Datos de La cuenta
+		</legend>
+		
+		<p>
+			<label for="id_username">Usuario:</label>
+			{% if form.username.errors %}
+		<p class="errors">
+			{{ form.username.errors.as_text }}
+		</p>
+		{% endif %}
+		{{ form.username }}
+		</p>
 
+		<p>
+			<label for="id_email">Correo:</label>
+			{% if form.email.errors %}
+		<p class="errors">
+			{{ form.email.errors.as_text }}
+		</p>
+		{% endif %}
+		{{ form.email }}
+		</p>
+		<p>
+			<label for="id_password1">Password:</label>
+			{% if form.password1.errors %}
+		<p class="errors">
+			{{ form.password1.errors.as_text }}
+		</p>
+		{% endif %}
+		{{ form.password1 }}
+		</p>
+		<p>
+			<label for="id_password2">Password (Reingresa la clave para comprobar):</label>
+			{% if form.password2.errors %}
+		<p class="errors">
+			{{ form.password2.errors.as_text }}
+		</p>
+		{% endif %}
+		{{ form.password2 }}
+		</p>
+	</fieldset>
+	<fieldset>
+		<legend>
+			Informacion Personal
+		</legend>
+		<p>
+			<label for="nombre">Nombre</label>
+			{{form.nombre.errors.as_text}}{{form.nombre}} 
+		</p>
+		<p>
+			<label for="apellido">Apellido</label>
+			{{form.apellidos.errors.as_text}}{{form.apellidos}}
+		</p>
+		<p>
+			<label for="sexo">Sexo</label>
+			{{form.sexo.errors.as_text}}{{form.sexo}}
+		</p>
+		<p>
+			<label for="fecha_nacimiento">Fecha De Nacimiento</label>
+			{{form.fecha_nacimiento.errors.as_text}}{{form.fecha_nacimiento}}
+		</p>
+		
+		<p>
+			<label for="telefono_particular">Telefono Particular</label>
+			{{form.telefono_particular.errors.as_text}}{{form.telefono_particular}}
+		</p>
+		
+			<p>
+			<label for="telefono_domicilio">Telefono Del Domicilio</label>
+			{{form.telefono_domicilio.errors.as_text}}{{form.telefono_domicilio}}
+		</p>
 
+	</fieldset>
+	<fieldset>
+		<legend>
+			Domicilio Actual
+		</legend>
 
+		<p>
+			<label for="localidad">Localidad</label>
+			{{form.localidad.errors.as_text}}{{form.localidad}}
+		</p>
+		<p>
+			<label for="barrio">Barrio</label>
+			{{form.barrio.errors.as_text}}{{form.barrio}}
+		</p>
+		<p>
+			<label for="direccion">Direccion</label>
+			{{form.direccion.errors.as_text}}{{form.direccion}}
+		</p>
+		<p>
+			<label for="numero_direccion">Numero</label>
+			{{form.numero_direccion.errors.as_text}}{{form.numero_direccion}}
+		</p>
+		<p>
+			<label for="piso">Piso</label>
+			{{form.piso.errors.as_text}}{{form.piso}}
+		</p>
+		<p>
+			<label for="depto">Depto</label>
+			{{form.depto.errors.as_text}}{{form.depto}}
+		</p>
+		<p>
+			<label for="codigo_postal">Codigo Postal</label>
+			{{form.codigo_postal.errors.as_text}}{{form.codigo_postal}}
+		</p>
+	</fieldset>
 
+	<fieldset>
+		<legend>
+			Datos de Interes
+		</legend>
+		<h5>Deseo suscribirme a los siguientes envios:</h5>
+		<p>
+			{{form.ofertasYPromocionesDisponibles.errors.as_text}}{{form.ofertasYPromocionesDisponibles}} Ofertas Y Promociones Disponibles
+		</p>
+		<p>
+			{{form.menuDiario.errors.as_text}}{{form.menuDiario}} Menu Diario
+		</p>
+		<p>
+			{{form.notificacionPedidosConfirmados.errors.as_text}}{{form.notificacionPedidosConfirmados}} Notificacion De Pedidos Confirmados
+		</p>
+		<p>
+			{{form.estadoPedidosRealizados.errors.as_text}}{{form.estadoPedidosRealizados}} Estado De Pedidos Realizados
+		</p>
+	</fieldset>
 
+	<p class="submit">
+		<input class="btn-primary" type="submit" value="Registro &rarr;">
+	</p>
+</form>
+<br />
+
+<p>
+	Completa el formulario de registro y tu cuenta sera creada;
+</p>
+<p>
+	Se te enviara un correo con las instrucciones para terminar tu registro.
+</p>
+
+<p>
+	Solamente usaremos tu correo para el registro y para las opciones que vos decidas
+
+	{% endblock %}
 

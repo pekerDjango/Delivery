@@ -17,6 +17,5 @@ admin.site.register(Cliente, ClienteAdmin)
 
 class ExUserAdmin(admin.ModelAdmin):
     model = ExUserProfile
-    list_display = ('is_human',)
     
 admin.site.register(ExUserProfile, ExUserAdmin)
