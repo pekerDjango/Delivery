@@ -64,9 +64,9 @@ class TipoProducto(models.Model):
     class Meta:
         verbose_name_plural = "Tipos de Productos" 
 
-def validar_stock(value):
-        if self <10:
-            raise ValidationError("No se puede ingresar un stock menor a 10")
+#def validar_stock(value):
+#        if self <10:
+#            raise ValidationError("No se puede ingresar un stock menor a 10")
   
 class Ingrediente(models.Model):        
     codigo = models.AutoField(primary_key=True, verbose_name = "Código")
@@ -74,7 +74,7 @@ class Ingrediente(models.Model):
     tipoIngrediente = models.ForeignKey (TipoIngrediente, verbose_name = "Tipo de ingrediente")
     unidadDeMedida = models.ForeignKey(UnidadDeMedida, verbose_name = "Unidad de Medida")
     imagen = models.ImageField(upload_to='imagenes/ComponentesDePedido/Ingredientes', verbose_name='Vista Previa')
-    stockActual = models.IntegerField(verbose_name = "Stock Actual", validators = [validar_stock])
+    stockActual = models.IntegerField(verbose_name = "Stock Actual")
     stockMinimo = models.IntegerField(verbose_name = "Stock Mínimo")
     stockCorte = models.IntegerField(verbose_name = "Stock Corte")
     precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)" )

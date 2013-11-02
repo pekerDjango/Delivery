@@ -161,7 +161,7 @@ class IngredientesSeccion(models.Model):
     seccion = models.ForeignKey(SeccionProducto)
     ingrediente = models.ForeignKey(Ingrediente)    
     def __unicode__(self):
-        return u'%s - %s'%(self.seccion.nombre, self.ingrediente.nombre)
+        return u'%s - %s - %s'%(self.seccion.producto.slogan ,self.seccion.nombre, self.ingrediente.nombre)
     class Meta:
         verbose_name_plural = "Ingredientes por Seccion"
     def getIngredienteClasificacion(self):
@@ -174,7 +174,7 @@ class IngredienteClasificacion(models.Model):
     clasificacion = models.ForeignKey(Clasificacion)
     cantidad = models.IntegerField()
     def __unicode__(self):
-        return self.ingrediente.ingrediente.nombre + self.ingrediente.seccion.nombre
+        return self.ingrediente.ingrediente.nombre + self.ingrediente.seccion.nombre + self.clasificacion.nombre
     class Meta:
         verbose_name_plural = "Ingredientes Clasificaciones"
             

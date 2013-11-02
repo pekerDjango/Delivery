@@ -206,13 +206,15 @@ def detallePago_view(request):
                             ing = Ingrediente.objects.get(pk=promoing.ingrediente.codigo)
                             ing.stockActual = ing.stockActual - cantidad
                             ing.save()
-#            elif not d.producto_armado is None:
-#                for productoArmadoSeccion in d.producto_armado.producto.getSecciones(): # recorre las secciones del producto armado
-#                    for seccionIngrediente in productoArmadoSeccion.getIngredienteSeccion(): # recorre los ingredientes seccion de las secciones
-#                        for ingredienteClasificacion in seccionIngrediente.getIngredienteClasificacion(): # recorre los ingredientes clasificados de las secciones                                                
-                            
-
-        
+            elif not d.producto_armado is None:
+                for productoArmadoSeccion in d.producto_armado.producto.getSecciones(): # recorre las secciones del producto armado
+                    for seccionIngrediente in productoArmadoSeccion.getIngredienteSeccion(): # recorre los ingredientes seccion de las secciones
+                        for ingredienteClasificacion in seccionIngrediente.getIngredienteClasificacion(): # recorre los ingredientes clasificados de las secciones
+                                if d.producto_armado.version.clasificacion == ingredienteClasificacion.clasificacion: # chequeo que se la misma version que la seleccionada por el usuario
+                                    cantidad = ingredienteClasificacion.cantidad * d.cantidad
+                                    ing = Ingrediente.objects.get(pk=seccionIngrediente.ingrediente.codigo)
+                                    ing.stockActual = ing.stockActual - cantidad
+                                    ing.save()        
     ped = request.session["pedido"]
     horaActual = datetime.now().time()       
     ctx = { 'pedido':ped, 'form':form,'form2':form2, 'vuelto':vuelto, 'horaActual':horaActual}  
