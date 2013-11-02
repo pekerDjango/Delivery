@@ -45,8 +45,8 @@ class DomicilioSearch(models.Model):
     localidad = models.ForeignKey(Localidad)
     barrio = ChainedForeignKey(Barrio, chained_field = "localidad", chained_model_field = "localidad", auto_choose = True)
     servicio = models.ForeignKey(Servicio)
-    def __unicode__(self):
-        return self.direccion + str(self.numero_direccion)
+    def __unicode__(self):        
+        return u'%s, %s'%(self.direccion, self.numero_direccion)
     class Meta:
         verbose_name="Domicilio Cliente"        
         verbose_name_plural = "Domicilios"
@@ -84,6 +84,7 @@ class Pedido(models.Model):
     estado = models.ForeignKey(EstadoPedido)
     servicio = models.ForeignKey(Servicio)
     tipologia_vivienda = models.ForeignKey(TipologiaVivienda)
+    domicilio = models.ForeignKey(DomicilioSearch)
     precio_envio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Costo de Envio($)" )    
     def __unicode__(self):
         return str(self.fechaPedido)
@@ -157,7 +158,6 @@ class SeccionProducto(models.Model):
 class IngredientesSeccion(models.Model):
     """ Clase Ingredientes por seccion
     Atributos: producto, ingredientes"""
-#    producto = models.ForeignKey(ProductoParaArmar)
     seccion = models.ForeignKey(SeccionProducto)
     ingrediente = models.ForeignKey(Ingrediente)    
     def __unicode__(self):
@@ -207,7 +207,16 @@ class DetallePedido(models.Model):
     promocion = models.ForeignKey(Promocion, blank=True, null=True)
     precio = models.DecimalField(max_digits = 5, decimal_places = 2, verbose_name = "Precio($)" )    
     def __unicode__(self):
-        return u'%s, %s'%(self.producto.producto.nombre, self.cantidad)   
+        total = self.pedido.cliente
+        if not self.producto is None:
+            total = self.producto.producto.nombre
+        elif not self.menu is None:            
+            total = self.menu.nombre
+        elif not self.promocion is None:
+            total = self.promocion.nombre
+        elif not self.producto_armado is None:
+            total = self.producto_armado.producto.slogan
+        return total   
     def precioTotalUnidad(self):
         total = (self.precio * self.cantidad)
         return total

@@ -73,7 +73,7 @@ class DetallePedidoInline(admin.StackedInline, SortableInline):
     
 class PedidoAdmin(admin.ModelAdmin):
     search_fields = ('cliente','fechaPedido','estado','servicio', 'tipologia_vivienda')
-    list_display = ('cliente', 'fechaPedido', 'hora_entrega', 'servicio', 'tipologia_vivienda', 'precio_envio', 'estado')
+    list_display = ('cliente', 'fechaPedido', 'domicilio','hora_entrega', 'servicio', 'tipologia_vivienda', 'precio_envio', 'estado')
     list_filter = ('cliente', 'fechaPedido', 'hora_entrega', 'estado', 'servicio', 'tipologia_vivienda', 'precio_envio')
     ordering=('cliente','fechaPedido','estado')
     

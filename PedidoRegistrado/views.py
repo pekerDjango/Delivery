@@ -93,9 +93,10 @@ def agregarPedido_view(request,cantidad,id_pro,id_tip):
     est=EstadoPedido.objects.get(pk=1)
     ser=Servicio.objects.get(pk=1)
     tip=TipologiaVivienda.objects.get(pk=1) 
-    pedi = request.session["pedido"] 
+    pedi = request.session["pedido"]
+    dom = request.session ["domicilio"]  
     if  pedi is None: 
-        p = Pedido(cliente=cli,fechaPedido=fechaPed,estado=est,servicio=ser,tipologia_vivienda=tip,precio_envio=8)
+        p = Pedido(cliente=cli,fechaPedido=fechaPed,estado=est,servicio=ser,tipologia_vivienda=tip,precio_envio=8, domicilio= dom)
         p.save()
         request.session["pedido"]=p
     ped = request.session["pedido"]  
@@ -254,9 +255,10 @@ def productoParaArmar_view(request,id_pro):
     est=EstadoPedido.objects.get(pk=1)
     ser=Servicio.objects.get(pk=1)
     tip=TipologiaVivienda.objects.get(pk=1) 
-    pedi = request.session["pedido"] 
+    pedi = request.session["pedido"]
+    dom = request.session ["domicilio"]  
     if  pedi is None: 
-        p = Pedido(cliente=cli,fechaPedido=fechaPed,estado=est,servicio=ser,tipologia_vivienda=tip,precio_envio=8)
+        p = Pedido(cliente=cli,fechaPedido=fechaPed,estado=est,servicio=ser,tipologia_vivienda=tip,precio_envio=8, domicilio= dom)
         p.save()
         request.session["pedido"]=p
     ped = request.session["pedido"]
