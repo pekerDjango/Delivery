@@ -9,6 +9,7 @@ from RecursosDeEmpresa.models import Sucursal
 from datetime import date, datetime, timedelta
 from django.contrib.auth.decorators import login_required
 from SiGeP.settings import URL_LOGIN
+from django.db.models import Count
 
 def pedidoInformacion_view(request):
     if request.method == "POST":
@@ -81,8 +82,13 @@ def promocionDisponibles_view(request):
     ctx = { 'productos':promos, 'pedido':ped}   
     return render_to_response('PedidoRegistrado/promosDisponibles.html',ctx, context_instance=RequestContext(request))
 
-def productosPopulares_view(request):       
-    productos = Producto.objects.all()
+def productosPopulares_view(request):
+    d = DetallePedido.objects.values("producto__producto").annotate(Count("producto__producto")).order_by("-producto__producto__count")
+    productos = []
+    if d is not None: 
+        for a in d:
+            if a.get('producto__producto') is not None:
+                productos.append(Producto.objects.get(pk = a.get('producto__producto')))
     ped = request.session["pedido"]    
     ctx = { 'productos':productos, 'pedido':ped}  
     return render_to_response('PedidoRegistrado/productosSolicitados.html',ctx, context_instance=RequestContext(request))

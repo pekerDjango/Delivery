@@ -194,7 +194,7 @@ class DetalleProductoArmado(models.Model):
     producto = models.ForeignKey(ProductoArmado)
     ingrediente = models.ForeignKey(IngredientesSeccion)
     def __unicode__(self):
-        return u'%s- %s'%(self.producto, self.ingrediente)
+        return u'%s - %s'%(self.producto.producto.slogan, self.ingrediente.seccion)
 
 class DetallePedido(models.Model):
     """Clase Detalle de Pedido

@@ -242,13 +242,12 @@ function quitarDetalle(aquitar)
                        
                  {% endfor %}
                  {% endif %}-->
-            
-        
+                 
     {% if pedido %}      
            
            <table border="0" cellspacing="5" cellpadding="5">
                  {% for d in pedido.getDetallePedido %}
-               <tr><td>   {{d.promocion.nombre}} {{d.menu.nombre}}{{d.producto.producto.nombre}} {{d.producto.clasificacion}} {{d.producto_armado.producto.slogan}}</td>
+               <tr><td>   {{d.promocion.nombre}} {{d.menu.nombre}}{{d.producto.producto.nombre}} {{d.producto.clasificacion}} {{d.producto_armado.producto.slogan}}  </td>
                    <td> <select name="cantidad" id="{{d.id}}"  style="width:50px" onchange = "actualizarCantidad(this)">
                         <option {% if d.cantidad == 0 %} selected="selected" {% endif %} value="1">0</option>
                         <option {% if d.cantidad == 1 %} selected="selected" {% endif %}  value="1">1</option>
@@ -257,15 +256,13 @@ function quitarDetalle(aquitar)
                         <option {% if d.cantidad == 4 %} selected="selected" {% endif %} value="4">4</option>
                     </select> </td>
              </tr>
-              <tr class="fila-con-borde">
+               <tr class="fila-con-borde">
                     <td>Precio: {{d.precioTotalUnidad}}</td><td><a href="#" onclick="quitarDetalle(this)" id="{{d.id}}" >quitar</a> </td>
                </tr>
-               
-               
-                <hr />
            {% endfor %}
           
            </table>
+            </div>
            </hr>
             {% if productoArmar %}
           <strong>{{productoArmar.slogan}}</strong>
@@ -285,7 +282,7 @@ function quitarDetalle(aquitar)
         {% endfor %}
         {% endif %}
            {% endif %}
-            </div>
+          
            
           
                
