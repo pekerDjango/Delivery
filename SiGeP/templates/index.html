@@ -1,14 +1,102 @@
-{% extends 'base.html' %}
-{% block title %} Pagina Inicio{% endblock %}
-{% block breadcrumbs %}
- <ul class="breadcrumb">
-<li><a href="/">Home</a>  <span class="divider">></span> </li>
-</ul>
-{% endblock %}
+<!doctype html>
+<html lang="es">
 
-{% block content %}
+<head>
+	<meta charset="UTF-8">
+	<title>SiGeP</title>
+	 <link href="/media/bootstrap/css/bootstrap.css" rel="stylesheet">
+     <link href="/media/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+     <link href="/media/bootstrap/css/bootstrap-sigep.css" rel="stylesheet">
+    <link href="/media/css/sigep.css" rel="stylesheet">
+    <script src="/media/js/jquery.js"></script>
+    <script src="/media/bootstrap/js/bootstrap.js"></script>  
+  
+   <style>
+  body {
+      
+        padding-bottom: 40px;
+       
+       }      
+   </style>
+</head>
+<body style="background-image:url(/media/imagenes/mantel.jpg);" >
+  
+<a name="enlace1"></a>
 
-<div id="myCarousel" class="carousel slide"  >
+<div id="header">
+<!--    <div class="container">-->
+<a class="brand" href="{% url "vista_index" %}" style="margin-left:30px;"><img src="/media/imagenes/Logo_DiNino_sinFrase1.png" alt="logo" style=" width:150px; height:150px;" ></a><img src="/media/imagenes/frase1.png" alt="frase" style="margin-left:80px; width:1000px;" >
+ 
+	<div class="navbar " style="height:52px;">
+
+		<div class="navbar-inner" style="opacity: 1;" >
+
+			<div class="container-fluid">
+   
+			
+	
+				  <ul class="nav nav-pills" style="margin-top:0px;margin-left:210px;">
+
+					   <li><a href="{% url "vista_pedidoInformacion" %}" class="btn" style="margin-top:0%; height:30px;width:135px;">Pedido</a></li>
+					   <li><a href="" class="btn" style="margin-top:0%;height:30px;width:135px ;">Productos</a></li>			
+					   <li><a href="" class="btn" style="margin-top:0%;height:30px;width:135px ;">Promociones</a></li>
+					   <li><a href="{% url "vista_sucursal" %}" class="btn" style="margin-top:0%;height:30px;width:135px;">Sucursales</a></li>
+					   <li><a href="/contacto/" class="btn" style="margin-top:0%;height:30px;width:135px ;">Contacto</a></li>
+				  </ul>
+        
+
+   <div class="login" style="margin-top:0%;">
+          {% if user.is_authenticated %}
+           {{ user.username }}|
+          <a href="{% url "vista_logout" %}" > Cerrar Sesion </a>
+          {% else %}
+        
+          <a href="{% url "vista_login" %}" class="btn" style="margin-top:0%;height:35px;width:80px;"> Login </a>
+           {% endif %}
+          </div> 
+    <div class="pull-right">
+            <div class="social">
+                <a class="" href="http://www.facebook.com/federicopeker"><img src="/media/imagenes/base/fb.png"></a>
+                <a class="" href="https://twitter.com/federicopeker"><img src="/media/imagenes/base/tw.png"></a>
+            </div><!--/div social -->
+          </div><!--/div pull -->        
+
+
+
+           
+				      
+			</div><!--/container fluid -->
+		</div><!--/navbar inner -->
+	</div><!--/navbar -->
+	<hr>
+	
+<div style="opacity:0.7; height:23px;">
+	<div class="breadcrumbs">
+		{% block breadcrumbs %}
+			<ul class="breadcrumb" style=" height:15px;">
+					<li><a href="/">Home</a>  <span class="divider"></span> </li>
+			</ul>
+		{% endblock %}
+	</div><!--/breadcrumb -->
+</div><!--/div style -->
+
+
+
+</div><!--/div header -->
+
+<!--<hr>-->
+</div> 
+	<div class="container-fluid" >
+    
+       {% block estadoPedido %}           
+        {% endblock %}
+ <div class="span2">
+ </div>
+
+  <div class="row-fluid"  >
+  <div class="span8" > 
+  <br>  
+<div id="myCarousel" class="carousel slide" style="margin:0px;" >
 
 <ol class="carousel-indicators" style="right: 50%;top: auto;bottom: 15px;margin-right: -19px;">
               <li data-target="#myCarousel" data-slide-to="0"  ></li>
@@ -17,8 +105,8 @@
        </ol>
 
     <div class="carousel-inner">
-      <div class="item">
-        <img src="/media/imagenes/carousel/menu.jpg"    alt="">
+      <div class="item active">
+        <img src="/media/imagenes/carousel/combo_Listo.jpg"    alt="">
         <div class="carousel-caption"  >
           
           <h4>Menú</h4>
@@ -26,14 +114,14 @@
         </div>
       </div>
       <div class="item">
-        <img src="/media/imagenes/carousel/promocion.jpg" alt="">
+        <img src="/media/imagenes/carousel/ComboUlt.jpg" alt="">
         <div class="carousel-caption">
           <h4>Promoción</h4>
           <p>Promociones increibles para todos los gustos</p>
         </div>
       </div>
-      <div class="item active" >
-        <img src="/media/imagenes/carousel/productosSolicitados.jpg"   alt="">
+      <div class="item " >
+        <img src="/media/imagenes/carousel/NuestrosProductos2.jpg"   alt="">
         <div class="carousel-caption" >
           <h4>Nuestros Productos</h4>
           <p>Revise nuestros menús</p>
@@ -42,98 +130,81 @@
     </div>
     <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
     <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
-  </div>
-{% endblock %}
-{% block panelAux %}
-<div  id = "panelPrincipal"class="well well-large" height="100%">
-<table align="center">
-<tr><td >
-<a href="http://www.quilmes.com.ar"  ><img src="/media/imagenes/publicidades/quilmes.jpg" alt="quilmes" style="height:65px; width:200px;" /> </a>
-</td></tr>
-<tr> <td>
-<a href="http://www.coca-cola.com.ar"  ><img src="/media/imagenes/publicidades/cocacola.jpg" alt="cocacola" style="height:60px; width:200px;" /></a> 
-</td></tr> 
-<tr> <td>
-<a href="http://www.mccain.com.ar" ><img src="/media/imagenes/publicidades/mccain.jpg" alt="mccain" style="height:65px; width:200px;" /></a> 
-</td></tr> 
-<tr> <td>
-<a href="http://www.pepsi.com.ar"  ><img src="/media/imagenes/publicidades/pepsi.jpg" alt="pepsi" style="height:65px; width:200px;" /></a> 
-</td></tr> 
-<tr> <td>
-<a href="http://www.budweiser.com.ar"  ><img src="/media/imagenes/publicidades/budweiser.jpg" alt="budweiser" style="height:65px; width:200px;" /></a> 
-</td></tr> 
-<tr> <td>
-<a href="http://www.sevenup.com.ar"  ><img src="/media/imagenes/publicidades/sevenup.jpg" alt="sevenup" style="height:55px; width:200px;" /></a> 
-</td></tr> 
-<tr> <td>
-<a href="http://www.sprite.com.ar"  ><img src="/media/imagenes/publicidades/sprite.jpg" alt="sprite" style="height:55px; width:200px;" /></a> 
-</td></tr> 
-</table>  
-</div>
-{% endblock %}
+  </div> 
 
-{% block contentInferior%}
- <hr>
 
-  <div class="accordion" id="accordion2">
-      <span class="span4">
-       <div class="well well-large">
-          <div class="accordion-group">
-               <div class="accordion-heading">
-                   <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                   <div class="pull-center">
-                      <h3> Nueva sucursal</h3>
-                  </div>
-                  <p>Abrimos una nueva sucursal para estar más cerca de usted</p>
-                   </a>
-               </div>
-               <div id="collapseOne" class="accordion-body collapse">
-              <div class="accordion-inner">
-               <a href="/sucursales/"><img class="img-rounded" src="/media/imagenes/sucursal_centro.png"  ></a>
-               <br>
-               <a href="/sucursales/" class="btn btn-primary btn-block"> Conoce nuestras sucursales</a>
-              </div>
-               </div>
-          </div>
-          </div>
-      </span>
-<span class="span4">
-<div class="well well-large">
-<div class="accordion-group">
-               <div class="accordion-heading">
-                   <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-                  <h3> Productos Personalizados</h3>
-                   <p>Te damos la posibilidad de personalizar tus productos. </p>
-                   </a>
-               </div>
-               <div id="collapseTwo" class="accordion-body collapse">
-                    <div class="accordion-inner">
-                       <a href="#"><img class="img-rounded" src="/media/imagenes/lomito_completo.png"  alt="sucursal"></a>
-                       <br>
-                        <a href="#" class="btn btn-primary btn-block"> Arma tu producto</a>
-                     </div>
-               </div>
-          </div>
-</div>
-</span>
-<span class="span4">
-<div class="well well-large">
-<div class="accordion-group">
-               <div class="accordion-heading">
-                   <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
-                  <h3> Te acercamos tu pedido</h3>
-                   <p>Contamos con servicio de delivery para llevar tu pedido</p>
-                 </a>
-               </div>
-               <div id="collapseThree" class="accordion-body collapse">
-                    <div class="accordion-inner">
-                        <a href="#"><img class="img-rounded" src="/media/imagenes/delivery2.png"  alt="sucursal"></a>
-                       <br>
-                        <a href="/pedido" class="btn btn-primary btn-block"> Arma tu pedido</a>
-                     </div>
-               </div>
-          </div>
-</div>
-</span>
-</div>
-{% endblock %}
+
+<table style="margin-top:0px; margin-bottom:0px;" align="center" class="imagenes-sponsors">
+<tr >
+<td   style="padding-left:0px;"><a href="http://www.budweiser.com.ar"  ><img src="/media/imagenes/publicidades/budweiser_logo.png" alt="budweiser"  /></a> </td>
+<td style="padding-left:0px;"><a href="http://www.coca-cola.com.ar"  ><img src="/media/imagenes/publicidades/CocaCola_logo.png" alt="cocacola" style=" width:110px; height:30px;" /></a> </td>
+<td style="padding-left:0px;"><a href="http://www.mccain.com.ar" ><img src="/media/imagenes/publicidades/McCain_logo.png" alt="mccain" style=" width:120px; height:50px;" /></a> </td>
+<td><a href="http://www.pepsi.com.ar"  ><img src="/media/imagenes/publicidades/pepsi_Logo.png" alt="pepsi" style=" width:110px; height:50px;" /></a>  </td>
+<td ><a href="http://www.quilmes.com.ar"  ><img src="/media/imagenes/publicidades/Quilmes_logo.png" alt="quilmes" style=" width:110px; height:40px;" /> </a></td>
+<td><a href="http://www.sevenup.com.ar"  ><img src="/media/imagenes/publicidades/7up_logo.png" alt="sevenup" style=" width:110px; height:40px;" /></a>  </td>
+<td><a href="http://www.sprite.com.ar"  ><img src="/media/imagenes/publicidades/Sprite_logo.png" alt="sprite" style=" width:110px; height:40px;" /></a>  </td>
+</tr>
+</table>
+
+ </div><!--/span8-->
+<div class="span2">
+ </div>
+ </div><!--/row-->
+ </div><!-- Fin container fluid-->
+
+
+<hr style="margin-top:0px;">
+<div class="container-fluid" >
+	 <div class="row-fluid"  >
+	
+				<div class="span4" style="text-align:center;">
+						<div class="well" >
+				                  <h3 > Nueva sucursal</h3>
+				                  <p>Abrimos una nueva sucursal para estar más cerca de ud</p>
+				                  <a href="/sucursales/"><img  class="img-rounded" src="/media/imagenes/sucursal_centro.png" style="width:150px; height:150px;" ></a>
+				                  <br>
+				                     <a href="/sucursales/" class="btn   btn-block " id="botonBlock"> Conoce nuestras sucursales</a>  
+				                        
+				        </div><!--/well-->   
+				 </div><!--/span4-->
+
+	           <div class="span4"  style="text-align:center;">
+						<div class="well">
+								  <h3>  Productos Personalizados</h3>
+				                  <p>Te damos la posibilidad de personalizar tus productos</p>
+				                  <a href="#"><img class="img-rounded" src="/media/imagenes/lomito_completo.png"  alt="sucursal" style="width:150px; height:150px;"></a>
+				                  <br>
+				                  <a href="#" class="btn   btn-block " id="botonBlock"> Arma tu  producto</a>
+				                
+						</div><!--/well-->
+	          </div><!--/span4-->
+	          <div class="span4"  style="text-align:center;">
+						<div class="well">
+					                  <h3> Te acercamos tu pedido</h3>
+					                  <p>Contamos con servicio de delivery para llevar tu pedido</p>
+					                  <a href="#"><img class="img-rounded" src="/media/imagenes/delivery.png"  alt="sucursal" style="width:150px; height:150px;"></a>
+					                 <br>				                
+					                 <a href="/pedido" class="btn   btn-block " id="botonBlock">  Arma tu pedido</a>
+						</div><!--/well-->
+	         </div><!--/span4-->
+	         
+	 </div><!--/row fluid-->
+ </div><!--/cotainer fluid-->
+ 
+ 
+ 
+    <br>
+
+    <hr>
+  <footer style="text-align:center" >
+	    <div class="span12">
+		      <div class="pull-right">
+		          <a href="#enlace1"><i class="icon-hand-up"></i>Subir</a>
+		      </div>
+	          <p>Copyright 2013 Todos los derechos reservados - <strong>SiGeP S.A. </strong> - Córdoba - Argentina <br /></p>
+	     </div>
+  </footer>
+   
+
+</body>
+</html>

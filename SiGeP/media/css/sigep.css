@@ -9,13 +9,13 @@
 .login{margin: 15px 0 0 0;padding: 0;float: right;height: 37px;}
 .login> a{margin: 0 10px 0 0;padding: 0 0 16px;}
 .login > a:hover{border-bottom: 3px solid black;}
-.item{border:1px solid #d9d9d9;margin:0 0 10px 0;background-color:#e6e6e6}
+.item{border:1px solid #d9d9d9;margin:0 0 10px 0;background-color:#e6e6e6;}
 .header {position: relative;background-color: #fff;}
 .header .column { float: right;width: 500px;padding: 10px 0;}
 .header img {float: left;width:140px; height:72px;}
-.header a{color:#0078ae; font-weight: bold; display: block; overflow:hidden; cursor: pointer; }
+.header a{color:black; font-weight: bold; display: block; overflow:hidden; cursor: pointer; }
 .header a:hover,
-.header a:focus { color: #ffffff; background-color:#0078ae;}
+.header a:focus { color: #ffffff; background-color:#D10D1C;}
 .header h2 {
 font-family: DominosFont,Arial,Helvetica,sans-serif;
 font-size: 18px;
@@ -32,12 +32,13 @@ font-size: 18px;
 	width:408px;
 	height: 29px;
 	font-family: DominosFont,Arial,Helvetica,sans-serif;
-	background-color: #0078ae;color: #fff;
+	background-color: #D10D1C;color: #fff;
 	text-transform: uppercase;font-size: 17px;
 	padding: 8px 10px;
 	border-radius: 5px 5px 5px 5px;
 	font-weight: bold;
 	}
+img.img-rounded{height: 213px;width:290px;}
 
 .tuDetalleProducto{
 	width:208px;
@@ -62,7 +63,7 @@ html, body, #map-canvas {
 .well .nav .nav-header{
 	color: #FFFFFF;
 	font-size: 17px;
-	background-color: #0078AE;
+	background-color: #D10D1C;
 	border-radius: 5px;
 	text-align: left;
 	text-shadow: 0px 0px;
@@ -80,36 +81,78 @@ html, body, #map-canvas {
 
 .nav-pills > .active > a, .nav-pills > .active > a:hover, .nav-pills > .active > a:focus{
 	border-radius: 5px;
+	background-color:#D10D1C;
 }
 
 #ProductosNuevos p{
 	margin-top: 10px
 }
+
+.accordion-toggle  h4 {
+	color :black;
+}
 .well a {
 color: #0088cc;
-text-decoration: underline;
 }
+
 .well hr{
 	margin:8px; 
 }
 
 body{
-	background-color:  rgb(151, 14, 14);
+	 background-image:url(/media/imagenes/mantel.jpg);
 }
 #contentendor-navegador{
 background-color: #F55E2C;
 }
 
-
-.hero-unit {
-background: rgba(241, 144, 53, 1);
+.hero-unit{
+	background-color:#E7E1E1;
 }
+
 .cajaschicas{
 		width: 50px; 
 }
 
 .fila-con-borde{
 	border-bottom:1pt solid black;
+}
+.btn-large, .btn-block{
+		background:#D10D1C;
+		color:white;
+}
+.btn-block a {
+
+		color:white;
+}
+
+.accordion-inner a {
+	color :white;
+}
+#botonBlock {
+	color :white;
+}
+.brand{
+	margin-left:30px;
+}
+.brand img{
+	 width:150px; height:150px;
+}
+.navbar{
+	height:52px;
+}
+#estiloNavPills{
+	margin-top:0px;
+	margin-left:210px;
+}
+#estiloNavPills .btn{
+	margin-top:0%;
+	 height:30px;
+	 width:135px;
+}
+#estiloBreadcrumbs{
+	opacity:0.7; 
+	height:43px;
 }
 
 .navbar .nav > li > a {

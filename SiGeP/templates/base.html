@@ -10,41 +10,33 @@
     <link href="/media/css/sigep.css" rel="stylesheet">
     <script src="/media/js/jquery.js"></script>
     <script src="/media/bootstrap/js/bootstrap.js"></script>  
-  
+ 
 </head>
-<body>
-   <style>
-  body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-       }      
-   </style>
+<body >
+  
 <a name="enlace1"></a>
+
 <div id="header">
 <!--    <div class="container">-->
-	<div class="navbar ">
-		<div class="navbar-inner">
-			<div id="contentendor-navegador" class="container-fluid">
-        <div class="span9">
-			    <a class="brand" href="{% url "vista_index" %}">Home</a>
-				  <ul class="nav nav-pills">
-					   <li><a href="{% url "vista_pedidoInformacion" %}">Pedido</a></li>
-					   <li><a href="{% url "vista_producto_listado"  %}">Productos</a></li>			
-					   <li><a href="">Promociones</a></li>
-					   <li><a href="{% url "vista_sucursal" %}">Sucursales</a></li>
-					   <li><a href="/contacto/">Contacto</a></li>
-				  </ul>
-          <div class="pull-right">
-            <div class="social">
-                <a class="" href="http://www.facebook.com/federicopeker"><img src="/media/imagenes/base/fb.png"></a>
-                <a class="" href="https://twitter.com/federicopeker"><img src="/media/imagenes/base/tw.png"></a>
-            </div><!--/div social -->
-          </div><!--/div pull -->
-      </div><!--/span9 -->
-      
-      <div class="span3">          
-      </div><!--/span3 -->
- <div class="login">
+<a class="brand" href="{% url "vista_index" %}" ><img src="/media/imagenes/Logo_DiNino_sinFrase1.png" alt="logo" ></a><img src="/media/imagenes/frase1.png" alt="frase" style="margin-left:80px; width:1000px;" >
+ 
+  <div class="navbar ">
+
+    <div class="navbar-inner"  >
+
+      <div class="container-fluid">
+    
+          <ul class="nav nav-pills" id="estiloNavPills" >
+
+             <li><a href="{% url "vista_pedidoInformacion" %}" class="btn" >Pedido</a></li>
+             <li><a href="" class="btn" >Productos</a></li>      
+             <li><a href="" class="btn" >Promociones</a></li>
+             <li><a href="{% url "vista_sucursal" %}" class="btn" >Sucursales</a></li>
+             <li><a href="/contacto/" class="btn" >Contacto</a></li>
+          </ul>
+			      
+
+   <div class="login" style="margin-top:0%;">
           {% if user.is_authenticated %}
            {{ user.username }}|
           <a href="/accounts/logout"> Cerrar Sesion </a>
@@ -82,24 +74,44 @@
             </div>
             <!-- fin del model -->
           {% endif %}
-          </div>
-				      
-			</div><!--/container fluid -->
-		</div><!--/navbar inner -->
-	</div><!--/navbar -->
-	<hr>
+   </div>
+	 <div class="pull-right">
+            <div class="social">
+                <a class="" href="http://www.facebook.com/federicopeker"><img src="/media/imagenes/base/fb.png"></a>
+                <a class="" href="https://twitter.com/federicopeker"><img src="/media/imagenes/base/tw.png"></a>
+            </div><!--/div social -->
+          </div><!--/div pull --> 
+        
+
+
+
+           
+              
+      </div><!--/container fluid -->
+    </div><!--/navbar inner -->
+  </div><!--/navbar -->
+  <hr>
+
+<div  id="estiloBreadcrumbs">
+  <div class="breadcrumbs">
+    {% block breadcrumbs %}
+     
+    {% endblock %}
+  </div><!--/breadcrumb -->
+</div><!--/div style -->
+
+
 
 </div><!--/div header -->
-<div class="breadcrumbs">
-{% block breadcrumbs %}
-{% endblock %}
+
 <!--<hr>-->
-</div> 
-	<div class="container-fluid" style="overflow:hidden">
+
+
+	<div class="container-fluid" >
     
       <div class="row-fluid"  >
       
-        <div class="span9" style="float:left">
+        <div class="span9" >
         
             {% block estadoPedido %}           
             {% endblock %}
@@ -110,7 +122,7 @@
            
         </div><!--/span-->
          
-        <div class="span3" style="float:left">
+        <div class="span3" >
           {% block panelAux %}
             {% endblock%}
             </div><!--/span--> 
