@@ -184,7 +184,7 @@ class ProductoArmado(models.Model):
     producto = models.ForeignKey(ProductoParaArmar)
     version = models.ForeignKey(VersionProducto)
     def __unicode__(self):
-        return self.version
+        return self.producto.slogan
     def getDetalleProductoArmado(self):
         return DetalleProductoArmado.objects.filter(producto=self)
     
