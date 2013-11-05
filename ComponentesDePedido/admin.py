@@ -39,7 +39,7 @@ class DetalleVersionInline(admin.StackedInline, SortableInline):
 class DetalleIngredientesInline(admin.StackedInline, SortableInline):
     model = DetalleIngredientes
     verbose_name_plural = "Detalle de Ingredientes"
-    extra = 1
+    extra = 4
     formfield_overrides = {        
         models.IntegerField: {'widget': TextInput(attrs={'class':'input-mini'})},
         }
