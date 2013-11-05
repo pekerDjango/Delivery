@@ -10,6 +10,7 @@ from datetime import date, datetime, timedelta
 from django.contrib.auth.decorators import login_required
 from SiGeP.settings import URL_LOGIN
 from django.db.models import Count
+from django.core.mail import EmailMessage 
 
 def pedidoInformacion_view(request):
     if request.method == "POST":
@@ -246,6 +247,15 @@ def pedidoFinalizado_view(request):
     dt = datetime.combine(date.today(), horaPedir) + timedelta(minutes=total)
     ped.hora_entrega = dt.time()
     ped.save()
+    titulo = 'Pedido Registrado'
+    contenido = "Su pedido ha sido registrado existosamente con los siguientes datos" + "\n"
+    contenido += "Numero de pedido: "+ str(ped.id) + "\n"
+    contenido += "Hora de entrega aproxiamadamente "+ str(ped.hora_entrega) + "\n"
+    contenido += ""+"\n"
+    contenido += "Lo saluda atentamente el equipo de SiGeP \n"               
+    correo = EmailMessage(titulo, contenido, to=['federicopeker@gmail.com'])
+    correo.send()
+    
     ctx = { 'pedido':ped, 'importe':importe, 'vuelto': vuelto, 'horaPedir':horaPedir,'total':total}  
     return render_to_response('PedidoRegistrado/pedidoFinalizado.html',ctx, context_instance=RequestContext(request))
 
