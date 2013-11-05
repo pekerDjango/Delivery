@@ -54,6 +54,7 @@
         </table>
 <br />
         {% if domicilio  %}
+        <p>Número de Pedido: <strong>{{pedido.id}}</strong></p>
         <p>Pedido va ser enviado: <strong>{{domicilio.direccion}} {{domicilio.numero_direccion}} {{domicilio.barrio}} {{domicilio.localidad}}</strong></p>
              {% endif %}
              {% if sucursal  %}
