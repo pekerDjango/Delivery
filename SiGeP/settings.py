@@ -1,5 +1,5 @@
 # Django settings for SiGeP project.
-#encoding:utf-8
+# encoding:utf-8
 # Identificando la ruta del proyecto
 import os
 RUTA_PROYECTO = os.path.dirname(os.path.realpath(__file__))
@@ -15,12 +15,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': os.path.join(os.path.dirname(__file__),'sqlite.db'),                 # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(os.path.dirname(__file__), 'sqlite.db'),
+        'USER': '',  # Not used with sqlite3.
+        'PASSWORD': '',  # Not used with sqlite3.
+        'HOST': '',  # Set to empty string for localhost.Not used with sqlite3.
+        'PORT': '',  # Set to empty string for default. Not used with sqlite3.
     }
 }
 
@@ -49,7 +49,8 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__),'media/'))
+MEDIA_ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__),
+                                           'media/'))
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -77,9 +78,9 @@ STATICFILES_DIRS = (
 # various locations.
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',)
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
-)
+
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '&amp;@z&amp;dpqobr65923j1cyo#gox3bz(*eqxz0jo*aiqvcn7^1umb&amp;'
@@ -87,9 +88,9 @@ SECRET_KEY = '&amp;@z&amp;dpqobr65923j1cyo#gox3bz(*eqxz0jo*aiqvcn7^1umb&amp;'
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.app_directories.Loader',)
 #     'django.template.loaders.eggs.Loader',
-)
+
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
@@ -100,8 +101,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
     "context_processors.my_processor",
-    'django.core.context_processors.request', #activar las variables de session alojadas en el request
-    )
+    'django.core.context_processors.request',  # activar las variables de
+    #  session alojadas en el request
+)
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -119,8 +121,9 @@ ROOT_URLCONF = 'SiGeP.urls'
 WSGI_APPLICATION = 'SiGeP.wsgi.application'
 
 TEMPLATE_DIRS = (
-    os.path.join(os.path.dirname(__file__),'templates'),
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    os.path.join(os.path.dirname(__file__), 'templates'),
+    # Put strings here, like "/home/html/django_templates" or
+    # "C:/www/django/templates"
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
@@ -129,28 +132,29 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-#    'django.contrib.sites',
+    # 'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:    
+    # Uncomment the next line to enable the admin
     'django_admin_bootstrapped',
-     'django.contrib.admin',
-     'south',
+    'django.contrib.admin',
+    'south',
     # Uncomment the next line to enable admin documentation:
-     'django.contrib.admindocs',
-     'ComponentesDePedido',
-     'RecursosDeEmpresa',
-     'PedidoRegistrado',
-     'ConfiguracionDeComponentes',
-     'sorl.thumbnail',
-     'form_utils', 
-     'registration',
-     'django.contrib.humanize',
-     'smart_selects'
-     
+    'django.contrib.admindocs',
+    'ComponentesDePedido',
+    'RecursosDeEmpresa',
+    'PedidoRegistrado',
+    'ConfiguracionDeComponentes',
+    'sorl.thumbnail',
+    'form_utils',
+    'registration',
+    'django.contrib.humanize',
+    'smart_selects'
+
 )
 
-ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
+ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window; you may, of course,
+# use a different value.
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
@@ -187,5 +191,5 @@ LOGGING = {
     }
 }
 
-URL_LOGIN="/accounts/login/"
+URL_LOGIN = "/accounts/login/"
 AUTH_PROFILE_MODULE = "ConfiguracionDeComponentes.Cliente"
