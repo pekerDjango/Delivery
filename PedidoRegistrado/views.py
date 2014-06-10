@@ -225,14 +225,14 @@ def detallePago_view(request):
         form = PagoForm(precioTotal=total)
         form2 = HoraPedidoForm()
         for d in ped.getDetallePedido():
-            if not d.producto is None:
+            if d.producto is not None:
                 for i in d.producto.producto.getIngredientes():  # recorre los
                     # ingrediente del productos
                     cantidad = i.cantidad * d.cantidad
                     ing = Ingrediente.objects.get(pk=i.ingrediente.codigo)
                     ing.stockActual = ing.stockActual - cantidad
                     ing.save()
-            elif not d.menu is None:
+            elif d.menu is not None:
                 for detm in d.menu.getDetalleMenu():  # recorro los detalles
                     # de menu
                     for promenu in detm.producto.getIngredientes():  # recorre
@@ -243,7 +243,7 @@ def detallePago_view(request):
                             pk=promenu.ingrediente.codigo)
                         ing.stockActual = ing.stockActual - cantidad
                         ing.save()
-            elif not d.promocion is None:
+            elif d.promocion is not None:
                 for promoPro in d.promocion.getDetallePromocionProducto():
                     # recorre los productos en el detalle de promocion
                     for promoing in promoPro.producto.getIngredientes():
@@ -268,7 +268,7 @@ def detallePago_view(request):
                                 pk=promoing.ingrediente.codigo)
                             ing.stockActual = ing.stockActual - cantidad
                             ing.save()
-            elif not d.producto_armado is None:
+            elif d.producto_armado is not None:
                 for productoArmadoSeccion in d.producto_armado.producto.getSecciones():
                     # recorre las secciones del producto armado
                     for seccionIngrediente in productoArmadoSeccion.getIngredienteSeccion():
@@ -293,13 +293,13 @@ def pedidoFinalizado_view(request):
     ped = request.session["pedido"]
     total = 0
     for d in ped.getDetallePedido():
-        if not d.producto is None:
+        if d.producto is not None:
             total += int(d.producto.producto.tiempoPreparacion) * d.cantidad
-        elif not d.menu is None:
+        elif d.menu is not None:
             total += d.menu.tiempoPreparacionTotal() * d.cantidad
-        elif not d.promocion is None:
+        elif d.promocion is not None:
             total += d.promocion.tiempoPreparacionTotal() * d.cantidad
-        elif not d.producto_armado is None:
+        elif d.producto_armado is not None:
             total += d.producto_armado.version.tiempoPreparacion * d.cantidad
     tupla = request.session["importe"]
     importe = tupla[0]
@@ -411,7 +411,7 @@ def productoArmadoIngrediente_view(request, id_ing):
     ing = IngredientesSeccion.objects.get(pk=id_ing)
     dic = request.session["exclusion"]
     keys = dic.keys()
-    if not ing.seccion.orden in keys:
+    if ing.seccion.orden not in keys:
         dic[ing.seccion.orden] = [1, ing.seccion]
         detalle = DetalleProductoArmado(producto=productoArmado,
                                         ingrediente=ing)

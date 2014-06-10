@@ -276,13 +276,13 @@ class DetallePedido(models.Model):
 
     def __unicode__(self):
         total = self.pedido.cliente
-        if not self.producto is None:
+        if self.producto is not None:
             total = self.producto.producto.nombre
-        elif not self.menu is None:
+        elif self.menu is not None:
             total = self.menu.nombre
-        elif not self.promocion is None:
+        elif self.promocion is not None:
             total = self.promocion.nombre
-        elif not self.producto_armado is None:
+        elif self.producto_armado is not None:
             total = self.producto_armado.producto.slogan
         return total
 
